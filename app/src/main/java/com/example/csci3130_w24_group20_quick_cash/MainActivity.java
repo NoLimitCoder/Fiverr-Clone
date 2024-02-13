@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     protected void saveInfoToFirebase(String name, String emailAddress, String password, String contactNumber, String role) {
-        DatabaseReference dbr = FirebaseDatabase.getInstance().getReference("User Information").child(emailAddress);
+        DatabaseReference dbr = FirebaseDatabase.getInstance().getReference("User Information").child(name);
 
         dbr.child("name").setValue(name);
         dbr.child("emailAddress").setValue(emailAddress);
@@ -106,6 +106,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         String password = getPassword();
         String contactNumber = getContactNumber();
         String role = getRole();
-        saveInfoToFirebase(name, emailAddress, password, contactNumber, role);
+        String errorMessage = new String();
+        CredentialValidator validator = new CredentialValidator();
+         if (!validator.isValidName(name)) {
+            errorMessage = getResources().getString(R.string.INVALID_NAME).trim();
+        } else if (!validator.isValidEmailAddress(emailAddress)) {
+            errorMessage = getResources().getString(R.string.INVALID_EMAIL_ADDRESS).trim();
+        } else if (!validator.isValidPassword(password)) {
+            errorMessage = getResources().getString(R.string.INVALID_PASSWORD).trim();
+         } else if (!validator.isValidContactNumber(contactNumber)){
+             errorMessage = getResources().getString(R.string.INVALID_NUMBER).trim();
+        } else if (!validator.isValidRole(role)) {
+             errorMessage = getResources().getString(R.string.INVALID_ROLE).trim();
+         }
+        setStatusMessage(errorMessage);
+        if (errorMessage.isEmpty()) {
+            saveInfoToFirebase(name, emailAddress, password, contactNumber, role);
+        }
+
     }
 }
