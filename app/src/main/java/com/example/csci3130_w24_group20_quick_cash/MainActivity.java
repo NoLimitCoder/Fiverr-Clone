@@ -88,8 +88,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+
     protected void saveInfoToFirebase(String name, String emailAddress, String password, String contactNumber, String role) {
-        DatabaseReference dbr = FirebaseDatabase.getInstance().getReference("User Information").child(name);
+        DatabaseReference dbr = FirebaseDatabase.getInstance().getReference("User Inmation").child(name);
 
         dbr.child("name").setValue(name);
         dbr.child("emailAddress").setValue(emailAddress);
@@ -98,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dbr.child("role").setValue(role);
 
     }
+
 
     @Override
     public void onClick(View view) {
