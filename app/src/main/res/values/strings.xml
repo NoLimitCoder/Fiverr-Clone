@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">csci3130_w24_group20_Quick_Cash</string>
+    <string name="EMPTY_USER_NAME">Empty Username</string>
 </resources>
