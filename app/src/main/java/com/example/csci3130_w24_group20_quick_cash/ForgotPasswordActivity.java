@@ -17,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class forgotPasswordActivity extends AppCompatActivity{
     FirebaseDatabase database = null;
+
     FirebaseCRUD crud = null;
     FirebaseAuth auth;
 
