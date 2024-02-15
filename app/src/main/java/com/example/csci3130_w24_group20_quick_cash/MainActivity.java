@@ -1,8 +1,6 @@
 package com.example.csci3130_w24_group20_quick_cash;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -10,8 +8,14 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -89,13 +93,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     protected void saveInfoToFirebase(String name, String emailAddress, String password, String contactNumber, String role) {
-        DatabaseReference dbr = FirebaseDatabase.getInstance().getReference("User Information").child(name);
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(emailAddress, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task){
+                if (task.isSuccessful()){
+                    FirebaseUser user = task.getResult().getUser();
+                    if (user != null) {
+                        DatabaseReference dbr = FirebaseDatabase.getInstance().getReference("users").child(name);
 
-        dbr.child("name").setValue(name);
-        dbr.child("emailAddress").setValue(emailAddress);
-        dbr.child("password").setValue(password);
-        dbr.child("contact number").setValue(contactNumber);
-        dbr.child("role").setValue(role);
+                        dbr.child("name").setValue(name);
+                        dbr.child("emailAddress").setValue(emailAddress);
+                        dbr.child("password").setValue(password);
+                        dbr.child("contactNumber").setValue(contactNumber);
+                        dbr.child("role").setValue(role);
+
+                        sendEmailVerification(user);
+
+                    }
+                }
+            }
+                });
+
+    }
+
+    protected void sendEmailVerification(FirebaseUser user){
 
     }
 
