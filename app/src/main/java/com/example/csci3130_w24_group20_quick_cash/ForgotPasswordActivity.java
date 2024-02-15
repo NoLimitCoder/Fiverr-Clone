@@ -15,7 +15,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class forgotPasswordActivity extends AppCompatActivity{
+public class ForgotPasswordActivity extends AppCompatActivity{
     FirebaseDatabase database = null;
 
     FirebaseCRUD crud = null;
@@ -36,7 +36,7 @@ public class forgotPasswordActivity extends AppCompatActivity{
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
-                            Toast.makeText(forgotPasswordActivity.this, "Check your email to reset password", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ForgotPasswordActivity.this, "Check your email to reset password", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -54,9 +54,9 @@ public class forgotPasswordActivity extends AppCompatActivity{
     protected void confirmMatch() {
         EditText passwordBox = findViewById(R.id.new_password);
         EditText confirmPassword = findViewById(R.id.confirm_password);
-        if(passwordBox.getText().toString().equals(confirmPassword.getText().toString())){
+        //if(passwordBox.getText().toString().equals(confirmPassword.getText().toString())){
 
-        }
+     //   }
     }
 
 }
