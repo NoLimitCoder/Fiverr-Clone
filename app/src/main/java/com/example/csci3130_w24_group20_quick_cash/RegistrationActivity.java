@@ -24,7 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
 
     FirebaseDatabase database = null;
     FirebaseCRUD crud = null;
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(MainActivity.this, "Verification email has been sent", Toast.LENGTH_LONG).show();
+                Toast.makeText(RegistrationActivity.this, "Verification email has been sent", Toast.LENGTH_LONG).show();
             }
         });
 
