@@ -2,6 +2,7 @@ package com.example.csci3130_w24_group20_quick_cash;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
+import android.view.Menu;
 import android.widget.Button;
 
 import android.os.Bundle;
@@ -15,7 +16,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class LogoutActivity extends AppCompatActivity implements View.OnClickListener{
+public class LogoutActivity extends AppCompatActivity{
 
     private FirebaseAuth firebaseAuth;
     private Button logout;
@@ -35,6 +36,7 @@ public class LogoutActivity extends AppCompatActivity implements View.OnClickLis
                 Logout();
             }
         });
+        //logout.setOnClickListener(view -> Logout());
     }
 
     private void Logout(){
@@ -44,9 +46,5 @@ public class LogoutActivity extends AppCompatActivity implements View.OnClickLis
     }
 
 
-
-    @Override
-    public void onClick(View v) {
-
-    }
 }
+
