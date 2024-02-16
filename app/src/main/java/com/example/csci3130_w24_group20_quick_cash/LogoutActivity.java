@@ -25,10 +25,11 @@ public class LogoutActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
+        this.setupLogoutButton();
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        /*firebaseAuth = FirebaseAuth.getInstance();
 
-        logout = (Button) findViewById(R.id.logoutButton);
+        logout = (Button) findViewById(R.id.loginButton);
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -37,12 +38,21 @@ public class LogoutActivity extends AppCompatActivity{
             }
         });
         //logout.setOnClickListener(view -> Logout());
+
+         */
     }
 
-    private void Logout(){
+    /*private void Logout(){
         firebaseAuth.signOut();
         finish();
         startActivity(new Intent(LogoutActivity.this, MainActivity.class));
+    }
+
+     */
+
+    protected void setupLogoutButton() {
+        Button logoutButton = findViewById(R.id.logoutButton);
+        logoutButton.setOnClickListener((View.OnClickListener) this);
     }
 
 
