@@ -39,6 +39,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         loginButton.setOnClickListener(this);
     }
 
+    protected void setupLogoutButton() {
+        Button logoutButton = findViewById(R.id.logoutButton);
+        logoutButton.setOnClickListener(this);
+    }
+
     protected void move2WelcomeWindow(String userName) {
         Intent intent = new Intent(getBaseContext(), WelcomeActivity.class);
         //intent.putExtra("userName", userName);
