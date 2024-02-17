@@ -1,7 +1,6 @@
 package com.example.csci3130_w24_group20_quick_cash;
 
 import static android.content.ContentValues.TAG;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser != null){
-            currentUser.reload();
+            move2WelcomeWindow();
         }
     }
 
@@ -110,10 +109,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String psswd = getPassword();
             String errorMessage = new String();
             CredentialValidator validator = new CredentialValidator();
-
+            boolean userExists = false;
             if (validator.isEmptyUserName(userName)) {
                 errorMessage = "Error: " + getString(R.string.EMPTY_USER_NAME);
-            } else {
+                Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+            }
+            else if (validator.isEmptyPassword(psswd)) {
+                errorMessage = "Error: " + getString(R.string.EMPTY_PASSWORD);
+                Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
+            }
+            else {
                 UserExists(userName, psswd, new AuthCallback() {
                     @Override
                     public void onResult(boolean success) {
@@ -124,7 +129,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 });
             }
-            //setStatusMessage(v, errorMessage.trim());
         }
         else if (v.getId() == R.id.signUpButton) {
             // Handle sign up button click

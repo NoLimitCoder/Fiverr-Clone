@@ -8,6 +8,10 @@ public class CredentialValidator {
         return userName.isEmpty();
     }
 
+    protected boolean isEmptyPassword(String password) {
+        return password.isEmpty();
+    }
+
     protected boolean isValidName(String name) {
         return Pattern.matches("^[a-zA-Z]{2,}(?: [a-zA-Z]+){0,2}$", name);
     }
