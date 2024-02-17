@@ -2,29 +2,36 @@ package com.example.csci3130_w24_group20_quick_cash;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.auth.FirebaseAuth;
 
-public class ForgotPasswordActivity extends AppCompatActivity{
-    FirebaseDatabase database = null;
+import java.util.ArrayList;
+import java.util.List;
 
-    FirebaseCRUD crud = null;
-    FirebaseAuth auth;
+public class ForgotPasswordActivity extends AppCompatActivity {
+    protected FirebaseAuth mAuth;
 
     @Override
-    protected void onCreate(Bundle savedInstance){
-        super.onCreate(savedInstance);
+    protected void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.enter_email);
+        mAuth = FirebaseAuthSingleton.getInstance();
 
         EditText userEmail = findViewById(R.id.emailEntry);
         Button send = findViewById(R.id.verifyButton);
@@ -32,7 +39,7 @@ public class ForgotPasswordActivity extends AppCompatActivity{
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                auth.sendPasswordResetEmail(userEmail.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                mAuth.sendPasswordResetEmail(userEmail.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()){
@@ -45,18 +52,5 @@ public class ForgotPasswordActivity extends AppCompatActivity{
 
     }
 
-    protected void setNewPassword(String email, String password) {
-        database = FirebaseDatabase.getInstance(getResources().getString(R.string.FIREBASE_DB_URL));
-        DatabaseReference dbr = FirebaseDatabase.getInstance().getReference("User Inmation").child(email);
-        dbr.child("password").setValue(password);
-    }
-
-    protected void confirmMatch() {
-        EditText passwordBox = findViewById(R.id.new_password);
-        EditText confirmPassword = findViewById(R.id.confirm_password);
-        //if(passwordBox.getText().toString().equals(confirmPassword.getText().toString())){
-
-     //   }
-    }
 
 }

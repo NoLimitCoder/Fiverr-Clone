@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         this.setupLoginButton();
         this.setupSignUpButton();
+        this.setupForgotButton();
         this.initializeDatabaseAccess();
         mAuth = FirebaseAuthSingleton.getInstance();
     }
@@ -56,6 +57,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button signUpButton = findViewById(R.id.signUpButton);
         signUpButton.setOnClickListener(this);
     }
+    protected void setupForgotButton() {
+        Button forgotPassButton = findViewById(R.id.forgotPassButton);
+        forgotPassButton.setOnClickListener(this);
+    }
     protected void setupLogoutButton() {
         Button logoutButton = findViewById(R.id.logoutButton);
         logoutButton.setOnClickListener(this);
@@ -68,6 +73,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     protected void move2RegistrationWindow() {
         Intent intent = new Intent(getBaseContext(), RegistrationActivity.class);
+        startActivity(intent);
+    }
+    protected void move2forgotPass() {
+        Intent intent = new Intent(getBaseContext(), ForgotPasswordActivity.class);
         startActivity(intent);
     }
     protected void setStatusMessage(View v, String message) {
@@ -131,6 +140,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // You can add code to navigate to the sign-up activity or perform other actions here
             move2RegistrationWindow();
 
+        }
+        else if(v.getId() == R.id.forgotPassButton){
+            move2forgotPass();
         }
     }
 
