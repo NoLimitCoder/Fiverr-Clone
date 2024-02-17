@@ -50,6 +50,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button signUpButton = findViewById(R.id.signUpButton);
         signUpButton.setOnClickListener(this);
     }
+    protected void setupLogoutButton() {
+        Button logoutButton = findViewById(R.id.logoutButton);
+        logoutButton.setOnClickListener(this);
+    }
 
     protected void move2WelcomeWindow() {
         Intent intent = new Intent(getBaseContext(), WelcomeActivity.class);
