@@ -32,7 +32,7 @@ import static org.junit.Assert.*;
 public class RegExpressoTests {
 
     public ActivityScenario<RegistrationActivity> scenario;
-/*
+
     @Before
     public void setup() {
         scenario = ActivityScenario.launch(RegistrationActivity.class);
@@ -46,90 +46,90 @@ public class RegExpressoTests {
 
     @Test
     public void checkIfNameIsInvalid() {
-        onView(withId(R.id.netIDBox)).perform(typeText(""));
+        onView(withId(R.id.nameBox)).perform(typeText(""));
         onView(withId(R.id.emailBox)).perform(typeText("abc.123@dal.ca"));
+        onView(withId(R.id.passwordbox)).perform(typeText("111111111"));
+        onView(withId(R.id.numberbox)).perform(typeText("4169098983"));
         onView(withId(R.id.roleSpinner)).perform(click());
-        onData(allOf(is(instanceOf(String.class)), is("Buyer"))).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("Employee"))).perform(click());
         onView(withId(R.id.registerButton)).perform(click());
-        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.EMPTY_NET_ID)));
+        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.INVALID_NAME)));
     }
 
-
     @Test
-    public void checkIfNetIDIsValid() {
+    public void checkIfNameIsValid() {
+        onView(withId(R.id.nameBox)).perform(typeText("Ammar Za"));
         onView(withId(R.id.emailBox)).perform(typeText("abc.123@dal.ca"));
-        onView(withId(R.id.netIDBox)).perform(typeText("mh881819"));
+        onView(withId(R.id.passwordbox)).perform(typeText("111111111"));
+        onView(withId(R.id.numberbox)).perform(typeText("4169098983"));
         onView(withId(R.id.roleSpinner)).perform(click());
-        onData(allOf(is(instanceOf(String.class)), is("Buyer"))).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("Employee"))).perform(click());
         onView(withId(R.id.registerButton)).perform(click());
-        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.EMPTY_STRING)));
-    }
-
-
-    @Test
-    public void checkIfNetIDIsInvalid() {
-        onView(withId(R.id.emailBox)).perform(typeText("abc.123@dal.ca"));
-        onView(withId(R.id.netIDBox)).perform(typeText("88mh1819"));
-        onView(withId(R.id.roleSpinner)).perform(click());
-        onData(allOf(is(instanceOf(String.class)), is("Buyer"))).perform(click());
-        onView(withId(R.id.registerButton)).perform(click());
-        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.INVALID_NET_ID)));
-    }
-
-
-    @Test
-    public void checkIfEmailIsValid() {
-        onView(withId(R.id.netIDBox)).perform(typeText("sh885689"));
-        onView(withId(R.id.emailBox)).perform(typeText("abc.123@dal.ca"));
-        onView(withId(R.id.roleSpinner)).perform(click());
-        onData(allOf(is(instanceOf(String.class)), is("Buyer"))).perform(click());
-        onView(withId(R.id.registerButton)).perform(click());
-        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.EMPTY_STRING)));
+        onView(withId(R.id.statusLabel)).check(matches(withText("")));
     }
 
 
     @Test
     public void checkIfEmailIsInvalid() {
-        onView(withId(R.id.netIDBox)).perform(typeText("sh885689"));
-        onView(withId(R.id.emailBox)).perform(typeText("abc.123ku.ca"));
+        onView(withId(R.id.nameBox)).perform(typeText("Ammar Za"));
+        onView(withId(R.id.emailBox)).perform(typeText("abc.123dal.ca"));
+        onView(withId(R.id.passwordbox)).perform(typeText("111111111"));
+        onView(withId(R.id.numberbox)).perform(typeText("4169098983"));
         onView(withId(R.id.roleSpinner)).perform(click());
-        onData(allOf(is(instanceOf(String.class)), is("Buyer"))).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("Employee"))).perform(click());
         onView(withId(R.id.registerButton)).perform(click());
         onView(withId(R.id.statusLabel)).check(matches(withText(R.string.INVALID_EMAIL_ADDRESS)));
     }
 
 
     @Test
-    public void checkIfEmailIsNotFromDAL() {
-        onView(withId(R.id.netIDBox)).perform(typeText("xy884568"));
-        onView(withId(R.id.emailBox)).perform(typeText("abc123@usask.ca"));
+    public void checkIfPasswordIsInvalid() {
+        onView(withId(R.id.nameBox)).perform(typeText("Ammar Za"));
+        onView(withId(R.id.emailBox)).perform(typeText("abc.123@dal.ca"));
+        onView(withId(R.id.passwordbox)).perform(typeText("1"));
+        onView(withId(R.id.numberbox)).perform(typeText("4169098983"));
         onView(withId(R.id.roleSpinner)).perform(click());
-        onData(allOf(is(instanceOf(String.class)), is("Buyer"))).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("Employee"))).perform(click());
         onView(withId(R.id.registerButton)).perform(click());
-        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.INVALID_DAL_EMAIL)));
+        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.INVALID_PASSWORD)));
+    }
+
+    @Test
+    public void checkIfContactNumberIsValid() {
+        onView(withId(R.id.nameBox)).perform(typeText("Ammar Za"));
+        onView(withId(R.id.emailBox)).perform(typeText("abc.123@dal.ca"));
+        onView(withId(R.id.passwordbox)).perform(typeText("1111111111"));
+        onView(withId(R.id.numberbox)).perform(typeText("98983"));
+        onView(withId(R.id.roleSpinner)).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("Employee"))).perform(click());
+        onView(withId(R.id.registerButton)).perform(click());
+        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.INVALID_NUMBER)));
     }
 
 
     @Test
     public void checkIfRoleIsValid() {
-        onView(withId(R.id.netIDBox)).perform(typeText("xy884568"));
-        onView(withId(R.id.emailBox)).perform(typeText("abc123@dal.ca"));
+        onView(withId(R.id.nameBox)).perform(typeText("Ammar Za"));
+        onView(withId(R.id.emailBox)).perform(typeText("abc.123@dal.ca"));
+        onView(withId(R.id.passwordbox)).perform(typeText("111111111"));
+        onView(withId(R.id.numberbox)).perform(typeText("4169098983"));
         onView(withId(R.id.roleSpinner)).perform(click());
-        onData(allOf(is(instanceOf(String.class)), is("Seller"))).perform(click());
+        onData(allOf(is(instanceOf(String.class)), is("Employee"))).perform(click());
         onView(withId(R.id.registerButton)).perform(click());
-        onView(withId(R.id.statusLabel)).check(matches(withText(R.string.EMPTY_STRING)));
+        onView(withId(R.id.statusLabel)).check(matches(withText("")));
     }
 
 
     @Test
     public void checkIfRoleIsInvalid() {
-        onView(withId(R.id.netIDBox)).perform(typeText("xy884568"));
-        onView(withId(R.id.emailBox)).perform(typeText("abc123@dal.ca"));
+        onView(withId(R.id.nameBox)).perform(typeText("Ammar Za"));
+        onView(withId(R.id.emailBox)).perform(typeText("abc.123@dal.ca"));
+        onView(withId(R.id.passwordbox)).perform(typeText("111111111"));
+        onView(withId(R.id.numberbox)).perform(typeText("4169098983"));
         onView(withId(R.id.roleSpinner)).perform(click());
         onData(allOf(is(instanceOf(String.class)), is("Select your role"))).perform(click());
         onView(withId(R.id.registerButton)).perform(click());
         onView(withId(R.id.statusLabel)).check(matches(withText(R.string.INVALID_ROLE)));
     }
 
- */
 }

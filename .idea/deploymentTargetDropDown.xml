@@ -5,6 +5,21 @@
       <entry key="app">
         <State />
       </entry>
+      <entry key="checkIfContactNumberIsValid()">
+        <State />
+      </entry>
+      <entry key="checkIfEmailIsInvalid()">
+        <State />
+      </entry>
+      <entry key="checkIfPasswordIsInvalid()">
+        <State />
+      </entry>
+      <entry key="checkIfRoleIsInvalid()">
+        <State />
+      </entry>
+      <entry key="checkIfRoleIsValid()">
+        <State />
+      </entry>
     </value>
   </component>
 </project>
