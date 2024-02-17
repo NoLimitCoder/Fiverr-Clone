@@ -12,15 +12,15 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class WelcomeActivity extends AppCompatActivity implements View.OnClickListener {
-
-    private FirebaseAuth firebaseAuth;
     private Button logoutButton;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome); // Use correct layout file here
         this.setupLogoutButton();
+        mAuth = FirebaseAuthSingleton.getInstance();
     }
 
 
@@ -31,7 +31,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
 
 
     private void logout() {
-        firebaseAuth.signOut();
+        mAuth.signOut();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
