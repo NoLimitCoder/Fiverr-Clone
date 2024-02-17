@@ -150,7 +150,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean dispatchTouchEvent(MotionEvent event) {
         View view = getCurrentFocus();
         boolean ret = super.dispatchTouchEvent(event);
-
         if (view instanceof EditText) {
             View w = getCurrentFocus();
             int scrcoords[] = new int[2];
@@ -167,6 +166,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return ret;
     }
-
-
 }
