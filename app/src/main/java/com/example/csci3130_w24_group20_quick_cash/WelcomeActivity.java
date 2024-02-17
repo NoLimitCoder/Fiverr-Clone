@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import com.google.firebase.auth.FirebaseUser;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -24,7 +25,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
 
 
     protected void setupLogoutButton() {
-        Button logoutButton = findViewById(R.id.logoutButton); // Correct ID of the logout button
+        logoutButton = findViewById(R.id.logoutButton); // Correct ID of the logout button
         logoutButton.setOnClickListener(this);
     }
 
@@ -34,7 +35,6 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
-
 
     @Override
     public void onClick(View v) {

@@ -47,14 +47,14 @@
         android:layout_marginEnd="105dp"
         android:layout_marginBottom="17dp"
         android:src="@drawable/login_draw"
-        app:layout_constraintBottom_toTopOf="@+id/userName"
+        app:layout_constraintBottom_toTopOf="@+id/email"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/welcomeLabel" />
 
     <EditText
-        android:id="@+id/userName"
+        android:id="@+id/email"
         android:layout_width="360dp"
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal"
@@ -63,7 +63,7 @@
         android:layout_marginEnd="26dp"
         android:layout_marginBottom="12dp"
         android:background="@drawable/input"
-        android:hint="Username"
+        android:hint="Email"
         android:paddingLeft="20dp"
         app:layout_constraintBottom_toTopOf="@+id/password"
         app:layout_constraintEnd_toEndOf="parent"
@@ -86,7 +86,7 @@
         app:layout_constraintBottom_toTopOf="@+id/forgotPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userName" />
+        app:layout_constraintTop_toBottomOf="@+id/email" />
 
     <TextView
         android:id="@+id/forgotPassword"
@@ -115,7 +115,7 @@
         android:layout_marginBottom="23dp"
         android:background="@drawable/login_btn"
         android:text="Login"
-        app:layout_constraintBottom_toTopOf="@+id/dontHaveAnAccount"
+        app:layout_constraintBottom_toTopOf="@+id/noAccount"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/forgotPassword" />
@@ -131,35 +131,36 @@
         app:layout_constraintTop_toBottomOf="@+id/loginButton" />
 
     <TextView
-        android:id="@+id/dontHaveAnAccount"
+        android:id="@+id/noAccount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="134dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="135dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="3dp"
         android:text="Don't have an account?"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/signUp"
+        app:layout_constraintBottom_toTopOf="@+id/signUpButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginButton" />
 
-    <TextView
-        android:id="@+id/signUp"
+    <Button
+        android:id="@+id/signUpButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="181dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="182dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="45dp"
+        android:background="@android:color/transparent"
         android:text="Sign up"
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dontHaveAnAccount" />
+        app:layout_constraintTop_toBottomOf="@+id/noAccount" />
 
     <TextView
         android:id="@+id/statusLabel"
@@ -173,8 +174,7 @@
         android:textSize="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUp" />
+        app:layout_constraintStart_toStartOf="parent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
