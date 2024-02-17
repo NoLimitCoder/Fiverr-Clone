@@ -4,21 +4,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WelcomeActivity">
+    android:background="@color/background"
+    tools:context=".MainActivity">
+
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="169dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="82dp"
+        android:src="@drawable/shape"
+        app:layout_constraintBottom_toTopOf="@+id/welcomeBack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/quickCashLogo"
+        android:layout_width="201dp"
+        android:layout_height="92dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="105dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="105dp"
+        android:src="@drawable/login_draw"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/welcomeBack" />
 
     <TextView
-        android:id="@+id/welcomeLabel"
-        android:layout_width="match_parent"
+        android:id="@+id/welcomeBack"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="624dp"
-        android:layout_marginBottom="623dp"
-        android:text="Welcome Back!"
+        android:layout_marginBottom="143dp"
+        android:text="Hi, Welcome!"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="50sp"
+        android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/logoutButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="292dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="295dp"
+        android:background="@drawable/login_btn"
+        android:text="Logout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/welcomeBack" >
+    </Button>
 </androidx.constraintlayout.widget.ConstraintLayout>
