@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     FirebaseCRUD crud = null;
 
     protected String getUserName() {
-        EditText netIDBox = findViewById(R.id.userName);
+        EditText netIDBox = findViewById(R.id.email);
         return netIDBox.getText().toString().trim();
     }
 
@@ -83,12 +83,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (validator.isEmptyUserName(userName)) {
                 errorMessage = "Error: " + getString(R.string.EMPTY_USER_NAME);
             } else {
-                if(UserExists(userName)) {
+                //if(UserExists(userName)) {
                     move2WelcomeWindow();
                     return;
-                } else{
-                    errorMessage = "Error: " + getString(R.string.INVALID_EMAIL_ADDRESS);
-                }
+                //} else{
+                 //   errorMessage = "Error: " + getString(R.string.INVALID_EMAIL_ADDRESS);
+               // }
             }
             setStatusMessage(v, errorMessage.trim());
         }
