@@ -1,130 +1,112 @@
 package com.example.csci3130_w24_group20_quick_cash;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    FirebaseDatabase database = null;
-    FirebaseCRUD crud = null;
+    protected String getUserName() {
+        EditText netIDBox = findViewById(R.id.userName);
+        return netIDBox.getText().toString().trim();
+    }
+
+    protected String getPassword() {
+        EditText emailBox = findViewById(R.id.password);
+        return emailBox.getText().toString().trim();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.setupLoginButton();
+        this.setupForgotPassButton();
 
-        this.loadRoleSpinner();
-        this.setupRegistrationButton();
-        this.initializeDatabaseAccess();
-    }
+        Button loginButton = findViewById(R.id.loginButton);
+        Button forgotPassButton = findViewById(R.id.forgotPassButton);
 
-    protected void loadRoleSpinner() {
-        Spinner roleSpinner = findViewById(R.id.roleSpinner);
-        List<String> roles = new ArrayList<>();
-        roles.add("Select your role");
-        roles.add("Employee");
-        roles.add("Employer");
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this,
-                androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, roles);
-        spinnerAdapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
-        roleSpinner.setAdapter(spinnerAdapter);
-    }
-
-    protected void setupRegistrationButton() {
-        Button registerButton = findViewById(R.id.registerButton);
-        registerButton.setOnClickListener(this);
-
-    }
-
-    protected void initializeDatabaseAccess() {
-        database = FirebaseDatabase.getInstance(getResources().getString(R.string.FIREBASE_DB_URL));
-        crud = new FirebaseCRUD(database);
-    }
-
-    protected String getName() {
-        EditText nameBox = findViewById(R.id.nameBox);
-        return nameBox.getText().toString().trim();
-    }
-
-    protected String getEmailAddress() {
-        EditText emailBox = findViewById(R.id.emailBox);
-        return emailBox.getText().toString().trim();
-    }
-
-    protected String getPassword() {
-        EditText passwordBox = findViewById(R.id.passwordbox);
-        return passwordBox.getText().toString().trim();
-    }
-
-    protected String getContactNumber() {
-        EditText contactNumber = findViewById(R.id.numberbox);
-        return contactNumber.getText().toString().trim();
-    }
-
-    protected String getRole() {
-        Spinner roleSpinner = findViewById(R.id.roleSpinner);
-        return roleSpinner.getSelectedItem().toString().trim();
+        loginButton.setOnClickListener(this);
+        forgotPassButton.setOnClickListener(this);
     }
 
 
-    protected void setStatusMessage(String message) {
-        TextView statusLabel = findViewById(R.id.statusLabel);
-        statusLabel.setText(message.trim());
+    protected void setupLoginButton() {
+        Button loginButton = findViewById(R.id.loginButton);
+        loginButton.setOnClickListener(this);
     }
 
-
-
-    protected void saveInfoToFirebase(String name, String emailAddress, String password, String contactNumber, String role) {
-        DatabaseReference dbr = FirebaseDatabase.getInstance().getReference("User Inmation").child(name);
-
-        dbr.child("name").setValue(name);
-        dbr.child("emailAddress").setValue(emailAddress);
-        dbr.child("password").setValue(password);
-        dbr.child("contact number").setValue(contactNumber);
-        dbr.child("role").setValue(role);
-
+    protected void setupForgotPassButton() {
+        Button loginButton = findViewById(R.id.forgotPassButton);
+        loginButton.setOnClickListener(this);
     }
 
+    protected void move2WelcomeWindow() {
+        Intent intent = new Intent(getBaseContext(), WelcomeActivity.class);
+        startActivity(intent);
+    }
+
+    protected void move2ForgotPassword(){
+        Intent intent = new Intent(getBaseContext(), ForgotPasswordActivity.class);
+        startActivity(intent);
+    }
+
+    protected void setStatusMessage(View v, String message) {
+        Snackbar snackbar = Snackbar.make(v, message, Snackbar.LENGTH_SHORT);
+        snackbar.show();
+    }
 
     @Override
-    public void onClick(View view) {
-        String name = getName();
-        String emailAddress = getEmailAddress();
-        String password = getPassword();
-        String contactNumber = getContactNumber();
-        String role = getRole();
-        String errorMessage = new String();
-        CredentialValidator validator = new CredentialValidator();
-         if (!validator.isValidName(name)) {
-            errorMessage = getResources().getString(R.string.INVALID_NAME).trim();
-        } else if (!validator.isValidEmailAddress(emailAddress)) {
-            errorMessage = getResources().getString(R.string.INVALID_EMAIL_ADDRESS).trim();
-        } else if (!validator.isValidPassword(password)) {
-            errorMessage = getResources().getString(R.string.INVALID_PASSWORD).trim();
-         } else if (!validator.isValidContactNumber(contactNumber)){
-             errorMessage = getResources().getString(R.string.INVALID_NUMBER).trim();
-        } else if (!validator.isValidRole(role)) {
-             errorMessage = getResources().getString(R.string.INVALID_ROLE).trim();
-         }
-        setStatusMessage(errorMessage);
-        if (errorMessage.isEmpty()) {
-            saveInfoToFirebase(name, emailAddress, password, contactNumber, role);
+    public void onClick(View v) {
+        if(v.getId() == R.id.forgotPassButton) {
+            move2ForgotPassword();
         }
+        if(v.getId() == R.id.loginButton){
+            String userName = getUserName();
+            String errorMessage;
+            CredentialValidator validator = new CredentialValidator();
 
+            if (validator.isEmptyUserName(userName)) {
+                errorMessage = "Error: " + getString(R.string.EMPTY_USER_NAME);
+            } else {
+                move2WelcomeWindow();
+                return; // Early return since no error
+            }
+            setStatusMessage(v, errorMessage.trim());
+        }
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        View view = getCurrentFocus();
+        boolean ret = super.dispatchTouchEvent(event);
+
+        if (view instanceof EditText) {
+            View w = getCurrentFocus();
+            int scrcoords[] = new int[2];
+            w.getLocationOnScreen(scrcoords);
+            float x = event.getRawX() + w.getLeft() - scrcoords[0];
+            float y = event.getRawY() + w.getTop() - scrcoords[1];
+
+            if (event.getAction() == MotionEvent.ACTION_UP
+                    && (x < w.getLeft() || x >= w.getRight()
+                    || y < w.getTop() || y > w.getBottom()) ) {
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getWindow().getCurrentFocus().getWindowToken(), 0);
+            }
+        }
+        return ret;
     }
 }

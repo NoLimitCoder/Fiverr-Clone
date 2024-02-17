@@ -6,4 +6,5 @@
     <string name="INVALID_ROLE">Invalid user role</string>
     <string name="INVALID_PASSWORD">Invalid password</string>
     <string name="INVALID_NUMBER">Invalid contact number</string>
+    <string name="EMPTY_USER_NAME">Invalid contact number</string>
 </resources>
