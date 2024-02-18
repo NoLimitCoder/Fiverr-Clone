@@ -78,31 +78,13 @@
         android:layout_marginStart="25dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="26dp"
-        android:layout_marginBottom="12dp"
         android:background="@drawable/input"
         android:hint="Password"
         android:inputType="textPassword"
         android:paddingLeft="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/forgotPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email" />
-
-    <TextView
-        android:id="@+id/forgotPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
-        android:layout_marginBottom="24dp"
-        android:text="Forgot Password"
-        android:textAlignment="center"
-        android:textColor="@color/forgotpassword"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/loginButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <Button
         android:id="@+id/loginButton"
@@ -110,17 +92,18 @@
         android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="26dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="26dp"
-        android:layout_marginBottom="23dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/login_btn"
         android:text="Login"
         app:layout_constraintBottom_toTopOf="@+id/noAccount"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/forgotPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -137,10 +120,9 @@
         android:layout_marginStart="134dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="135dp"
-        android:layout_marginBottom="3dp"
         android:text="Don't have an account?"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/signUpButton"
+        app:layout_constraintBottom_toTopOf="@+id/statusLabel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginButton" />
@@ -159,6 +141,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/noAccount" />
 
@@ -175,6 +158,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
+
+    <Button
+        android:id="@+id/forgotPassButton"
+        android:layout_width="360dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="26dp"
+        android:background="@drawable/login_btn"
+        android:text="Forgot Password"
+        app:layout_constraintBottom_toTopOf="@+id/noAccount"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/loginButton"
+        app:layout_constraintVertical_bias="0.414" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

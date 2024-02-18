@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         this.setupLoginButton();
         this.setupSignUpButton();
+        this.setupForgotButton();
         this.initializeDatabaseAccess();
         mAuth = FirebaseAuthSingleton.getInstance();
     }
@@ -55,6 +56,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button signUpButton = findViewById(R.id.signUpButton);
         signUpButton.setOnClickListener(this);
     }
+    protected void setupForgotButton() {
+        Button forgotPassButton = findViewById(R.id.forgotPassButton);
+        forgotPassButton.setOnClickListener(this);
+    }
     protected void setupLogoutButton() {
         Button logoutButton = findViewById(R.id.logoutButton);
         logoutButton.setOnClickListener(this);
@@ -67,6 +72,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     protected void move2RegistrationWindow() {
         Intent intent = new Intent(getBaseContext(), RegistrationActivity.class);
+        startActivity(intent);
+    }
+    protected void move2forgotPass() {
+        Intent intent = new Intent(getBaseContext(), ForgotPasswordActivity.class);
         startActivity(intent);
     }
     protected void setStatusMessage(View v, String message) {
@@ -136,13 +145,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             move2RegistrationWindow();
 
         }
+        else if(v.getId() == R.id.forgotPassButton){
+            move2forgotPass();
+        }
     }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         View view = getCurrentFocus();
         boolean ret = super.dispatchTouchEvent(event);
-
         if (view instanceof EditText) {
             View w = getCurrentFocus();
             int scrcoords[] = new int[2];
@@ -159,6 +170,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return ret;
     }
-
-
 }
