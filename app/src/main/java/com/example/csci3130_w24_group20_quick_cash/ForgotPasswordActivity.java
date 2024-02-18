@@ -37,7 +37,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                         if (task.isSuccessful()){
                             Toast.makeText(ForgotPasswordActivity.this, "Check your email to reset password", Toast.LENGTH_LONG).show();
                         } else {
-                            Toast.makeText(ForgotPasswordActivity.this, "Email not in database", Toast.LENGTH_LONG).show();
+                            Toast.makeText(ForgotPasswordActivity.this, "Unsuccessful", Toast.LENGTH_LONG).show();
                         }
                     }
                 });
