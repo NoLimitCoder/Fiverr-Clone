@@ -8,6 +8,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -27,20 +29,19 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 CredentialValidator validator = new CredentialValidator();
                 if(!validator.isValidEmailAddress(userEmail.getText().toString())){
                     Toast.makeText(ForgotPasswordActivity.this, "Invalid Email", Toast.LENGTH_LONG).show();
-                }
-                //if(mAuth.fetchSignInMethodsForEmail(userEmail.getText().toString()) ){
-
-               // }
-                mAuth.sendPasswordResetEmail(userEmail.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()){
-                            Toast.makeText(ForgotPasswordActivity.this, "Check your email to reset password", Toast.LENGTH_LONG).show();
-                        } else {
-                            Toast.makeText(ForgotPasswordActivity.this, "Unsuccessful", Toast.LENGTH_LONG).show();
+                } else {
+                    mAuth.sendPasswordResetEmail(userEmail.getText().toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Toast.makeText(ForgotPasswordActivity.this, "Email sent if in database", Toast.LENGTH_LONG).show();
                         }
-                    }
-                });
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(ForgotPasswordActivity.this, "Couldn't find email in database", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
             }
         });
 

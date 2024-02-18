@@ -92,18 +92,18 @@
         android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="26dp"
-        android:layout_marginTop="500dp"
         android:layout_marginEnd="26dp"
-        android:layout_marginBottom="23dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/login_btn"
         android:text="Login"
         app:layout_constraintBottom_toTopOf="@+id/noAccount"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -120,10 +120,9 @@
         android:layout_marginStart="134dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="135dp"
-        android:layout_marginBottom="3dp"
         android:text="Don't have an account?"
         android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/signUpButton"
+        app:layout_constraintBottom_toTopOf="@+id/statusLabel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginButton" />
@@ -142,6 +141,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/noAccount" />
 
@@ -161,19 +161,20 @@
 
     <Button
         android:id="@+id/forgotPassButton"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginStart="161dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="159dp"
-        android:layout_marginBottom="42dp"
+        android:layout_width="360dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginStart="26dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="26dp"
+        android:background="@drawable/login_btn"
         android:text="Forgot Password"
-        app:layout_constraintBottom_toTopOf="@+id/signUpButton"
+        app:layout_constraintBottom_toTopOf="@+id/noAccount"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password"
-        app:layout_constraintVertical_bias="0.16" />
+        app:layout_constraintTop_toBottomOf="@+id/loginButton"
+        app:layout_constraintVertical_bias="0.414" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
