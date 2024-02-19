@@ -30,7 +30,7 @@ public class WelcomeActivity extends AppCompatActivity implements View.OnClickLi
     }
 
 
-    private void logout() {
+    void logout() {
         mAuth.signOut();
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

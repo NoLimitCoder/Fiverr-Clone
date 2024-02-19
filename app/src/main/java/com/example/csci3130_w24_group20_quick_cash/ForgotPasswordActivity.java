@@ -21,8 +21,12 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.enter_email);
         mAuth = FirebaseAuthSingleton.getInstance();
-        EditText userEmail = findViewById(R.id.emailEntry);
+        this.setupSendButton();
+    }
+
+    protected void setupSendButton() {
         Button send = findViewById(R.id.verifyButton);
+        EditText userEmail = findViewById(R.id.emailEntry);
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,7 +48,6 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
 

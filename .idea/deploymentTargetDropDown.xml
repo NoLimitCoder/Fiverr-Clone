@@ -2,22 +2,13 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="LogoutExpressoTests">
+        <State />
+      </entry>
+      <entry key="RegExpressoTests">
+        <State />
+      </entry>
       <entry key="app">
-        <State />
-      </entry>
-      <entry key="checkIfContactNumberIsValid()">
-        <State />
-      </entry>
-      <entry key="checkIfEmailIsInvalid()">
-        <State />
-      </entry>
-      <entry key="checkIfPasswordIsInvalid()">
-        <State />
-      </entry>
-      <entry key="checkIfRoleIsInvalid()">
-        <State />
-      </entry>
-      <entry key="checkIfRoleIsValid()">
         <State />
       </entry>
     </value>
