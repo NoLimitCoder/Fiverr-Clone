@@ -41,6 +41,7 @@
         android:layout_marginEnd="57dp"
         android:text="Account Registration"
         android:textSize="32dp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
