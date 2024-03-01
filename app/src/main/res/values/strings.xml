@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">csci3130_w24_group20_Quick_Cash</string>
+    <string name="EMPTY_USER_NAME">Empty Username</string>
+    <string name="EMPTY_PASSWORD">Empty Password</string>
+    <string name="FIREBASE_DB_URL">https://csci-w24-group20-quick-cash-default-rtdb.firebaseio.com/</string>
+    <string name="INVALID_NAME">Invalid name</string>
+    <string name="INVALID_EMAIL_ADDRESS">Invalid email address</string>
+    <string name="INVALID_ROLE">Invalid user role</string>
+    <string name="INVALID_PASSWORD">Invalid password</string>
+    <string name="INVALID_NUMBER">Invalid contact number</string>
+</resources>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "160034340247",
+    "project_id": "csci-w24-group20-quick-cash",
+    "storage_bucket": "csci-w24-group20-quick-cash.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:160034340247:android:57758e7d847c31fce958d2",
+        "android_client_info": {
+          "package_name": "com.example.csci3130_w24_group20_quick_cash"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBut94C6-1HW025RrTcSMs8__F5TcBpCzM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
