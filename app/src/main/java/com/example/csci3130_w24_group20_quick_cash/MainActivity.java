@@ -11,11 +11,17 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     protected FirebaseAuth mAuth;
@@ -66,8 +72,31 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     protected void move2WelcomeWindow() {
-        Intent intent = new Intent(getBaseContext(), WelcomeActivity.class);
-        startActivity(intent);
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String uID = currentUser.getUid();
+        DatabaseReference dbr = FirebaseDatabase.getInstance().getReference("users").child(uID);
+        dbr.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()){
+                    String role = snapshot.child("role").getValue(String.class);
+
+                    if (role.equals("Employee")){
+                        Intent intent = new Intent(getBaseContext(), EmployeeWelcomeActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Log.d(TAG, "employer:success");
+                        Intent intent = new Intent (getBaseContext(), EmployerWelcomeActivity.class);
+                        startActivity(intent);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     protected void move2RegistrationWindow() {
@@ -100,6 +129,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 });
     }
+
 
     protected String getUserName() {
         EditText netIDBox = findViewById(R.id.email);
