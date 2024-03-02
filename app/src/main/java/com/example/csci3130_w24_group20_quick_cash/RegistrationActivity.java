@@ -104,13 +104,15 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 if (task.isSuccessful()){
                     FirebaseUser user = task.getResult().getUser();
                     if (user != null) {
-                        DatabaseReference dbr = FirebaseDatabase.getInstance().getReference("users").child(name);
+                        DatabaseReference dbr = FirebaseDatabase.getInstance().getReference("users").child(user.getUid());
 
                         dbr.child("name").setValue(name);
                         dbr.child("emailAddress").setValue(emailAddress);
                         dbr.child("password").setValue(password);
                         dbr.child("contactNumber").setValue(contactNumber);
                         dbr.child("role").setValue(role);
+
+
 
                         sendEmailVerification(user);
 
