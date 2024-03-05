@@ -72,6 +72,7 @@ public class JobPosting {
     public void setJobLocation(String jobLocation){
         this.jobLocation = jobLocation;
     }
+
     public void setJobSalary(String jobSalary){
         this.jobSalary = jobSalary;
     }
