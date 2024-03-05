@@ -1,4 +1,4 @@
-package com.example.csci3130_w24_group20_quick_cash;
+package com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.csci3130_w24_group20_quick_cash.R;
 
 /**
  * A simple {@link Fragment} subclass.
