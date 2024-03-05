@@ -22,8 +22,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".EmployeeWelcomeActivity" />
-        <activity android:name=".EmployerWelcomeActivity" />
+        <activity android:name=".BaseEmployeeActivity.BaseEmployeeActivity" />
+        <activity android:name=".BaseEmployerActivity.BaseEmployerActivity" />
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".ForgotPasswordActivity" />
 

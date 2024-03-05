@@ -1,22 +1,26 @@
-package com.example.csci3130_w24_group20_quick_cash;
+package com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity;
 
-import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.csci3130_w24_group20_quick_cash.FirebaseAuthSingleton;
+import com.example.csci3130_w24_group20_quick_cash.MainActivity;
+import com.example.csci3130_w24_group20_quick_cash.R;
 import com.google.firebase.auth.FirebaseAuth;
 
-public class EmployeeWelcomeActivity extends AppCompatActivity implements View.OnClickListener {
+public class BaseEmployerActivity extends AppCompatActivity implements View.OnClickListener {
     private Button logoutButton;
     private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_employee_welcome); // Use correct layout file here
+        setContentView(R.layout.activity_base_employer); // Use correct layout file here
         this.setupLogoutButton();
         mAuth = FirebaseAuthSingleton.getInstance();
     }

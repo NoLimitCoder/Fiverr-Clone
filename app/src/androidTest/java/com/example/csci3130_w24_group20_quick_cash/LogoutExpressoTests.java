@@ -11,6 +11,8 @@ import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
+import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.BaseEmployeeActivity;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,11 +25,11 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class LogoutExpressoTests {
 
-    public ActivityScenario<EmployeeWelcomeActivity> scenario;
+    public ActivityScenario<BaseEmployeeActivity> scenario;
 
     @Before
     public void setup() {
-        scenario = ActivityScenario.launch(EmployeeWelcomeActivity.class);
+        scenario = ActivityScenario.launch(BaseEmployeeActivity.class);
         scenario.onActivity(activity -> {
             activity.setupLogoutButton();
         });

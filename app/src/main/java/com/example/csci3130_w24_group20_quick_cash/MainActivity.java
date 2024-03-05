@@ -14,6 +14,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.BaseEmployeeActivity;
+import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.BaseEmployerActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -66,10 +69,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button forgotPassButton = findViewById(R.id.forgotPassButton);
         forgotPassButton.setOnClickListener(this);
     }
-    protected void setupLogoutButton() {
-        Button logoutButton = findViewById(R.id.logoutButton);
-        logoutButton.setOnClickListener(this);
-    }
 
     protected void move2WelcomeWindow() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -82,11 +81,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     String role = snapshot.child("role").getValue(String.class);
 
                     if (role.equals("Employee")){
-                        Intent intent = new Intent(getBaseContext(), EmployeeWelcomeActivity.class);
+                        Intent intent = new Intent(getBaseContext(), BaseEmployeeActivity.class);
                         startActivity(intent);
                     } else {
                         Log.d(TAG, "employer:success");
-                        Intent intent = new Intent (getBaseContext(), EmployerWelcomeActivity.class);
+                        Intent intent = new Intent (getBaseContext(), BaseEmployerActivity.class);
                         startActivity(intent);
                     }
                 }
