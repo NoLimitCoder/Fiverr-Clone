@@ -3,12 +3,19 @@ package com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.Employe
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.csci3130_w24_group20_quick_cash.JobAdapter;
+import com.example.csci3130_w24_group20_quick_cash.JobPosting;
+import com.example.csci3130_w24_group20_quick_cash.MockJobPostingRepo;
 import com.example.csci3130_w24_group20_quick_cash.R;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,7 +67,16 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false);
+    View view = inflater.inflate(R.layout.fragment_search, container, false);
+
+        RecyclerView jobRecyclerView = view.findViewById(R.id.jobRecyclerView);
+    jobRecyclerView.setLayoutManager((new LinearLayoutManager(getActivity())));
+
+    List<JobPosting> jobPostings = MockJobPostingRepo.getInstance().getJobPostings();
+
+        JobAdapter jobAdapter = new JobAdapter(jobPostings);
+    jobRecyclerView.setAdapter(jobAdapter);
+
+    return view;
     }
 }
