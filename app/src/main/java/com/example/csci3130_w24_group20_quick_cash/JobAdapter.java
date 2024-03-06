@@ -12,10 +12,15 @@ import java.util.List;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder>{
 
-    private final List<JobPosting> joblist;
+    private List<JobPosting> joblist;
 
     public JobAdapter(List <JobPosting> joblist){
         this.joblist = joblist;
+    }
+
+    public void updateJobPostings(List<JobPosting> joblist){
+        this.joblist = joblist;
+        notifyDataSetChanged();
     }
 
     @NonNull

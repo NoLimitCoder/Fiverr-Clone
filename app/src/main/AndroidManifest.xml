@@ -22,7 +22,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".BaseEmployeeActivity.BaseEmployeeActivity" />
+        <activity android:name=".BaseEmployeeActivity.BaseEmployeeActivity"
+            android:windowSoftInputMode="adjustPan"
+            />
         <activity android:name=".BaseEmployerActivity.BaseEmployerActivity" />
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".ForgotPasswordActivity" />

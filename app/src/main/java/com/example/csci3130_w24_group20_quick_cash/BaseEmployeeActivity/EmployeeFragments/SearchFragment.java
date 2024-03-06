@@ -6,15 +6,20 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.csci3130_w24_group20_quick_cash.JobAdapter;
 import com.example.csci3130_w24_group20_quick_cash.JobPosting;
 import com.example.csci3130_w24_group20_quick_cash.MockJobPostingRepo;
 import com.example.csci3130_w24_group20_quick_cash.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -64,6 +69,7 @@ public class SearchFragment extends Fragment {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -77,6 +83,41 @@ public class SearchFragment extends Fragment {
         JobAdapter jobAdapter = new JobAdapter(jobPostings);
     jobRecyclerView.setAdapter(jobAdapter);
 
+        EditText editTextSearch = view.findViewById(R.id.editTextSearch);
+        editTextSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String searchText = s.toString().toLowerCase();
+                List<JobPosting> filteredList = filterJobs(jobPostings, searchText);
+                jobAdapter.updateJobPostings(filteredList);
+            }
+        });
+
     return view;
+
+    }
+
+    private List<JobPosting> filterJobs(List<JobPosting> jobPostings, String searchText) {
+        List<JobPosting> filteredList = new ArrayList<>();
+        for (JobPosting job : jobPostings){
+            if (job.getJobTitle().toLowerCase().contains(searchText)
+            || job.getJobType().toLowerCase().contains(searchText)
+            || job.getJobSalary().toLowerCase().contains(searchText)
+            || job.getJobLocation().toLowerCase().contains(searchText)
+            || job.getEmployerName().toLowerCase().contains(searchText)){
+                filteredList.add(job);
+            }
+        }
+        return filteredList;
     }
 }
