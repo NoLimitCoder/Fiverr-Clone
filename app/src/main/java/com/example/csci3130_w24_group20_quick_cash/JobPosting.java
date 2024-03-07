@@ -1,9 +1,10 @@
 package com.example.csci3130_w24_group20_quick_cash;
+import java.io.Serializable;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.UUID;
 
-public class JobPosting {
+public class JobPosting implements Serializable {
     private String jobID;
     private String employerName;
     private String employerUID;

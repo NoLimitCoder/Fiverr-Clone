@@ -12,10 +12,17 @@ import java.util.List;
 
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder>{
 
-    private List<JobPosting> joblist;
+    private static List<JobPosting> joblist;
+    private static OnJobItemClickListener clickListener;
 
-    public JobAdapter(List <JobPosting> joblist){
+    public interface OnJobItemClickListener {
+        void onJobItemClick(JobPosting jobPosting);
+
+    }
+
+    public JobAdapter(List <JobPosting> joblist, OnJobItemClickListener clickListener){
         this.joblist = joblist;
+        this.clickListener = clickListener;
     }
 
     public void updateJobPostings(List<JobPosting> joblist){
@@ -35,14 +42,8 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder>{
         JobPosting job = joblist.get(position);
 
         holder.textJobTitle.setText(job.getJobTitle());
-        holder.textEmployerName.setText(job.getEmployerName());
-        holder.textJobLocation.setText(job.getJobLocation());
         holder.textJobSalary.setText(job.getJobSalary());
-        holder.textDescription.setText(job.getJobDescription());
         holder.textJobType.setText(job.getJobType());
-        holder.textOtherDetails.setText(job.getOtherDetails());
-        holder.textDatePosted.setText(job.getDatePosted());
-
     }
 
     @Override
@@ -50,20 +51,26 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder>{
         return joblist.size();
     }
 
-    public static class JobViewHolder extends RecyclerView.ViewHolder {
+    public static class JobViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView textJobTitle, textEmployerName, textJobLocation, textJobSalary, textDescription, textJobType, textOtherDetails, textDatePosted;
+        TextView textJobTitle, textJobSalary, textJobType;
 
         public JobViewHolder(@NonNull View itemView){
             super(itemView);
             textJobTitle = itemView.findViewById(R.id.textJobTitle);
-            textEmployerName = itemView.findViewById(R.id.textEmployerName);
-            textJobLocation = itemView.findViewById(R.id.textJobLocation);
             textJobSalary = itemView.findViewById(R.id.textJobSalary);
-            textDescription = itemView.findViewById(R.id.textDescription);
             textJobType = itemView.findViewById(R.id.textJobType);
-            textOtherDetails = itemView.findViewById(R.id.textOtherDetails);
-            textDatePosted = itemView.findViewById(R.id.textDatePosted);
+
+            itemView.setOnClickListener(this);
+        }
+        @Override
+        public void onClick(View view){
+
+            int position = getAdapterPosition();
+            if (position != RecyclerView.NO_POSITION && clickListener != null){
+                clickListener.onJobItemClick(joblist.get(position));
+            }
         }
     }
+
 }

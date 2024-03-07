@@ -3,6 +3,7 @@ package com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.Employe
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,7 +12,6 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.csci3130_w24_group20_quick_cash.JobAdapter;
@@ -27,7 +27,7 @@ import java.util.List;
  * Use the {@link SearchFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment implements JobAdapter.OnJobItemClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -80,7 +80,7 @@ public class SearchFragment extends Fragment {
 
     List<JobPosting> jobPostings = MockJobPostingRepo.getInstance().getJobPostings();
 
-        JobAdapter jobAdapter = new JobAdapter(jobPostings);
+    JobAdapter jobAdapter = new JobAdapter(jobPostings, this);
     jobRecyclerView.setAdapter(jobAdapter);
 
         EditText editTextSearch = view.findViewById(R.id.editTextSearch);
@@ -107,17 +107,27 @@ public class SearchFragment extends Fragment {
 
     }
 
+    private void openJobDetailsFragment(JobPosting jobposting){
+
+        JobDetailsFragment jobDetailsFragment = JobDetailsFragment.newInstance(jobposting);
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.frameLayout, jobDetailsFragment);
+        transaction.addToBackStack("fragment_search").commit();
+    }
+
     private List<JobPosting> filterJobs(List<JobPosting> jobPostings, String searchText) {
         List<JobPosting> filteredList = new ArrayList<>();
         for (JobPosting job : jobPostings){
             if (job.getJobTitle().toLowerCase().contains(searchText)
             || job.getJobType().toLowerCase().contains(searchText)
-            || job.getJobSalary().toLowerCase().contains(searchText)
-            || job.getJobLocation().toLowerCase().contains(searchText)
-            || job.getEmployerName().toLowerCase().contains(searchText)){
+            || job.getJobSalary().toLowerCase().contains(searchText)){
                 filteredList.add(job);
             }
         }
         return filteredList;
+    }
+    @Override
+    public void onJobItemClick(JobPosting jobPosting) {
+        openJobDetailsFragment(jobPosting);
     }
 }
