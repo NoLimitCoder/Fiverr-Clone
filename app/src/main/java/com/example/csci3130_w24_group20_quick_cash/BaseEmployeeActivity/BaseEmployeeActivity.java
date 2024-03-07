@@ -1,12 +1,9 @@
 package com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.os.Bundle;
-
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.ProfileFragment;
 import com.example.csci3130_w24_group20_quick_cash.R;
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.SearchFragment;
@@ -23,7 +20,6 @@ public class BaseEmployeeActivity extends AppCompatActivity{
         binding = ActivityBaseEmployeeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         switchFragment(new SearchFragment());
-
 
         binding.navLayout.setOnItemSelectedListener(item -> {
 
@@ -46,7 +42,6 @@ public class BaseEmployeeActivity extends AppCompatActivity{
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
     }
-
 
 }
 

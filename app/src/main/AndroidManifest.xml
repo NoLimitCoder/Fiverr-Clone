@@ -26,6 +26,8 @@
         <activity android:name=".BaseEmployerActivity.BaseEmployerActivity" />
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".ForgotPasswordActivity" />
+        <activity android:name=".BaseEmployerActivity.CreateJobActivity" />
+
 
     </application>
 
