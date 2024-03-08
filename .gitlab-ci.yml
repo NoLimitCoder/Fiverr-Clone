@@ -66,6 +66,7 @@ lintDebug:
   interruptible: true
   stage: build
   script:
+    - ./gradlew clean
     - ./gradlew -Pci --console=plain :app:lintDebug -PbuildDir=lint
 
 # Make Project
