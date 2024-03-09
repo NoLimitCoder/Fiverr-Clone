@@ -12,10 +12,6 @@ import android.widget.TextView;
 import com.example.csci3130_w24_group20_quick_cash.JobPosting;
 import com.example.csci3130_w24_group20_quick_cash.R;
 
-import org.w3c.dom.Text;
-
-import kotlinx.coroutines.Job;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link JobDetailsFragment#newInstance} factory method to
@@ -67,6 +63,9 @@ public class JobDetailsFragment extends Fragment {
         TextView textJobDescription = view.findViewById(R.id.textJobDescription);
         TextView textOtherDetails = view.findViewById(R.id.textOtherDetails);
         TextView textEmployerName = view.findViewById(R.id.textEmployerName);
+        TextView textJobCountry = view.findViewById(R.id.textJobCountry);
+        TextView textJobCity = view.findViewById(R.id.textJobCity);
+
 
 
 
@@ -74,10 +73,13 @@ public class JobDetailsFragment extends Fragment {
             textJobTitle.setText(jobPosting.getJobTitle());
             textJobType.setText(jobPosting.getJobType());
             textJobSalary.setText(jobPosting.getJobSalary());
-            textJobLocation.setText(jobPosting.getJobLocation());
+            textJobLocation.setText(jobPosting.getJobAddress());
             textJobDescription.setText(jobPosting.getJobDescription());
             textOtherDetails.setText(jobPosting.getOtherDetails());
             textEmployerName.setText(jobPosting.getEmployerName());
+            textJobCountry.setText(jobPosting.getJobCountry());
+            textJobCity.setText(jobPosting.getJobCity());
+
         }
         return view;
     }

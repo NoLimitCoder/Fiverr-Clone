@@ -2,9 +2,11 @@ package com.example.csci3130_w24_group20_quick_cash;
 
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -12,9 +14,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.csci3130_w24_group20_quick_cash.databinding.ActivityMapsBinding;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private List<JobPosting>jobPostings;
     private ActivityMapsBinding binding;
 
     @Override
@@ -24,10 +31,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("jobPostings")) {
+            jobPostings = (List<JobPosting>) intent.getSerializableExtra("jobPostings");
+
+            // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+            SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                    .findFragmentById(R.id.map);
+            mapFragment.getMapAsync(this);
+        }
     }
 
     /**
@@ -42,10 +54,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        if (jobPostings != null) {
+            for (JobPosting job : jobPostings) {
+                LatLng location = getLocationFromAddress(job.getJobCountry(), job.getJobCity(), job.getJobAddress());
+                if (location != null) {
+                    mMap.addMarker(new MarkerOptions().position(location).title(job.getJobTitle()));
+                }
+            }
+        }
     }
+
+
+
+    private LatLng getLocationFromAddress(String country, String city, String address) {
+        Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+        try {
+            List<Address> streetAddresses = geocoder.getFromLocationName(address + ", " + city + ", " + country, 1);
+            if (!address.isEmpty()){
+                double streetLatitude = streetAddresses.get(0).getLatitude();
+                double streetLongitude = streetAddresses.get(0).getLongitude();
+                return new LatLng(streetLatitude, streetLongitude);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

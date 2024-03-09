@@ -1,5 +1,6 @@
 package com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,13 +13,16 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.csci3130_w24_group20_quick_cash.JobAdapter;
 import com.example.csci3130_w24_group20_quick_cash.JobPosting;
+import com.example.csci3130_w24_group20_quick_cash.MapsActivity;
 import com.example.csci3130_w24_group20_quick_cash.MockJobPostingRepo;
 import com.example.csci3130_w24_group20_quick_cash.R;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,6 +79,7 @@ public class SearchFragment extends Fragment implements JobAdapter.OnJobItemClic
                              Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_search, container, false);
 
+
         RecyclerView jobRecyclerView = view.findViewById(R.id.jobRecyclerView);
     jobRecyclerView.setLayoutManager((new LinearLayoutManager(getActivity())));
 
@@ -82,6 +87,17 @@ public class SearchFragment extends Fragment implements JobAdapter.OnJobItemClic
 
     JobAdapter jobAdapter = new JobAdapter(jobPostings, this);
     jobRecyclerView.setAdapter(jobAdapter);
+
+    Button btnShowMap = view.findViewById(R.id.btnShowMap);
+    btnShowMap.setCompoundDrawablesWithIntrinsicBounds(R.drawable.baseline_map_24, 0, 0, 0);
+        btnShowMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent (new Intent(getActivity(), MapsActivity.class));
+                intent.putExtra("jobPostings", (Serializable) jobPostings);
+                startActivity(intent);
+            }
+        });
 
         EditText editTextSearch = view.findViewById(R.id.editTextSearch);
         editTextSearch.addTextChangedListener(new TextWatcher() {
@@ -120,7 +136,9 @@ public class SearchFragment extends Fragment implements JobAdapter.OnJobItemClic
         for (JobPosting job : jobPostings){
             if (job.getJobTitle().toLowerCase().contains(searchText)
             || job.getJobType().toLowerCase().contains(searchText)
-            || job.getJobSalary().toLowerCase().contains(searchText)){
+            || job.getJobSalary().toLowerCase().contains(searchText)
+            || job.getJobCountry().toLowerCase().contains(searchText)
+            || job.getJobCity().toLowerCase().contains(searchText)){
                 filteredList.add(job);
             }
         }

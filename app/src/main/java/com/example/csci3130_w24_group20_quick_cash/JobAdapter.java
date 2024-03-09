@@ -44,6 +44,8 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder>{
         holder.textJobTitle.setText(job.getJobTitle());
         holder.textJobSalary.setText(job.getJobSalary());
         holder.textJobType.setText(job.getJobType());
+        holder.textJobCountry.setText(job.getJobCountry());
+        holder.textJobCity.setText(job.getJobCity());
     }
 
     @Override
@@ -53,13 +55,15 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder>{
 
     public static class JobViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView textJobTitle, textJobSalary, textJobType;
+        TextView textJobTitle, textJobSalary, textJobType, textJobCountry, textJobCity;
 
         public JobViewHolder(@NonNull View itemView){
             super(itemView);
             textJobTitle = itemView.findViewById(R.id.textJobTitle);
             textJobSalary = itemView.findViewById(R.id.textJobSalary);
             textJobType = itemView.findViewById(R.id.textJobType);
+            textJobCountry = itemView.findViewById(R.id.textJobCountry);
+            textJobCity = itemView.findViewById(R.id.textJobCity);
 
             itemView.setOnClickListener(this);
         }

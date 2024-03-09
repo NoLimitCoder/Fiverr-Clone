@@ -6,7 +6,6 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Job Title -->
     <TextView
         android:id="@+id/textJobTitle"
         android:layout_width="match_parent"
@@ -16,7 +15,6 @@
         android:textColor="@color/black"
         android:layout_marginBottom="8dp"/>
 
-    <!-- Job Salary -->
     <TextView
         android:id="@+id/textJobSalary"
         android:layout_width="match_parent"
@@ -26,6 +24,20 @@
 
     <TextView
         android:id="@+id/textJobType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/textJobCountry"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:id="@+id/textJobCity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="16sp"

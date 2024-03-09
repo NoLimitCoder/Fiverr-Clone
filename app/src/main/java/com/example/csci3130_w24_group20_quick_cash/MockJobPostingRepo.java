@@ -10,21 +10,9 @@ public class MockJobPostingRepo {
 
     private MockJobPostingRepo(){
 
-        JobPostings.add(new JobPosting("Ammar Zain", "3535", "Software Developer", "6059 Shirley Street", "5000 dollars", "I need a coder", "Computer Science", "Must complete 3 years at school"));
-        JobPostings.add(new JobPosting("Riley fownn", "3536", "Software Developer", "6051605 Shirley Street", "5000 dollars", "I need a coder", "Computer Science", "Must complete 3 years at school"));
-        JobPostings.add(new JobPosting("Ammar Zain", "3535", "Software Developer", "6059 Shirley Street", "5000 dollars", "I need a coder", "Computer Science", "Must complete 3 years at school"));
-        JobPostings.add(new JobPosting("Ammar Zownn", "3536", "Software Developer", "6059 Shirley Street", "5000 dollars", "I need a coder", "Computer Science", "Must complete 3 years at school"));
-        JobPostings.add(new JobPosting("Ammar Zain", "3535", "Software Developer", "6059 Shirley Street", "5000 dollars", "I need a coder", "Math", "Must complete 3 years at school"));
-        JobPostings.add(new JobPosting("Ammar Zownn", "3536", "Software Developer", "6059 Shirley Street", "5000 dollars", "I need a coder", "Science", "Must complete 3 years at school"));
-        JobPostings.add(new JobPosting("Ammar Zain", "3535", "Software Developer", "6059 Shirley Street", "5000 dollars", "I need a coder", "Computer Science", "Must complete 3 years at school"));
-        JobPostings.add(new JobPosting("Ammar Zownn", "3536", "Software Developer", "6059 Shirley Street", "5000 dollars", "I need a coder", "Computer Science", "Must complete 3 years at school"));
-        JobPostings.add(new JobPosting("Ammar Zain", "3535", "Software Developer", "6059 Shirley Street", "5000 dollars", "I need a coder", "Computer Science", "Must complete 3 years at school"));
-        JobPostings.add(new JobPosting("Ammar Zownn", "3536", "Software Developer", "6059 Shirley Street", "5000 dollars", "I need a coder", "Computer Science", "Must complete 3 years at school"));
-        JobPostings.add(new JobPosting("Ammar Zain", "3535", "Software Developer", "6059 Shirley Street", "5000 dollars", "I need a coder", "Computer Science", "Must complete 3 years at school"));
-        JobPostings.add(new JobPosting("Ammar Zownn", "3536", "Software Developer", "6059 Shirley Street", "5000 dollars", "I need a coder", "Computer Science", "Must complete 3 years at school"));
-        JobPostings.add(new JobPosting("Ammar Zain", "3535", "Software Developer", "6059 Shirley Street", "5000 dollars", "I need a coder", "Computer Science", "Must complete 3 years at school"));
-        JobPostings.add(new JobPosting("Ammar Zownn", "3536", "Software Developer", "6059 Shirley Street", "5000 dollars", "I need a coder", "Computer Science", "Must complete 3 years at school"));
-
+        JobPostings.add(new JobPosting("Ammar Zain", "3535", "Software Developer", "Canada", "Halifax","6056 Shirley Street", "5000 dollars", "I need a coder", "Computer Science", "Must complete 3 years at school"));
+        JobPostings.add(new JobPosting("Ammar Zain", "3535", "Software Developer", "Canada", "Halifax","6059 Shirley Street", "5000 dollars", "I need a coder", "Computer Science", "Must complete 3 years at school"));
+        JobPostings.add(new JobPosting("Riley Devitt", "3535", "Software Developer", "Canada", "Halifax","6299 South St", "5000 dollars", "I need a coder", "Computer Science", "Must complete 3 years at school"));
 
     }
 
