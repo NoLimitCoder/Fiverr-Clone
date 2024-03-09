@@ -60,6 +60,9 @@ before_script:
   # Not necessary, but just for surity
   - chmod +x ./gradlew
 
+  # added local properties file (I think Map API tries to load Map key from this file)
+  - echo "sdk.dir=${ANDROID_HOME}" > local.properties
+
 # Basic android and gradle stuff
 # Check linting
 lintDebug:
@@ -73,8 +76,7 @@ assembleDebug:
   interruptible: true
   stage: build
   script:
-    - echo "sdk.dir=${ANDROID_HOME}" > local.properties
-    - ./gradlew assembleDebug --scan --debug --stacktrace
+    - ./gradlew assembleDebug
   artifacts:
     paths:
       - app/build/outputs/
