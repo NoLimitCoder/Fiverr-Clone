@@ -73,6 +73,7 @@ assembleDebug:
   interruptible: true
   stage: build
   script:
+    - echo "sdk.dir=${ANDROID_HOME}" > local.properties
     - ./gradlew assembleDebug --scan --debug --stacktrace
   artifacts:
     paths:
