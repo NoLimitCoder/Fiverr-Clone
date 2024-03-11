@@ -49,6 +49,17 @@ public class BaseEmployerActivity extends AppCompatActivity implements View.OnCl
             return true;
         });
     }
+
+    protected void setupSearchTextView() {
+        Search = findViewById(R.id.Search); // Correct ID of the Search TextView
+        Search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BaseEmployerActivity.this, CreateJobActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.new_job){

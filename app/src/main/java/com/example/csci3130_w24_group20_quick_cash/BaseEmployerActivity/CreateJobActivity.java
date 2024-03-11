@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -14,15 +16,25 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.ProfileFragment;
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.SearchFragment;
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.SettingsFragment;
+import com.example.csci3130_w24_group20_quick_cash.CredentialValidator;
 import com.example.csci3130_w24_group20_quick_cash.FirebaseAuthSingleton;
 import com.example.csci3130_w24_group20_quick_cash.R;
 import com.example.csci3130_w24_group20_quick_cash.databinding.ActivityBaseEmployeeBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 
 public class CreateJobActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
+    private DatabaseReference root = FirebaseDatabase.getInstance();
+
     ActivityBaseEmployeeBinding binding;
+    //make a recycler viewer
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +44,7 @@ public class CreateJobActivity extends AppCompatActivity {
         switchFragment(new SearchFragment());
 
         mAuth = FirebaseAuthSingleton.getInstance();
+
 
         binding.navLayout.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
@@ -46,6 +59,7 @@ public class CreateJobActivity extends AppCompatActivity {
             return true;
         });
     }
+    
 
     private void switchFragment(Fragment fragment){
         FragmentManager fragManager = getSupportFragmentManager();
@@ -53,4 +67,83 @@ public class CreateJobActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
     }
+
+
+    protected String getCompanyName() {
+        EditText companyNameBox = findViewById(R.id.company_name);
+        return companyNameBox.getText().toString().trim();
+    }
+    protected String getJobName() {
+        EditText jobNameBox = findViewById(R.id.job_name);
+        return jobNameBox.getText().toString().trim();
+    }
+
+    protected String getDescription() {
+        EditText descriptionBox = findViewById(R.id.job_description);
+        return descriptionBox.getText().toString().trim();
+    }
+
+    protected String getRequirements() {
+        EditText requirementBox = findViewById(R.id.job_requirements);
+        return requirementBox.getText().toString().trim();
+    }
+
+    protected String getInstructions() {
+        EditText instructionsBox = findViewById(R.id.job_requirements);
+        return instructionsBox.getText().toString().trim();
+    }
+
+    @Override
+    public void onClick(View view) {
+        String companyName = getCompanyName();
+        String jobName = getJobName();
+        String description = getDescription();
+        String requirements = getRequirements();
+        String instructions = getInstructions();
+        String errorMessage = new String();
+
+        CredentialValidator validator = new CredentialValidator();
+
+        if () {
+            errorMessage = getResources().getString(R.string.INVALID_NAME).trim();
+        } else if (!validator.isValidEmailAddress(emailAddress)) {
+            errorMessage = getResources().getString(R.string.INVALID_EMAIL_ADDRESS).trim();
+        } else if (!validator.isValidPassword(password)) {
+            errorMessage = getResources().getString(R.string.INVALID_PASSWORD).trim();
+        } else if (!validator.isValidContactNumber(contactNumber)){
+            errorMessage = getResources().getString(R.string.INVALID_NUMBER).trim();
+        } else if (!validator.isValidRole(role)) {
+            errorMessage = getResources().getString(R.string.INVALID_ROLE).trim();
+        }
+        setStatusMessage(errorMessage);
+
+
+        if (errorMessage.isEmpty()) {
+            saveInfoToFirebase(companyName, jobName, description, requirements, instructions);
+        }
+
+    }
+
+    protected void saveInfoToFirebase(String companyName, String jobName, String description, String requirements, String instructions) {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task){
+                if (task.isSuccessful()){
+                    FirebaseUser user = task.getResult().getUser();
+                    if (user != null) {
+                        DatabaseReference dbr = FirebaseDatabase.getInstance().getReference("users").child(user.getUid());
+
+                        dbr.child("companyName").setValue(companyName);
+                        dbr.child("jobName").setValue(jobName);
+                        dbr.child("description").setValue(description);
+                        dbr.child("requirements").setValue(requirements);
+                        dbr.child("instructions").setValue(instructions);
+
+
+                    }
+                }
+            }
+        });
+
+    }
+
 }

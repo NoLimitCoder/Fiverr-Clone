@@ -8,6 +8,10 @@ public class CredentialValidator {
         return userName.isEmpty();
     }
 
+    protected boolean isEmptyField(String field){
+        return field.isEmpty();
+    }
+
     protected boolean isEmptyPassword(String password) {
         return password.isEmpty();
     }

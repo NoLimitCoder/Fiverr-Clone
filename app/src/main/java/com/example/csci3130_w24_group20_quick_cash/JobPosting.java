@@ -1,11 +1,12 @@
 package com.example.csci3130_w24_group20_quick_cash;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.UUID;
 
 public class JobPosting {
     private String jobID;
     private String employerName;
-    private String employerID;
+    private String employerUID;
     private String jobTitle;
     private String jobLocation;
     private String jobSalary;
@@ -15,11 +16,11 @@ public class JobPosting {
     private String datePosted;
 
     public JobPosting(){}
-    public JobPosting(String jobID, String employerName, String employerID, String jobTitle, String jobLocation,
+    public JobPosting(String employerName, String employerID, String jobTitle, String jobLocation,
                       String jobSalary, String jobDescription, String jobType, String otherDetails){
-        this.jobID = jobID;
+        this.jobID = generateJobID();
         this.employerName = employerName;
-        this.employerID = employerID;
+        this.employerUID = employerUID;
         this.jobTitle = jobTitle;
         this.jobLocation = jobLocation;
         this.jobSalary = jobSalary;
@@ -35,8 +36,8 @@ public class JobPosting {
     public String getEmployerName(){
         return this.employerName;
     }
-    public String getEmployerID(){
-        return this.employerID;
+    public String getEmployerUID(){
+        return this.employerUID;
     }
     public String getJobTitle(){
         return this.jobTitle;
@@ -63,8 +64,8 @@ public class JobPosting {
     public void setEmployerName(String employerName){
         this.employerName = employerName;
     }
-    public void setEmployerID(String employerID){
-        this.employerID = employerID;
+    public void setEmployerID(String employerUID){
+        this.employerUID = employerUID;
     }
     public void setJobTitle(String jobTitle){
         this.jobTitle = jobTitle;
@@ -76,7 +77,7 @@ public class JobPosting {
     public void setJobSalary(String jobSalary){
         this.jobSalary = jobSalary;
     }
-    public void getJobDescription(String jobDescription){
+    public void setJobDescription(String jobDescription){
         this.jobDescription = jobDescription;
     }
     public void setJobType(String jobType){
@@ -93,6 +94,10 @@ public class JobPosting {
     private String setCurrentDate(){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd");
         return dateFormat.format(new Date());
+    }
+
+    private String generateJobID(){
+        return UUID.randomUUID().toString();
     }
 
 }
