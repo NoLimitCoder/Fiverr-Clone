@@ -21,12 +21,41 @@
         android:layout_constraintTop_toTopOf="parent"
         android:layout_constraintVertical_bias="0.152" />
 
+    <EditText
+        android:id="@+id/company_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_constraintHorizontal_bias="0.0"
+        android:layout_constraintVertical_bias="0.409"
+        android:layout_constraintTop_toBottomOf="@+id/create_job_title"
+        android:layout_constraintEnd_toEndOf="parent"
+        android:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="145dp"
+        android:layout_marginBottom="39dp"
+        android:ems="10"
+        android:hint="Company Name"
+        android:inputType="text" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="Upload fragment"
-        android:textSize="26dp"
-        android:layout_gravity="center"/>
+        android:textSize="26dp" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>
 

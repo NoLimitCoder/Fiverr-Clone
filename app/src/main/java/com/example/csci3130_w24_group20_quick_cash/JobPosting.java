@@ -1,14 +1,17 @@
 package com.example.csci3130_w24_group20_quick_cash;
+import java.io.Serializable;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.UUID;
 
-public class JobPosting {
+public class JobPosting implements Serializable {
     private String jobID;
     private String employerName;
     private String employerUID;
     private String jobTitle;
-    private String jobLocation;
+    private String jobCountry;
+    private String jobCity;
+    private String jobAddress;
     private String jobSalary;
     private String jobDescription;
     private String jobType;
@@ -16,13 +19,16 @@ public class JobPosting {
     private String datePosted;
 
     public JobPosting(){}
-    public JobPosting(String employerName, String employerID, String jobTitle, String jobLocation,
-                      String jobSalary, String jobDescription, String jobType, String otherDetails){
+    public JobPosting(String employerName, String employerUID, String jobTitle, String jobCountry, String jobCity,
+                      String jobAddress, String jobSalary, String jobDescription,
+                      String jobType, String otherDetails){
         this.jobID = generateJobID();
         this.employerName = employerName;
         this.employerUID = employerUID;
         this.jobTitle = jobTitle;
-        this.jobLocation = jobLocation;
+        this.jobCountry = jobCountry;
+        this.jobCity = jobCity;
+        this.jobAddress = jobAddress;
         this.jobSalary = jobSalary;
         this.jobDescription = jobDescription;
         this.jobType = jobType;
@@ -42,8 +48,12 @@ public class JobPosting {
     public String getJobTitle(){
         return this.jobTitle;
     }
-    public String getJobLocation(){
-        return this.jobLocation;
+
+    public String getJobCountry(){return this.jobCountry;}
+
+    public String getJobCity(){return this.jobCity;}
+    public String getJobAddress(){
+        return this.jobAddress;
     }
     public String getJobSalary(){
         return this.jobSalary;
@@ -70,8 +80,12 @@ public class JobPosting {
     public void setJobTitle(String jobTitle){
         this.jobTitle = jobTitle;
     }
-    public void setJobLocation(String jobLocation){
-        this.jobLocation = jobLocation;
+
+    public void setJobCountry(String jobCountry){this.jobCountry = jobCountry;}
+
+    public void setJobCity(String jobCity){this.jobCity = jobCity;}
+    public void setJobAddress(String jobAddress){
+        this.jobAddress = jobAddress;
     }
 
     public void setJobSalary(String jobSalary){
