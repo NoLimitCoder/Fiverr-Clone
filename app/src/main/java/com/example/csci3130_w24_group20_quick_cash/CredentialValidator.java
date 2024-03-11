@@ -8,7 +8,7 @@ public class CredentialValidator {
         return userName.isEmpty();
     }
 
-    protected boolean isEmptyField(String field){
+    public boolean isEmptyField(String field){
         return field.isEmpty();
     }
 

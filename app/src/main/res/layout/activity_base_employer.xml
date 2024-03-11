@@ -7,46 +7,16 @@
     android:background="@color/background"
     tools:context=".MainActivity">
 
-
-    <ImageView
-        android:id="@+id/imageView4"
-        android:layout_width="169dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="82dp"
-        android:src="@drawable/shape"
-        app:layout_constraintBottom_toTopOf="@+id/welcomeBack"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <ImageView
-        android:id="@+id/quickCashLogo"
-        android:layout_width="201dp"
-        android:layout_height="92dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="105dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="105dp"
-        android:src="@drawable/login_draw"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcomeBack" />
-
-    <TextView
-        android:id="@+id/welcomeBack"
+    <FrameLayout
+        android:id="@+id/frameLayout"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="284dp"
-        android:text="Hi, Employer!"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/navLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView4" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/navLayout"
@@ -55,20 +25,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/menu_employee_dashboard" />
-
-    <Button
-        android:id="@+id/new_job"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="142dp"
-        android:layout_marginTop="45dp"
-        android:layout_marginEnd="165dp"
-        android:layout_marginBottom="97dp"
-        android:text="New Job"
-        app:layout_constraintBottom_toTopOf="@+id/navLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/quickCashLogo" />
+        app:menu="@menu/menu_employer_dashboard" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

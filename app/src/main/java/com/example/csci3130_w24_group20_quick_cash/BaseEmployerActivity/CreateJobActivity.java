@@ -29,9 +29,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
-public class CreateJobActivity extends AppCompatActivity {
+public class CreateJobActivity extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth mAuth;
-    private DatabaseReference root = FirebaseDatabase.getInstance();
+   // private DatabaseReference root = FirebaseDatabase.getInstance();
 
     ActivityBaseEmployeeBinding binding;
     //make a recycler viewer
@@ -103,27 +103,13 @@ public class CreateJobActivity extends AppCompatActivity {
         String errorMessage = new String();
 
         CredentialValidator validator = new CredentialValidator();
-
-        if () {
-            errorMessage = getResources().getString(R.string.INVALID_NAME).trim();
-        } else if (!validator.isValidEmailAddress(emailAddress)) {
-            errorMessage = getResources().getString(R.string.INVALID_EMAIL_ADDRESS).trim();
-        } else if (!validator.isValidPassword(password)) {
-            errorMessage = getResources().getString(R.string.INVALID_PASSWORD).trim();
-        } else if (!validator.isValidContactNumber(contactNumber)){
-            errorMessage = getResources().getString(R.string.INVALID_NUMBER).trim();
-        } else if (!validator.isValidRole(role)) {
-            errorMessage = getResources().getString(R.string.INVALID_ROLE).trim();
-        }
-        setStatusMessage(errorMessage);
+        CredentialValidator val = new CredentialValidator();
 
 
-        if (errorMessage.isEmpty()) {
-            saveInfoToFirebase(companyName, jobName, description, requirements, instructions);
-        }
+
 
     }
-
+/*
     protected void saveInfoToFirebase(String companyName, String jobName, String description, String requirements, String instructions) {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task){
@@ -145,5 +131,5 @@ public class CreateJobActivity extends AppCompatActivity {
         });
 
     }
-
+*/
 }
