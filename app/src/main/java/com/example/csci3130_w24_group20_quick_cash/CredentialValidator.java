@@ -1,11 +1,30 @@
 package com.example.csci3130_w24_group20_quick_cash;
 
+import android.location.Address;
+import android.location.Geocoder;
+
+import android.content.Context;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 import java.util.regex.Pattern;
 import java.util.regex.Pattern;
 
 public class CredentialValidator {
     protected boolean isEmptyUserName(String userName) {
         return userName.isEmpty();
+    }
+
+    protected boolean isValidAddress(Context context, String country, String city, String address){
+        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+        try {
+            List<Address> validAddress = geocoder.getFromLocationName(address + ", " + city + ", " + country, 1);
+            return validAddress != null && !validAddress.isEmpty();
+        } catch (IOException e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
     protected boolean isEmptyPassword(String password) {

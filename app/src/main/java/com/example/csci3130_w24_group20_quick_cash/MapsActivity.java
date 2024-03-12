@@ -70,11 +70,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         try {
             List<Address> streetAddresses = geocoder.getFromLocationName(address + ", " + city + ", " + country, 1);
-            if (!address.isEmpty()){
                 double streetLatitude = streetAddresses.get(0).getLatitude();
                 double streetLongitude = streetAddresses.get(0).getLongitude();
                 return new LatLng(streetLatitude, streetLongitude);
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
