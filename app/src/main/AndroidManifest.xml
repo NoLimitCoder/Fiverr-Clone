@@ -23,12 +23,11 @@
         </activity>
 
         <activity android:name=".BaseEmployeeActivity.BaseEmployeeActivity" />
-        <activity android:name=".BaseEmployerActivity.BaseEmployerActivity" />
+        <activity
+            android:name=".BaseEmployerActivity.BaseEmployerActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".ForgotPasswordActivity" />
-        <activity android:name=".BaseEmployerActivity.CreateJobActivity" />
-
-
     </application>
 
 </manifest>

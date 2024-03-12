@@ -1,26 +1,23 @@
 package com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.UploadFragment;
-import com.example.csci3130_w24_group20_quick_cash.FirebaseAuthSingleton;
-import com.example.csci3130_w24_group20_quick_cash.MainActivity;
+import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.JobUploadFragment;
 import com.example.csci3130_w24_group20_quick_cash.R;
 
-import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.ProfileFragment;
-import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.SearchFragment;
-import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.SettingsFragment;
-import com.example.csci3130_w24_group20_quick_cash.databinding.ActivityBaseEmployeeBinding;
+import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.EmployerProfileFragment;
+import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.EmployerSettingsFragment;
 import com.example.csci3130_w24_group20_quick_cash.databinding.ActivityBaseEmployerBinding;
-import com.google.firebase.auth.FirebaseAuth;
 
 
 public class BaseEmployerActivity extends AppCompatActivity  {
@@ -32,43 +29,23 @@ public class BaseEmployerActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         binding = ActivityBaseEmployerBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot()); // Use correct layout file here
-        switchFragment(new UploadFragment());
+        switchFragment(new JobUploadFragment());
 
         binding.navLayout.setOnItemSelectedListener( item -> {
 
             int itemId = item.getItemId();
 
             if (itemId == R.id.uploadJobs){
-                switchFragment(new UploadFragment());
+                switchFragment(new JobUploadFragment());
             } else if (itemId == R.id.viewProfile){
-                switchFragment(new ProfileFragment());
+                switchFragment(new EmployerProfileFragment());
             } else if (itemId == R.id.employeeSettings){
-                switchFragment(new SettingsFragment());
+                switchFragment(new EmployerSettingsFragment());
             }
 
             return true;
         });
     }
-/*
-    protected void setupSearchTextView() {
-        Search = findViewById(R.id.Search); // Correct ID of the Search TextView
-        Search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(BaseEmployerActivity.this, CreateJobActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
-    */
-/*
-    @Override
-    public void onClick(View v) {
-        if(v.getId() == R.id.new_job){
-            move2CreateJob();
-        }
-    }
-*/
     private void switchFragment(Fragment fragment){
         FragmentManager fragManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragManager.beginTransaction();
@@ -76,17 +53,28 @@ public class BaseEmployerActivity extends AppCompatActivity  {
         fragmentTransaction.commit();
     }
 
-    /*
-    protected void setupNewJobButton() {
-        logoutButton = findViewById(R.id.new_job); // Correct ID of the logout button
-        logoutButton.setOnClickListener(this);
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent event) {
+        View view = getCurrentFocus();
+        boolean ret = super.dispatchTouchEvent(event);
+
+        if (view instanceof EditText) {
+            View w = getCurrentFocus();
+            int scrcoords[] = new int[2];
+            w.getLocationOnScreen(scrcoords);
+            float x = event.getRawX() + w.getLeft() - scrcoords[0];
+            float y = event.getRawY() + w.getTop() - scrcoords[1];
+
+            if (event.getAction() == MotionEvent.ACTION_UP
+                    && (x < w.getLeft() || x >= w.getRight()
+                    || y < w.getTop() || y > w.getBottom()) ) {
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getWindow().getCurrentFocus().getWindowToken(), 0);
+            }
+        }
+        return ret;
     }
 
-    protected void move2CreateJob(){
-        Intent intent = new Intent(getBaseContext(), CreateJobActivity.class);
-        startActivity(intent);
-    }
-*/
 
 
 

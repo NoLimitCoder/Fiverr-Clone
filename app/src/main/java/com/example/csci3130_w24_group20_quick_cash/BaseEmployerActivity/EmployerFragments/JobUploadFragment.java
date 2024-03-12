@@ -1,17 +1,10 @@
 package com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments;
 
-import static android.content.ContentValues.TAG;
-
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,19 +12,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.BaseEmployeeActivity;
-import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.ProfileFragment;
-import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.SearchFragment;
-import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.SettingsFragment;
-import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.BaseEmployerActivity;
 import com.example.csci3130_w24_group20_quick_cash.CredentialValidator;
 import com.example.csci3130_w24_group20_quick_cash.FirebaseAuthSingleton;
 import com.example.csci3130_w24_group20_quick_cash.FirebaseCRUD;
 import com.example.csci3130_w24_group20_quick_cash.JobPosting;
 import com.example.csci3130_w24_group20_quick_cash.R;
-import com.example.csci3130_w24_group20_quick_cash.databinding.ActivityBaseEmployeeBinding;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -40,10 +26,10 @@ import com.google.firebase.database.ValueEventListener;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link UploadFragment#newInstance} factory method to
+ * Use the {@link JobUploadFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UploadFragment extends Fragment implements View.OnClickListener {
+public class JobUploadFragment extends Fragment implements View.OnClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -69,7 +55,7 @@ public class UploadFragment extends Fragment implements View.OnClickListener {
     Button uploadButton;
     FirebaseCRUD crud = null;
 
-    public UploadFragment() {
+    public JobUploadFragment() {
         // Required empty public constructor
     }
 
@@ -82,8 +68,8 @@ public class UploadFragment extends Fragment implements View.OnClickListener {
      * @return A new instance of fragment UploadFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static UploadFragment newInstance(String param1, String param2) {
-        UploadFragment fragment = new UploadFragment();
+    public static JobUploadFragment newInstance(String param1, String param2) {
+        JobUploadFragment fragment = new JobUploadFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -107,11 +93,12 @@ public class UploadFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_upload, container, false);
+        View view = inflater.inflate(R.layout.fragment_job_upload, container, false);
 
         uploadButton = view.findViewById(R.id.uploadJobButton);
 
@@ -131,7 +118,7 @@ public class UploadFragment extends Fragment implements View.OnClickListener {
         return view;
     }
 
-    public void uploadJobPosting(){
+    public void uploadJobPosting() {
 
         CredentialValidator credChecker = new CredentialValidator();
 
@@ -147,12 +134,19 @@ public class UploadFragment extends Fragment implements View.OnClickListener {
         employerUID = mAuth.getCurrentUser().getUid();
         fetchEmployerName(employerUID);
 
-        JobPosting jobPosting = new JobPosting(employerName[0], employerUID, jobTitle,jobCountry,jobCity,jobAddress,jobSalary,
-        jobDescription, jobType, jobOtherDetails);
+        JobPosting jobPosting = new JobPosting(employerName[0], employerUID, jobTitle, jobCountry, jobCity, jobAddress, jobSalary,
+                jobDescription, jobType, jobOtherDetails);
 
-        jobPostingReference.child(employerUID).child(jobPosting.getJobID()).setValue(jobPosting);
 
-        Toast.makeText(getContext(), "Job Posting Uploaded Successfully", Toast.LENGTH_SHORT).show();
+        if (credChecker.isJobFilledOut(jobTitle, jobCountry, jobCity, jobAddress, jobSalary,
+                jobDescription, jobType, jobOtherDetails)) {
+
+            jobPostingReference.child(employerUID).child(jobPosting.getJobID()).setValue(jobPosting);
+
+            Toast.makeText(getContext(), "Job Posting Uploaded Successfully", Toast.LENGTH_SHORT).show();
+        }
+        Toast.makeText(getContext(), "Please Fill Out All The Fields", Toast.LENGTH_SHORT).show();
+
     }
 
     public void fetchEmployerName(String employerUID){

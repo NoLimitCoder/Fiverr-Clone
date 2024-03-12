@@ -8,8 +8,15 @@ public class CredentialValidator {
         return userName.isEmpty();
     }
 
-    public boolean isEmptyField(String field){
-        return field.isEmpty();
+    public boolean isJobFilledOut(String... jobFields){
+    for (String field :jobFields){
+        if(field.trim().isEmpty()){
+            return false;
+        }
+    }
+
+    return true;
+
     }
 
     protected boolean isEmptyPassword(String password) {
