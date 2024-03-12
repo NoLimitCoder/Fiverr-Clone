@@ -33,10 +33,10 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SearchFragment#newInstance} factory method to
+ * Use the {@link JobSearchFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SearchFragment extends Fragment implements JobAdapter.OnJobItemClickListener {
+public class JobSearchFragment extends Fragment implements JobAdapter.OnJobItemClickListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -51,7 +51,7 @@ public class SearchFragment extends Fragment implements JobAdapter.OnJobItemClic
 
     private List<JobPosting> jobPostings = new ArrayList<>();
 
-    public SearchFragment() {
+    public JobSearchFragment() {
         // Required empty public constructor
     }
 
@@ -64,8 +64,8 @@ public class SearchFragment extends Fragment implements JobAdapter.OnJobItemClic
      * @return A new instance of fragment SearchFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SearchFragment newInstance(String param1, String param2) {
-        SearchFragment fragment = new SearchFragment();
+    public static JobSearchFragment newInstance(String param1, String param2) {
+        JobSearchFragment fragment = new JobSearchFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -86,44 +86,44 @@ public class SearchFragment extends Fragment implements JobAdapter.OnJobItemClic
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_search, container, false);
+        View view = inflater.inflate(R.layout.fragment_job_search, container, false);
 
 
-    RecyclerView jobRecyclerView = view.findViewById(R.id.jobRecyclerView);
-    jobRecyclerView.setLayoutManager((new LinearLayoutManager(getActivity())));
+        RecyclerView jobRecyclerView = view.findViewById(R.id.jobRecyclerView);
+        jobRecyclerView.setLayoutManager((new LinearLayoutManager(getActivity())));
 
-    DatabaseReference jobPostingsRef = FirebaseDatabase.getInstance().getReference("JobPostings");
+        DatabaseReference jobPostingsRef = FirebaseDatabase.getInstance().getReference("JobPostings");
 
-    jobPostingsRef.addValueEventListener(new ValueEventListener() {
-        @Override
-        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            jobPostings.clear();
-            for (DataSnapshot snapshot: dataSnapshot.getChildren()){
-                for (DataSnapshot jobSnapShot : snapshot.getChildren()){
-                    JobPosting job = jobSnapShot.getValue(JobPosting.class);
-                    if (job != null){
-                        jobPostings.add(job);
+        jobPostingsRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                jobPostings.clear();
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()){
+                    for (DataSnapshot jobSnapShot : snapshot.getChildren()){
+                        JobPosting job = jobSnapShot.getValue(JobPosting.class);
+                        if (job != null){
+                            jobPostings.add(job);
+                        }
                     }
+
                 }
 
+                if (jobAdapter == null){
+                    jobAdapter = new JobAdapter(jobPostings, JobSearchFragment.this);
+                } else {
+                    jobAdapter.updateJobPostings(jobPostings);
+                }
+                jobRecyclerView.setAdapter(jobAdapter);
             }
 
-            if (jobAdapter == null){
-                jobAdapter = new JobAdapter(jobPostings, SearchFragment.this);
-            } else {
-                jobAdapter.updateJobPostings(jobPostings);
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
-            jobRecyclerView.setAdapter(jobAdapter);
-        }
+        });
 
-        @Override
-        public void onCancelled(@NonNull DatabaseError error) {
-
-        }
-    });
-
-    Button btnShowMap = view.findViewById(R.id.btnShowMap);
-    btnShowMap.setCompoundDrawablesWithIntrinsicBounds(R.drawable.baseline_map_24, 0, 0, 0);
+        Button btnShowMap = view.findViewById(R.id.btnShowMap);
+        btnShowMap.setCompoundDrawablesWithIntrinsicBounds(R.drawable.baseline_map_24, 0, 0, 0);
         btnShowMap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,7 +153,7 @@ public class SearchFragment extends Fragment implements JobAdapter.OnJobItemClic
             }
         });
 
-    return view;
+        return view;
 
     }
 
@@ -169,10 +169,10 @@ public class SearchFragment extends Fragment implements JobAdapter.OnJobItemClic
         List<JobPosting> filteredList = new ArrayList<>();
         for (JobPosting job : jobPostings){
             if (job.getJobTitle().toLowerCase().contains(searchText)
-            || job.getJobType().toLowerCase().contains(searchText)
-            || job.getJobSalary().toLowerCase().contains(searchText)
-            || job.getJobCountry().toLowerCase().contains(searchText)
-            || job.getJobCity().toLowerCase().contains(searchText)){
+                    || job.getJobType().toLowerCase().contains(searchText)
+                    || job.getJobSalary().toLowerCase().contains(searchText)
+                    || job.getJobCountry().toLowerCase().contains(searchText)
+                    || job.getJobCity().toLowerCase().contains(searchText)){
                 filteredList.add(job);
             }
         }

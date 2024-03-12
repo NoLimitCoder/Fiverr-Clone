@@ -38,7 +38,9 @@
         <activity
             android:name=".BaseEmployeeActivity.BaseEmployeeActivity"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".BaseEmployerActivity.BaseEmployerActivity" />
+        <activity
+            android:name=".BaseEmployerActivity.BaseEmployerActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".ForgotPasswordActivity" />
     </application>

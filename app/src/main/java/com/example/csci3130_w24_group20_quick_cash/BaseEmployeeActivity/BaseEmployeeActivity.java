@@ -1,5 +1,4 @@
 package com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -12,10 +11,11 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.ProfileFragment;
+import android.os.Bundle;
+import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.EmployeeProfileFragment;
 import com.example.csci3130_w24_group20_quick_cash.R;
-import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.SearchFragment;
-import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.SettingsFragment;
+import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.JobSearchFragment;
+import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.EmployeeSettingsFragment;
 import com.example.csci3130_w24_group20_quick_cash.databinding.ActivityBaseEmployeeBinding;
 
 public class BaseEmployeeActivity extends AppCompatActivity{
@@ -27,18 +27,17 @@ public class BaseEmployeeActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         binding = ActivityBaseEmployeeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        switchFragment(new SearchFragment());
-
+        switchFragment(new JobSearchFragment());
 
         binding.navLayout.setOnItemSelectedListener(item -> {
 
             int itemId = item.getItemId();
             if (itemId == R.id.searchJobs) {
-                switchFragment(new SearchFragment());
+                switchFragment(new JobSearchFragment());
             } else if (itemId == R.id.viewProfile) {
-                switchFragment((new ProfileFragment()));
+                switchFragment((new EmployeeProfileFragment()));
             } else if (itemId == R.id.employeeSettings) {
-                switchFragment(new SettingsFragment());
+                switchFragment(new EmployeeSettingsFragment());
             }
 
             return true;
@@ -72,7 +71,6 @@ public class BaseEmployeeActivity extends AppCompatActivity{
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
     }
-
 
 }
 

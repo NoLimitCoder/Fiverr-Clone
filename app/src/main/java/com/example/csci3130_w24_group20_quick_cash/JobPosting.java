@@ -105,7 +105,7 @@ public class JobPosting implements Serializable {
         return datePosted;
     }
 
-    private String setCurrentDate(){
+    public String setCurrentDate(){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd");
         return dateFormat.format(new Date());
     }

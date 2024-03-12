@@ -66,22 +66,22 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
     }
 
     protected String getName() {
-        EditText nameBox = findViewById(R.id.nameBox);
+        EditText nameBox = findViewById(R.id.editTextFullName);
         return nameBox.getText().toString().trim();
     }
 
     protected String getEmailAddress() {
-        EditText emailBox = findViewById(R.id.emailBox);
+        EditText emailBox = findViewById(R.id.editTextEmail);
         return emailBox.getText().toString().trim();
     }
 
     protected String getPassword() {
-        EditText passwordBox = findViewById(R.id.passwordbox);
+        EditText passwordBox = findViewById(R.id.editTextPassword);
         return passwordBox.getText().toString().trim();
     }
 
     protected String getContactNumber() {
-        EditText contactNumber = findViewById(R.id.numberbox);
+        EditText contactNumber = findViewById(R.id.editTextNumber);
         return contactNumber.getText().toString().trim();
     }
 

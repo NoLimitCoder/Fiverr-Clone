@@ -9,22 +9,30 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
-import java.util.regex.Pattern;
 
 public class CredentialValidator {
     protected boolean isEmptyUserName(String userName) {
         return userName.isEmpty();
     }
 
-    protected boolean isValidAddress(Context context, String country, String city, String address){
+    public boolean isValidAddress(Context context, String country, String city, String address) {
         Geocoder geocoder = new Geocoder(context, Locale.getDefault());
         try {
             List<Address> validAddress = geocoder.getFromLocationName(address + ", " + city + ", " + country, 1);
             return validAddress != null && !validAddress.isEmpty();
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public boolean isJobFilledOut(String... jobFields){
+    for (String field :jobFields){
+        if(field.trim().isEmpty()){
+            return false;
+        }
+    }
+    return true;
     }
 
     protected boolean isEmptyPassword(String password) {

@@ -18,10 +18,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SettingsFragment#newInstance} factory method to
+ * Use the {@link EmployeeSettingsFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SettingsFragment extends Fragment implements View.OnClickListener {
+public class EmployeeSettingsFragment extends Fragment implements View.OnClickListener {
 
     private Button logoutButton;
     private FirebaseAuth mAuth;
@@ -36,7 +36,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private String mParam1;
     private String mParam2;
 
-    public SettingsFragment() {
+    public EmployeeSettingsFragment() {
         // Required empty public constructor
     }
 
@@ -49,8 +49,8 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
      * @return A new instance of fragment SettingsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SettingsFragment newInstance(String param1, String param2) {
-        SettingsFragment fragment = new SettingsFragment();
+    public static EmployeeSettingsFragment newInstance(String param1, String param2) {
+        EmployeeSettingsFragment fragment = new EmployeeSettingsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -89,7 +89,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_settings, container, false);
+        View view = inflater.inflate(R.layout.fragment_employee_settings, container, false);
         setupLogoutButton(view);
         return view;
     }
