@@ -3,6 +3,7 @@ package com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.Employe
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -19,8 +20,12 @@ import android.widget.EditText;
 import com.example.csci3130_w24_group20_quick_cash.JobAdapter;
 import com.example.csci3130_w24_group20_quick_cash.JobPosting;
 import com.example.csci3130_w24_group20_quick_cash.MapsActivity;
-import com.example.csci3130_w24_group20_quick_cash.MockJobPostingRepo;
 import com.example.csci3130_w24_group20_quick_cash.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -41,6 +46,10 @@ public class SearchFragment extends Fragment implements JobAdapter.OnJobItemClic
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private JobAdapter jobAdapter;
+
+    private List<JobPosting> jobPostings = new ArrayList<>();
 
     public SearchFragment() {
         // Required empty public constructor
@@ -80,13 +89,38 @@ public class SearchFragment extends Fragment implements JobAdapter.OnJobItemClic
     View view = inflater.inflate(R.layout.fragment_search, container, false);
 
 
-        RecyclerView jobRecyclerView = view.findViewById(R.id.jobRecyclerView);
+    RecyclerView jobRecyclerView = view.findViewById(R.id.jobRecyclerView);
     jobRecyclerView.setLayoutManager((new LinearLayoutManager(getActivity())));
 
-    List<JobPosting> jobPostings = MockJobPostingRepo.getInstance().getJobPostings();
+    DatabaseReference jobPostingsRef = FirebaseDatabase.getInstance().getReference("JobPostings");
 
-    JobAdapter jobAdapter = new JobAdapter(jobPostings, this);
-    jobRecyclerView.setAdapter(jobAdapter);
+    jobPostingsRef.addValueEventListener(new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            jobPostings.clear();
+            for (DataSnapshot snapshot: dataSnapshot.getChildren()){
+                for (DataSnapshot jobSnapShot : snapshot.getChildren()){
+                    JobPosting job = jobSnapShot.getValue(JobPosting.class);
+                    if (job != null){
+                        jobPostings.add(job);
+                    }
+                }
+
+            }
+
+            if (jobAdapter == null){
+                jobAdapter = new JobAdapter(jobPostings, SearchFragment.this);
+            } else {
+                jobAdapter.updateJobPostings(jobPostings);
+            }
+            jobRecyclerView.setAdapter(jobAdapter);
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError error) {
+
+        }
+    });
 
     Button btnShowMap = view.findViewById(R.id.btnShowMap);
     btnShowMap.setCompoundDrawablesWithIntrinsicBounds(R.drawable.baseline_map_24, 0, 0, 0);
