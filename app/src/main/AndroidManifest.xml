@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- permission -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,6 +17,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Csci3130_w24_group20_Quick_Cash"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCxPsxpdWDE-Tk4Hf8ZE_Q993DGudKy16M" />
+
+        <activity
+            android:name=".MapsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_maps" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -21,12 +35,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".BaseEmployeeActivity.BaseEmployeeActivity" />
-        <activity android:name=".BaseEmployerActivity.BaseEmployerActivity" />
+        <activity
+            android:name=".BaseEmployeeActivity.BaseEmployeeActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".BaseEmployerActivity.BaseEmployerActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".ForgotPasswordActivity" />
-
     </application>
 
 </manifest>

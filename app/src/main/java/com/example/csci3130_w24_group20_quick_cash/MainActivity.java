@@ -1,3 +1,8 @@
+/**
+ * This class represents the main activity of the application.
+ * It handles user login, registration, and password recovery functionalities.
+ */
+
 package com.example.csci3130_w24_group20_quick_cash;
 
 import static android.content.ContentValues.TAG;
@@ -31,6 +36,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected FirebaseDatabase database = null;
     protected FirebaseCRUD crud = null;
 
+    /**
+     * Called when the activity is starting.
+     * Sets up the layout and initializes Firebase authentication and database access.
+     * Also sets up click listeners for login, sign-up, and forgot password buttons.
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down, this Bundle contains the data it most recently supplied in onSaveInstanceState(Bundle).
+     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +54,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mAuth = FirebaseAuthSingleton.getInstance();
     }
 
+    /**
+     * Called when the activity is about to start.
+     * Checks if the user is already signed in, if yes, redirects to the appropriate activity.
+     */
+
     @Override
     public void onStart() {
         super.onStart();
@@ -51,25 +68,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             move2WelcomeWindow();
         }
     }
-
+    /**
+     * Initializes Firebase database access.
+     */
     protected void initializeDatabaseAccess() {
         database = FirebaseDatabase.getInstance(getResources().getString(R.string.FIREBASE_DB_URL));
         crud = new FirebaseCRUD(database);
     }
+
+    /**
+     * Sets up the click listener for the login button.
+     */
     protected void setupLoginButton() {
         Button loginButton = findViewById(R.id.loginButton);
         loginButton.setOnClickListener(this);
     }
 
+    /**
+     * Sets up the click listener for the sign-up button.
+     */
     protected void setupSignUpButton() {
         Button signUpButton = findViewById(R.id.signUpButton);
         signUpButton.setOnClickListener(this);
     }
+
+    /**
+     * Sets up the click listener for the forgot password button.
+     */
     protected void setupForgotButton() {
         Button forgotPassButton = findViewById(R.id.forgotPassButton);
         forgotPassButton.setOnClickListener(this);
     }
 
+    /**
+     * Redirects the user to the welcome window based on their role.
+     */
     protected void move2WelcomeWindow() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         String uID = currentUser.getUid();
@@ -97,23 +130,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
-
+    /**
+     * Redirects the user to the registration window.
+     */
     protected void move2RegistrationWindow() {
         Intent intent = new Intent(getBaseContext(), RegistrationActivity.class);
         startActivity(intent);
     }
+
+    /**
+     * Redirects the user to the forgot password window.
+     */
     protected void move2forgotPass() {
         Intent intent = new Intent(getBaseContext(), ForgotPasswordActivity.class);
         startActivity(intent);
     }
+
+    /**
+     * Displays a status message using Snackbar.
+     * @param v The view to display the Snackbar in.
+     * @param message The message to display.
+     */
     protected void setStatusMessage(View v, String message) {
         Snackbar snackbar = Snackbar.make(v, message, Snackbar.LENGTH_SHORT);
         snackbar.show();
     }
+
     interface AuthCallback {
         void onResult(boolean success);
     }
 
+    /**
+     * Authenticates the user using Firebase authentication.
+     * @param userName The username (email) of the user.
+     * @param password The password of the user.
+     * @param callback The callback to be invoked with authentication result.
+     */
     protected void UserExists(final String userName, final String password, final AuthCallback callback) {
         mAuth.signInWithEmailAndPassword(userName, password)
                 .addOnCompleteListener(task -> {
@@ -129,17 +181,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
     }
 
-
+    /**
+     * Retrieves the username (email) entered by the user.
+     * @return The username entered by the user.
+     */
     protected String getUserName() {
         EditText netIDBox = findViewById(R.id.email);
         return netIDBox.getText().toString().trim();
     }
 
+    /**
+     * Retrieves the password entered by the user.
+     * @return The password entered by the user.
+     */
     protected String getPassword() {
         EditText netIDBox = findViewById(R.id.password);
         return netIDBox.getText().toString().trim();
     }
 
+    /**
+     * Handles click events for various buttons.
+     * @param v The view that was clicked.
+     */
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.loginButton) {
@@ -179,6 +242,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    /**
+     * Hides the soft keyboard when touching outside of EditText.
+     * @param event The MotionEvent being dispatched.
+     * @return True to consume the event here, false to allow it to continue on to other views.
+     */
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         View view = getCurrentFocus();

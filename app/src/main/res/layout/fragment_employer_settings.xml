@@ -6,12 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
-    tools:context=".BaseEmployeeActivity.EmployeeFragments.SettingsFragment">
+    tools:context=".BaseEmployerActivity.EmployerFragments.EmployerSettingsFragment">
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background"
-        tools:context=".BaseEmployeeActivity.BaseEmployeeActivity">
+        tools:context=".BaseEmployerActivity.BaseEmployerActivity">
 
 
         <ImageView
@@ -44,7 +44,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="143dp"
-            android:text="Hi, Employee!"
+            android:text="Hi, Employer!"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="18sp"

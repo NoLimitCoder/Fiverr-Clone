@@ -10,6 +10,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.concurrent.CompletionException;
 
+/**
+ * Class for performing CRUD operations on Firebase Realtime Database.
+ */
+
 public class FirebaseCRUD {
     private FirebaseDatabase database;
     private DatabaseReference nameRef = null;
@@ -25,6 +29,11 @@ public class FirebaseCRUD {
     private String extractedContactNumber;
     private String extractedRole;
 
+    /**
+     * Constructor for FirebaseCRUD.
+     *
+     * @param database The FirebaseDatabase instance.
+     */
 
     public FirebaseCRUD(FirebaseDatabase database) {
         this.database = database;
