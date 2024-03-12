@@ -1,3 +1,7 @@
+/**
+ * This class represents the Maps activity of the application.
+ * It displays a map with markers for job postings based on their addresses.
+ */
 package com.example.csci3130_w24_group20_quick_cash;
 
 import androidx.fragment.app.FragmentActivity;
@@ -21,9 +25,15 @@ import java.util.Locale;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private List<JobPosting>jobPostings;
+    private List<JobPosting> jobPostings;
     private ActivityMapsBinding binding;
 
+    /**
+     * Called when the activity is starting.
+     * Sets up the layout and retrieves job postings data passed through intent.
+     * Initializes the map fragment asynchronously.
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down, this Bundle contains the data it most recently supplied in onSaveInstanceState(Bundle).
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,10 +56,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
      * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
+     * we just add a marker near the location of each job posting.
+     * @param googleMap The GoogleMap object representing the map.
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -64,19 +72,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-
-
+    /**
+     * Retrieves latitude and longitude coordinates from an address string.
+     * @param country The country of the address.
+     * @param city The city of the address.
+     * @param address The street address.
+     * @return The LatLng object representing the location.
+     */
     private LatLng getLocationFromAddress(String country, String city, String address) {
         Geocoder geocoder = new Geocoder(this, Locale.getDefault());
         try {
             List<Address> streetAddresses = geocoder.getFromLocationName(address + ", " + city + ", " + country, 1);
+            if (!streetAddresses.isEmpty()) {
                 double streetLatitude = streetAddresses.get(0).getLatitude();
                 double streetLongitude = streetAddresses.get(0).getLongitude();
                 return new LatLng(streetLatitude, streetLongitude);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
     }
-
 }

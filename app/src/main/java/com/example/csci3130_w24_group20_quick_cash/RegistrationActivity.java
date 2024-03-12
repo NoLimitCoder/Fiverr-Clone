@@ -1,3 +1,8 @@
+/**
+ * This class represents the registration activity of the application.
+ * It allows users to register with their name, email, password, contact number, and role.
+ * Upon successful registration, the user information is stored in Firebase.
+ */
 package com.example.csci3130_w24_group20_quick_cash;
 
 import android.content.Context;
@@ -29,9 +34,16 @@ import java.util.List;
 
 public class RegistrationActivity extends AppCompatActivity implements View.OnClickListener {
 
+    // Firebase database instance
     FirebaseDatabase database = null;
+    // Firebase CRUD operations
     FirebaseCRUD crud = null;
 
+    /**
+     * Called when the activity is starting.
+     * Sets up the layout, loads role spinner, and initializes database access.
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down, this Bundle contains the data it most recently supplied in onSaveInstanceState(Bundle).
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +54,9 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         this.initializeDatabaseAccess();
     }
 
+    /**
+     * Loads role spinner with predefined roles.
+     */
     protected void loadRoleSpinner() {
         Spinner roleSpinner = findViewById(R.id.roleSpinner);
         List<String> roles = new ArrayList<>();
@@ -54,49 +69,84 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         roleSpinner.setAdapter(spinnerAdapter);
     }
 
+    /**
+     * Sets up registration button click listener.
+     */
     protected void setupRegistrationButton() {
         Button registerButton = findViewById(R.id.registerButton);
         registerButton.setOnClickListener(this);
-
     }
 
+    /**
+     * Initializes database access.
+     */
     protected void initializeDatabaseAccess() {
         database = FirebaseDatabase.getInstance(getResources().getString(R.string.FIREBASE_DB_URL));
         crud = new FirebaseCRUD(database);
     }
 
+    /**
+     * Retrieves the name entered by the user.
+     * @return The name entered by the user.
+     */
     protected String getName() {
         EditText nameBox = findViewById(R.id.editTextFullName);
         return nameBox.getText().toString().trim();
     }
 
+    /**
+     * Retrieves the email address entered by the user.
+     * @return The email address entered by the user.
+     */
     protected String getEmailAddress() {
         EditText emailBox = findViewById(R.id.editTextEmail);
         return emailBox.getText().toString().trim();
     }
 
+    /**
+     * Retrieves the password entered by the user.
+     * @return The password entered by the user.
+     */
     protected String getPassword() {
         EditText passwordBox = findViewById(R.id.editTextPassword);
         return passwordBox.getText().toString().trim();
     }
 
+    /**
+     * Retrieves the contact number entered by the user.
+     * @return The contact number entered by the user.
+     */
     protected String getContactNumber() {
         EditText contactNumber = findViewById(R.id.editTextNumber);
         return contactNumber.getText().toString().trim();
     }
 
+    /**
+     * Retrieves the role selected by the user.
+     * @return The role selected by the user.
+     */
     protected String getRole() {
         Spinner roleSpinner = findViewById(R.id.roleSpinner);
         return roleSpinner.getSelectedItem().toString().trim();
     }
 
-
+    /**
+     * Sets status message to the given message.
+     * @param message The message to set as the status message.
+     */
     protected void setStatusMessage(String message) {
         TextView statusLabel = findViewById(R.id.statusLabel);
         statusLabel.setText(message.trim());
     }
 
-
+    /**
+     * Saves user information to Firebase database.
+     * @param name The name of the user.
+     * @param emailAddress The email address of the user.
+     * @param password The password of the user.
+     * @param contactNumber The contact number of the user.
+     * @param role The role of the user.
+     */
     protected void saveInfoToFirebase(String name, String emailAddress, String password, String contactNumber, String role) {
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(emailAddress, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
@@ -112,17 +162,20 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                         dbr.child("contactNumber").setValue(contactNumber);
                         dbr.child("role").setValue(role);
 
-
-
                         sendEmailVerification(user);
 
                     }
                 }
             }
-                });
+        });
 
     }
 
+    /**
+     * Handles touch event on the screen to hide the soft keyboard when touched outside the EditText.
+     * @param event The motion event.
+     * @return True if the event was handled, false otherwise.
+     */
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         View view = getCurrentFocus();
@@ -145,6 +198,10 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         return ret;
     }
 
+    /**
+     * Sends email verification to the user.
+     * @param user The Firebase user.
+     */
     protected void sendEmailVerification(FirebaseUser user){
         user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -152,9 +209,13 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
                 Toast.makeText(RegistrationActivity.this, "Verification email has been sent", Toast.LENGTH_LONG).show();
             }
         });
-
     }
 
+    /**
+     * Handles click events for the registration button.
+     * Validates user input and registers the user if input is valid.
+     * @param view The view that was clicked.
+     */
     @Override
     public void onClick(View view) {
         String name = getName();
@@ -164,21 +225,20 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
         String role = getRole();
         String errorMessage = new String();
         CredentialValidator validator = new CredentialValidator();
-         if (!validator.isValidName(name)) {
+        if (!validator.isValidName(name)) {
             errorMessage = getResources().getString(R.string.INVALID_NAME).trim();
         } else if (!validator.isValidEmailAddress(emailAddress)) {
             errorMessage = getResources().getString(R.string.INVALID_EMAIL_ADDRESS).trim();
         } else if (!validator.isValidPassword(password)) {
             errorMessage = getResources().getString(R.string.INVALID_PASSWORD).trim();
-         } else if (!validator.isValidContactNumber(contactNumber)){
-             errorMessage = getResources().getString(R.string.INVALID_NUMBER).trim();
+        } else if (!validator.isValidContactNumber(contactNumber)){
+            errorMessage = getResources().getString(R.string.INVALID_NUMBER).trim();
         } else if (!validator.isValidRole(role)) {
-             errorMessage = getResources().getString(R.string.INVALID_ROLE).trim();
-         }
+            errorMessage = getResources().getString(R.string.INVALID_ROLE).trim();
+        }
         setStatusMessage(errorMessage);
         if (errorMessage.isEmpty()) {
             saveInfoToFirebase(name, emailAddress, password, contactNumber, role);
         }
-
     }
 }

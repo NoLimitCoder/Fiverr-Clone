@@ -19,6 +19,19 @@ public class JobPosting implements Serializable {
     private String datePosted;
 
     public JobPosting(){}
+    /**
+     * Parameterized constructor for JobPosting.
+     * @param employerName The name of the employer.
+     * @param employerUID The unique ID of the employer.
+     * @param jobTitle The title of the job.
+     * @param jobCountry The country where the job is located.
+     * @param jobCity The city where the job is located.
+     * @param jobAddress The address of the job location.
+     * @param jobSalary The salary offered for the job.
+     * @param jobDescription The description of the job.
+     * @param jobType The type of the job.
+     * @param otherDetails Any other details related to the job.
+     */
     public JobPosting(String employerName, String employerUID, String jobTitle, String jobCountry, String jobCity,
                       String jobAddress, String jobSalary, String jobDescription,
                       String jobType, String otherDetails){
@@ -105,11 +118,19 @@ public class JobPosting implements Serializable {
         return datePosted;
     }
 
+    /**
+     * Retrieves the current date.
+     * @return The current date in the format "yyyy-MM-dd".
+     */
     public String setCurrentDate(){
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyy-MM-dd");
         return dateFormat.format(new Date());
     }
 
+    /**
+     * Generates a unique job ID using UUID.
+     * @return The generated job ID.
+     */
     private String generateJobID(){
         return UUID.randomUUID().toString();
     }
