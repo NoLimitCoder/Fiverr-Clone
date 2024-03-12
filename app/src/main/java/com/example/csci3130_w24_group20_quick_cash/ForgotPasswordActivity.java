@@ -8,6 +8,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,9 +16,12 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 
-
+/**
+ * Activity for resetting user password.
+ */
 public class ForgotPasswordActivity extends AppCompatActivity {
     protected FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -48,6 +52,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         return ret;
     }
 
+    /**
+     * Sets up the functionality for the send button.
+     */
     protected void setupSendButton() {
         Button send = findViewById(R.id.verifyButton);
         EditText userEmail = findViewById(R.id.emailEntry);
@@ -55,7 +62,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 CredentialValidator validator = new CredentialValidator();
-                if(!validator.isValidEmailAddress(userEmail.getText().toString())){
+                if (!validator.isValidEmailAddress(userEmail.getText().toString())) {
                     Toast.makeText(ForgotPasswordActivity.this, "Invalid Email", Toast.LENGTH_LONG).show();
                 } else {
                     mAuth.sendPasswordResetEmail(userEmail.getText().toString()).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -73,7 +80,4 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
 }

@@ -10,21 +10,42 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+/**
+ * Adapter class for RecyclerView to display a list of job postings.
+ */
 public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder>{
 
     private static List<JobPosting> joblist;
     private static OnJobItemClickListener clickListener;
 
+    /**
+     * Interface definition for a callback to be invoked when a job item is clicked.
+     */
     public interface OnJobItemClickListener {
+        /**
+         * Called when a job item is clicked.
+         *
+         * @param jobPosting The clicked job posting object.
+         */
         void onJobItemClick(JobPosting jobPosting);
-
     }
 
-    public JobAdapter(List <JobPosting> joblist, OnJobItemClickListener clickListener){
+    /**
+     * Constructor for JobAdapter.
+     *
+     * @param joblist The list of job postings to be displayed.
+     * @param clickListener The click listener for job items.
+     */
+    public JobAdapter(List<JobPosting> joblist, OnJobItemClickListener clickListener){
         this.joblist = joblist;
         this.clickListener = clickListener;
     }
 
+    /**
+     * Updates the list of job postings.
+     *
+     * @param joblist The updated list of job postings.
+     */
     public void updateJobPostings(List<JobPosting> joblist){
         this.joblist = joblist;
         notifyDataSetChanged();
@@ -53,10 +74,18 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder>{
         return joblist.size();
     }
 
+    /**
+     * ViewHolder class for job items.
+     */
     public static class JobViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView textJobTitle, textJobSalary, textJobType, textJobCountry, textJobCity;
 
+        /**
+         * Constructor for JobViewHolder.
+         *
+         * @param itemView The view for the job item.
+         */
         public JobViewHolder(@NonNull View itemView){
             super(itemView);
             textJobTitle = itemView.findViewById(R.id.textJobTitle);
@@ -67,14 +96,13 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder>{
 
             itemView.setOnClickListener(this);
         }
+
         @Override
         public void onClick(View view){
-
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION && clickListener != null){
                 clickListener.onJobItemClick(joblist.get(position));
             }
         }
     }
-
 }
