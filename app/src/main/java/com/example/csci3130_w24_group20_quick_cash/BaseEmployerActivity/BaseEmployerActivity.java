@@ -46,12 +46,25 @@ public class BaseEmployerActivity extends AppCompatActivity  {
             return true;
         });
     }
+
+    /**
+     * Switches the current fragment with the provided fragment.
+     *
+     * @param fragment The fragment to be displayed.
+     */
     private void switchFragment(Fragment fragment){
         FragmentManager fragManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayout, fragment);
         fragmentTransaction.commit();
     }
+
+    /**
+     * Overrides the dispatchTouchEvent method to handle touch events within the activity.
+     *  *
+     *  * @param event The MotionEvent object representing the touch event.
+     *  * @return Returns true if the event was handled successfully, otherwise returns false.
+     */
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
@@ -74,8 +87,6 @@ public class BaseEmployerActivity extends AppCompatActivity  {
         }
         return ret;
     }
-
-
 
 
 }

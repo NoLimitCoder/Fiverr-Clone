@@ -25,9 +25,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link JobUploadFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * A fragment responsible for uploading job postings to the Firebase Realtime Database.
+ * This fragment provides UI elements for entering job posting details and functionality
+ * for uploading the job posting data to the database.
  */
 public class JobUploadFragment extends Fragment implements View.OnClickListener {
 
@@ -77,6 +77,9 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
         return fragment;
     }
 
+    /**
+     * Initializes database access by creating instances of FirebaseDatabase and FirebaseCRUD.
+     */
     protected void initializeDatabaseAccess() {
         database = FirebaseDatabase.getInstance(getResources().getString(R.string.FIREBASE_DB_URL));
         crud = new FirebaseCRUD(database);
@@ -93,15 +96,20 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
         }
     }
 
-
+    /**
+     * Called to create the view hierarchy associated with this fragment.
+     *
+     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment.
+     * @param container The parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
+     * @return Returns the View for the fragment's UI.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_job_upload, container, false);
-
         uploadButton = view.findViewById(R.id.uploadJobButton);
-
         jobTitleEditText = view.findViewById(R.id.editTextFullName);
         jobSalaryEditText = view.findViewById(R.id.editTextEmail);
         jobTypeEditText = view.findViewById(R.id.editTextPassword);
@@ -110,7 +118,6 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
         jobAdressEditText = view.findViewById(R.id.editTextJobAddress);
         jobDescriptionEditText = view.findViewById(R.id.editTextJobDescription);
         jobOtherDetailsEditText = view.findViewById(R.id.editTextJobOtherDetails);
-
         jobPostingReference = FirebaseDatabase.getInstance().getReference().child("JobPostings");
 
         uploadButton.setOnClickListener(this);
@@ -118,8 +125,13 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
         return view;
     }
 
+    /**
+     * Uploads a job posting to the Firebase Realtime Database.
+     * This method retrieves the job posting details from the input fields, validates them,
+     * and then uploads the job posting if all required fields are filled out and the address is valid.
+     * It displays appropriate toast messages to inform the user about the outcome of the upload process.
+     */
     public void uploadJobPosting() {
-
         CredentialValidator credChecker = new CredentialValidator();
 
         String jobTitle = jobTitleEditText.getText().toString().trim();
@@ -137,7 +149,6 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
         JobPosting jobPosting = new JobPosting(employerName[0], employerUID, jobTitle, jobCountry, jobCity, jobAddress, jobSalary,
                 jobDescription, jobType, jobOtherDetails);
 
-
         if (credChecker.isJobFilledOut(jobTitle, jobCountry, jobCity, jobAddress, jobSalary,
                 jobDescription, jobType, jobOtherDetails)) {
 
@@ -149,9 +160,15 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
             Toast.makeText(getContext(), "Address Is Not Valid",Toast.LENGTH_SHORT).show();
         }
         Toast.makeText(getContext(), "Please Fill Out All The Fields", Toast.LENGTH_SHORT).show();
-
     }
 
+    /**
+     * Fetches the employer's name from the Firebase Realtime Database using their unique user ID.
+     * This method retrieves the employer's name associated with the provided user ID and stores it
+     * in the employerName array.
+     *
+     * @param employerUID The unique user ID of the employer whose name is to be fetched.
+     */
     public void fetchEmployerName(String employerUID){
 
         DatabaseReference dbr = FirebaseDatabase.getInstance().getReference("users").child(employerUID);
@@ -170,7 +187,13 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
 
     }
 
-
+    /**
+     * Handles click events for the upload button.
+     * This method is invoked when the upload button is clicked,
+     * triggering the process of uploading a job posting.
+     *
+     * @param v The View object that was clicked, in this case, the upload button.
+     */
     @Override
     public void onClick(View v) {
         uploadJobPosting();

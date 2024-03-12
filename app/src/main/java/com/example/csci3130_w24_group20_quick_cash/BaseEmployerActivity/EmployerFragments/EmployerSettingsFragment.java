@@ -67,17 +67,34 @@ public class EmployerSettingsFragment extends Fragment implements View.OnClickLi
         }
     }
 
+    /**
+     * Sets up the logout button functionality by finding the button in the provided view and
+     * attaching an OnClickListener to it.
+     *
+     * @param view The parent view containing the logout button.
+     */
     protected void setupLogoutButton(View view) {
         logoutButton = view.findViewById(R.id.logoutButton); // Correct ID of the logout button
         logoutButton.setOnClickListener(this);
     }
 
+    /**
+     * Logs the current user out of the application by signing out from Firebase authentication
+     * and redirecting to the MainActivity.
+     */
     void logout() {
         mAuth.signOut();
         Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Handles the onClick event for the logout button.
+     * This method is invoked when the logout button is clicked.
+     * It logs the click event and initiates the logout process.
+     *
+     * @param v The View object that was clicked, in this case, the logout button.
+     */
     @Override
     public void onClick(View v) {
         Log.d("clicked", "clicked");

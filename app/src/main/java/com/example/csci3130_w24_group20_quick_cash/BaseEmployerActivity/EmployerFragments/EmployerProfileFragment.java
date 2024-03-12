@@ -10,9 +10,8 @@ import androidx.fragment.app.Fragment;
 import com.example.csci3130_w24_group20_quick_cash.R;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link EmployerProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * A fragment representing the employer's profile.
+ * This fragment displays information related to the employer's profile.
  */
 public class EmployerProfileFragment extends Fragment {
 
