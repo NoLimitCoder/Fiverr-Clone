@@ -9,6 +9,7 @@ import static android.content.ContentValues.TAG;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * Called when the activity is starting.
      * Sets up the layout and initializes Firebase authentication and database access.
      * Also sets up click listeners for login, sign-up, and forgot password buttons.
+     *
      * @param savedInstanceState If the activity is being re-initialized after previously being shut down, this Bundle contains the data it most recently supplied in onSaveInstanceState(Bundle).
      */
 
@@ -52,6 +54,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.setupForgotButton();
         this.initializeDatabaseAccess();
         mAuth = FirebaseAuthSingleton.getInstance();
+
+        /*ActivityCompat.requestPermissions(this,
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE},
+                PackageManager.PERMISSION_GRANTED);
+
+         */
     }
 
     /**
@@ -64,10 +73,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        if(currentUser != null){
+        if (currentUser != null) {
             move2WelcomeWindow();
         }
     }
+
     /**
      * Initializes Firebase database access.
      */
@@ -110,15 +120,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         dbr.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()){
+                if (snapshot.exists()) {
                     String role = snapshot.child("role").getValue(String.class);
 
-                    if (role.equals("Employee")){
+                    if (role.equals("Employee")) {
                         Intent intent = new Intent(getBaseContext(), BaseEmployeeActivity.class);
                         startActivity(intent);
                     } else {
                         Log.d(TAG, "employer:success");
-                        Intent intent = new Intent (getBaseContext(), BaseEmployerActivity.class);
+                        Intent intent = new Intent(getBaseContext(), BaseEmployerActivity.class);
                         startActivity(intent);
                     }
                 }
@@ -130,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
+
     /**
      * Redirects the user to the registration window.
      */
@@ -148,7 +159,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * Displays a status message using Snackbar.
-     * @param v The view to display the Snackbar in.
+     *
+     * @param v       The view to display the Snackbar in.
      * @param message The message to display.
      */
     protected void setStatusMessage(View v, String message) {
@@ -162,6 +174,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * Authenticates the user using Firebase authentication.
+     *
      * @param userName The username (email) of the user.
      * @param password The password of the user.
      * @param callback The callback to be invoked with authentication result.
@@ -183,6 +196,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * Retrieves the username (email) entered by the user.
+     *
      * @return The username entered by the user.
      */
     protected String getUserName() {
@@ -192,6 +206,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * Retrieves the password entered by the user.
+     *
      * @return The password entered by the user.
      */
     protected String getPassword() {
@@ -201,6 +216,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     /**
      * Handles click events for various buttons.
+     *
      * @param v The view that was clicked.
      */
     @Override
@@ -214,12 +230,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (validator.isEmptyUserName(userName)) {
                 errorMessage = "Error: " + getString(R.string.EMPTY_USER_NAME);
                 Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
-            }
-            else if (validator.isEmptyPassword(psswd)) {
+            } else if (validator.isEmptyPassword(psswd)) {
                 errorMessage = "Error: " + getString(R.string.EMPTY_PASSWORD);
                 Toast.makeText(MainActivity.this, errorMessage, Toast.LENGTH_SHORT).show();
-            }
-            else {
+            } else {
                 UserExists(userName, psswd, new AuthCallback() {
                     @Override
                     public void onResult(boolean success) {
@@ -230,20 +244,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 });
             }
-        }
-        else if (v.getId() == R.id.signUpButton) {
+        } else if (v.getId() == R.id.signUpButton) {
             // Handle sign up button click
             // You can add code to navigate to the sign-up activity or perform other actions here
             move2RegistrationWindow();
 
-        }
-        else if(v.getId() == R.id.forgotPassButton){
+        } else if (v.getId() == R.id.forgotPassButton) {
             move2forgotPass();
         }
     }
 
     /**
      * Hides the soft keyboard when touching outside of EditText.
+     *
      * @param event The MotionEvent being dispatched.
      * @return True to consume the event here, false to allow it to continue on to other views.
      */
@@ -260,11 +273,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             if (event.getAction() == MotionEvent.ACTION_UP
                     && (x < w.getLeft() || x >= w.getRight()
-                    || y < w.getTop() || y > w.getBottom()) ) {
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    || y < w.getTop() || y > w.getBottom())) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(getWindow().getCurrentFocus().getWindowToken(), 0);
             }
         }
         return ret;
     }
+
+    public void buttonUploadFile(View view) {
+        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT, MediaStore.Downloads.EXTERNAL_CONTENT_URI);
+        //intent.setType("application/pdf");
+        intent.setType("*/*");
+        this.startActivity(intent);
+    }
+
+    public void buttonOpenFile(View view) {
+        Intent intent = new Intent(Intent.ACTION_VIEW, MediaStore.Downloads.EXTERNAL_CONTENT_URI);
+        //intent.setType("application/pdf");
+        intent.setType("*/*");
+        this.startActivity(intent);
+    }
+
+
 }
