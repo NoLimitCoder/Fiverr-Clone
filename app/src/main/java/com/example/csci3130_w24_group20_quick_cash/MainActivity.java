@@ -125,10 +125,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     if (role.equals("Employee")) {
                         Intent intent = new Intent(getBaseContext(), BaseEmployeeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                     } else {
                         Log.d(TAG, "employer:success");
                         Intent intent = new Intent(getBaseContext(), BaseEmployerActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                     }
                 }
@@ -146,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     protected void move2RegistrationWindow() {
         Intent intent = new Intent(getBaseContext(), RegistrationActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
@@ -154,6 +157,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     protected void move2forgotPass() {
         Intent intent = new Intent(getBaseContext(), ForgotPasswordActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
@@ -283,6 +287,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void buttonUploadFile(View view) {
         Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT, MediaStore.Downloads.EXTERNAL_CONTENT_URI);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         //intent.setType("application/pdf");
         intent.setType("*/*");
         this.startActivity(intent);
@@ -290,6 +295,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void buttonOpenFile(View view) {
         Intent intent = new Intent(Intent.ACTION_VIEW, MediaStore.Downloads.EXTERNAL_CONTENT_URI);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         //intent.setType("application/pdf");
         intent.setType("*/*");
         this.startActivity(intent);

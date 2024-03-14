@@ -85,6 +85,7 @@ public class EmployerSettingsFragment extends Fragment implements View.OnClickLi
     void logout() {
         mAuth.signOut();
         Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 
