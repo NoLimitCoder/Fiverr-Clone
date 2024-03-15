@@ -31,7 +31,7 @@ public class LogoutExpressoTests {
     public void setup() {
         scenario = ActivityScenario.launch(BaseEmployeeActivity.class);
         scenario.onActivity(activity -> {
-            activity.setupLogoutButton();
+            //activity.setupLogoutButton();
         });
     }
 
