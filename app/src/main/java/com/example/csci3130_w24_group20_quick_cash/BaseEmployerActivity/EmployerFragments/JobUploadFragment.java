@@ -155,11 +155,12 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
             if (credChecker.isValidAddress(getContext(),jobCountry, jobCity, jobAddress)){
                 jobPostingReference.child(employerUID).child(jobPosting.getJobID()).setValue(jobPosting);
                 Toast.makeText(getContext(), "Job Posting Uploaded Successfully", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getContext(), "Address Is Not Valid", Toast.LENGTH_SHORT).show();
             }
-
-            Toast.makeText(getContext(), "Address Is Not Valid",Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getContext(), "Please Fill Out All The Fields", Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(getContext(), "Please Fill Out All The Fields", Toast.LENGTH_SHORT).show();
     }
 
     /**

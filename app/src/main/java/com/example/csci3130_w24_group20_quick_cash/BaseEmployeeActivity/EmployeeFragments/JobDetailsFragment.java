@@ -87,7 +87,9 @@ public class JobDetailsFragment extends Fragment {
         applyButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                switchFragment(new JobApplyFragment());
+                JobApplyFragment jobApplyFragment = new JobApplyFragment();
+                jobApplyFragment.setJobID(jobPosting.getJobID());
+                switchFragment(jobApplyFragment);
             }
         });
 
