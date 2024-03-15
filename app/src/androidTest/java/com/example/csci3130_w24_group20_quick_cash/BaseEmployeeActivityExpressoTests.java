@@ -3,13 +3,11 @@ import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.action.ViewActions;
 import androidx.test.espresso.matcher.ViewMatchers;
-import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.BaseEmployeeActivity;
 
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -47,10 +45,10 @@ public class BaseEmployeeActivityExpressoTests{
     @Test
     public void testSwitchToSettingsFragment() {
         // Click on the settings navigation item
-        Espresso.onView(ViewMatchers.withId(R.id.employeeSettings)).perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withId(R.id.employeeNavSettings)).perform(ViewActions.click());
 
         // Verify that the settings fragment is displayed by checking the visibility of its view
-        Espresso.onView(withId(R.id.employeeSettings))
+        Espresso.onView(withId(R.id.fragment_employee_settings))
                 .check(matches(isDisplayed()));
     }
 }
