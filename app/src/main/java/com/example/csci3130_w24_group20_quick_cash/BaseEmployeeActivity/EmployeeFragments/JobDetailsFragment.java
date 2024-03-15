@@ -3,10 +3,13 @@ package com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.Employe
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.csci3130_w24_group20_quick_cash.JobPosting;
@@ -66,6 +69,15 @@ public class JobDetailsFragment extends Fragment {
         TextView textJobCountry = view.findViewById(R.id.textJobCountry);
         TextView textJobCity = view.findViewById(R.id.textJobCity);
 
+        Button applyButton = view.findViewById(R.id.applyJobButton);
+        Button favoriteButton = view.findViewById(R.id.favoriteJobButton);
+
+        applyButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                switchFragment(new JobApplyFragment());
+            }
+        });
 
 
 
@@ -82,6 +94,13 @@ public class JobDetailsFragment extends Fragment {
 
         }
         return view;
+    }
+
+    private void switchFragment(Fragment fragment){
+        FragmentManager fragManager = requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayout, fragment);
+        fragmentTransaction.addToBackStack("fragment_job_details").commit();
     }
 
 }
