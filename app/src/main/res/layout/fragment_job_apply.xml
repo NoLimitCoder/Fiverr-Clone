@@ -7,11 +7,14 @@
     tools:context=".BaseEmployeeActivity.EmployeeFragments.EmployeeProfileFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
+
+    <Button
+        android:id="@+id/uploadResume"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
-        android:text="Apply fragment"
-        android:textSize="26dp"
-        android:layout_gravity="center"/>
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:text="Upload Resume"
+        android:layout_alignBottom="@+id/textEmployerName"/>
 
 </FrameLayout>
