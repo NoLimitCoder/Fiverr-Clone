@@ -26,8 +26,8 @@ public class ForgotPasswordJUnitTests {
      * Validates whether the email address format is correct.
      */
     @Test
-    public void checkIfEmailIsValid() {
-        assertTrue(validator.isValidEmailAddress("abc123@dal.ca"));
+    public void checkIfApplicationIsValid() {
+        assertTrue(validator.isApplicationFilledOut("abc123@dal.ca"));
         assertFalse(validator.isValidEmailAddress("a.ca"));
         assertFalse(validator.isValidEmailAddress("john.doeexample.com"));
     }
