@@ -47,7 +47,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextFullName"
+        android:id="@+id/editTextApplyFullName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="105dp"
@@ -76,7 +76,7 @@
         android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextFullName" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextApplyFullName" />
 
     <EditText
         android:id="@+id/editTextPassword"
@@ -96,7 +96,7 @@
         app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
 
     <EditText
-        android:id="@+id/editTextNumber"
+        android:id="@+id/editTextApplyCountry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="105dp"
@@ -121,7 +121,7 @@
         android:dropDownWidth="200dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextApplyCountry" />
 
     <Button
         android:id="@+id/registerButton"

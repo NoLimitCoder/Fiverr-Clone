@@ -110,14 +110,14 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_job_upload, container, false);
         uploadButton = view.findViewById(R.id.uploadJobButton);
-        jobTitleEditText = view.findViewById(R.id.editTextFullName);
+        jobTitleEditText = view.findViewById(R.id.editTextApplyFullName);
         jobSalaryEditText = view.findViewById(R.id.editTextEmail);
         jobTypeEditText = view.findViewById(R.id.editTextPassword);
-        jobCountryEditText = view.findViewById(R.id.editTextNumber);
-        jobCityEditText = view.findViewById(R.id.editTextJobCity);
+        jobCountryEditText = view.findViewById(R.id.editTextApplyCountry);
+        jobCityEditText = view.findViewById(R.id.editTextApplyCity);
         jobAdressEditText = view.findViewById(R.id.editTextJobAddress);
-        jobDescriptionEditText = view.findViewById(R.id.editTextJobDescription);
-        jobOtherDetailsEditText = view.findViewById(R.id.editTextJobOtherDetails);
+        jobDescriptionEditText = view.findViewById(R.id.editTextJobExperience);
+        jobOtherDetailsEditText = view.findViewById(R.id.editTextApplyOtherDetails);
         jobPostingReference = FirebaseDatabase.getInstance().getReference().child("JobPostings");
 
         uploadButton.setOnClickListener(this);

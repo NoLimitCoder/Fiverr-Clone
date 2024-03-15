@@ -18,7 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-
             <ImageView
                 android:id="@+id/imageView4"
                 android:layout_width="169dp"
@@ -59,7 +58,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/editTextFullName"
+                android:id="@+id/editTextApplyFullName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="105dp"
@@ -74,12 +73,30 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView" />
 
+
             <EditText
                 android:id="@+id/editTextEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="105dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="64dp"
+                android:layout_marginEnd="106dp"
+                android:width="200dp"
+                android:background="@drawable/input"
+                android:hint="Email"
+                android:paddingLeft="20dp"
+                android:textSize="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.493"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/editTextApplyFullName" />
+
+            <EditText
+                android:id="@+id/editTextApplyAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="105dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="106dp"
                 android:width="200dp"
                 android:background="@drawable/input"
@@ -87,13 +104,12 @@
                 android:paddingLeft="20dp"
                 android:textSize="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.493"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextFullName" />
-
-
+                app:layout_constraintTop_toBottomOf="@+id/editTextApplyFullName" />
 
             <EditText
-                android:id="@+id/editTextNumber"
+                android:id="@+id/editTextApplyCountry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="105dp"
@@ -109,7 +125,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/editTextAvailability" />
 
             <EditText
-                android:id="@+id/editTextJobCity"
+                android:id="@+id/editTextApplyCity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="105dp"
@@ -122,7 +138,7 @@
                 android:textSize="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextApplyCountry" />
 
             <EditText
                 android:id="@+id/editTextJobAddress"
@@ -138,7 +154,7 @@
                 android:textSize="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextJobCity" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextApplyCity" />
             <EditText
                 android:id="@+id/editTextEducation"
                 android:layout_width="wrap_content"
@@ -153,7 +169,7 @@
                 android:textSize="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextJobCity" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextApplyCity" />
 
             <EditText
                 android:id="@+id/editTextAvailability"
@@ -171,8 +187,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
 
+
             <EditText
-                android:id="@+id/editTextJobDescription"
+                android:id="@+id/editTextJobExperience"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="105dp"
@@ -189,7 +206,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/editTextJobAddress" />
 
             <EditText
-                android:id="@+id/editTextJobOtherDetails"
+                android:id="@+id/editTextApplyOtherDetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="105dp"
@@ -203,7 +220,7 @@
                 android:textSize="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextJobDescription" />
+                app:layout_constraintTop_toBottomOf="@+id/editTextJobExperience" />
 
             <Button
                 android:id="@+id/SubmitApplicationButton"
@@ -219,7 +236,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.501"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editTextJobOtherDetails"
+                app:layout_constraintTop_toBottomOf="@+id/editTextApplyOtherDetails"
                 app:layout_constraintVertical_bias="0.154" />
 
 

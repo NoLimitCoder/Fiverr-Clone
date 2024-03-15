@@ -90,7 +90,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
      * @return The name entered by the user.
      */
     protected String getName() {
-        EditText nameBox = findViewById(R.id.editTextFullName);
+        EditText nameBox = findViewById(R.id.editTextApplyFullName);
         return nameBox.getText().toString().trim();
     }
 
@@ -117,7 +117,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
      * @return The contact number entered by the user.
      */
     protected String getContactNumber() {
-        EditText contactNumber = findViewById(R.id.editTextNumber);
+        EditText contactNumber = findViewById(R.id.editTextApplyCountry);
         return contactNumber.getText().toString().trim();
     }
 
