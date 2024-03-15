@@ -43,7 +43,7 @@ public class RegExpressoTests {
     @Test
     public void checkIfNameIsInvalid() {
         onView(withId(R.id.editTextApplyFullName)).perform(typeText(""));
-        onView(withId(R.id.editTextEmail)).perform(typeText("abc.123@dal.ca"));
+        onView(withId(R.id.editTextApplyEmail)).perform(typeText("abc.123@dal.ca"));
         onView(withId(R.id.editTextPassword)).perform(typeText("111111111"));
         onView(withId(R.id.editTextApplyCountry)).perform(typeText("4169098983"));
         onView(withId(R.id.roleSpinner)).perform(click());
@@ -55,7 +55,7 @@ public class RegExpressoTests {
     @Test
     public void checkIfNameIsValid() {
         onView(withId(R.id.editTextApplyFullName)).perform(typeText("Ammar Za"));
-        onView(withId(R.id.editTextEmail)).perform(typeText("abc.123@dal.ca"));
+        onView(withId(R.id.editTextApplyEmail)).perform(typeText("abc.123@dal.ca"));
         onView(withId(R.id.editTextPassword)).perform(typeText("111111111"));
         onView(withId(R.id.editTextApplyCountry)).perform(typeText("4169098983"));
         onView(withId(R.id.roleSpinner)).perform(click());
@@ -68,7 +68,7 @@ public class RegExpressoTests {
     @Test
     public void checkIfEmailIsInvalid() {
         onView(withId(R.id.editTextApplyFullName)).perform(typeText("Ammar Za"));
-        onView(withId(R.id.editTextEmail)).perform(typeText("abc.123dal.ca"));
+        onView(withId(R.id.editTextApplyEmail)).perform(typeText("abc.123dal.ca"));
         onView(withId(R.id.editTextPassword)).perform(typeText("111111111"));
         onView(withId(R.id.editTextApplyCountry)).perform(typeText("4169098983"));
         onView(withId(R.id.roleSpinner)).perform(click());
@@ -81,7 +81,7 @@ public class RegExpressoTests {
     @Test
     public void checkIfPasswordIsInvalid() {
         onView(withId(R.id.editTextApplyFullName)).perform(typeText("Ammar Za"));
-        onView(withId(R.id.editTextEmail)).perform(typeText("abc.123@dal.ca"));
+        onView(withId(R.id.editTextApplyEmail)).perform(typeText("abc.123@dal.ca"));
         onView(withId(R.id.editTextPassword)).perform(typeText("1"));
         onView(withId(R.id.editTextApplyCountry)).perform(typeText("4169098983"));
         onView(withId(R.id.roleSpinner)).perform(click());
@@ -93,7 +93,7 @@ public class RegExpressoTests {
     @Test
     public void checkIfContactNumberIsValid() {
         onView(withId(R.id.editTextApplyFullName)).perform(typeText("Ammar Za"));
-        onView(withId(R.id.editTextEmail)).perform(typeText("abc.123@dal.ca"));
+        onView(withId(R.id.editTextApplyEmail)).perform(typeText("abc.123@dal.ca"));
         onView(withId(R.id.editTextPassword)).perform(typeText("1111111111"));
         onView(withId(R.id.editTextApplyCountry)).perform(typeText("98983"));
         onView(withId(R.id.roleSpinner)).perform(click());
@@ -106,7 +106,7 @@ public class RegExpressoTests {
     @Test
     public void checkIfRoleIsValid() {
         onView(withId(R.id.editTextApplyFullName)).perform(typeText("Ammar Za"));
-        onView(withId(R.id.editTextEmail)).perform(typeText("abc.123@dal.ca"));
+        onView(withId(R.id.editTextApplyEmail)).perform(typeText("abc.123@dal.ca"));
         onView(withId(R.id.editTextPassword)).perform(typeText("111111111"));
         onView(withId(R.id.editTextApplyCountry)).perform(typeText("4169098983"));
         onView(withId(R.id.roleSpinner)).perform(click());
@@ -119,7 +119,7 @@ public class RegExpressoTests {
     @Test
     public void checkIfRoleIsInvalid() {
         onView(withId(R.id.editTextApplyFullName)).perform(typeText("Ammar Za"));
-        onView(withId(R.id.editTextEmail)).perform(typeText("abc.123@dal.ca"));
+        onView(withId(R.id.editTextApplyEmail)).perform(typeText("abc.123@dal.ca"));
         onView(withId(R.id.editTextPassword)).perform(typeText("111111111"));
         onView(withId(R.id.editTextApplyCountry)).perform(typeText("4169098983"));
         onView(withId(R.id.roleSpinner)).perform(click());

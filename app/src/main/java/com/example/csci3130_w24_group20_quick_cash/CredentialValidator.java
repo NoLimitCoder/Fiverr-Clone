@@ -59,6 +59,21 @@ public class CredentialValidator {
     }
 
     /**
+     * Checks if all job fields are filled out.
+     *
+     * @param applicationFields The job fields to be checked.
+     * @return True if all job fields are filled out, otherwise false.
+     */
+    public boolean isApplicationFilledOut(String... applicationFields){
+        for (String field : applicationFields){
+            if(field.trim().isEmpty()){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
      * Checks if the provided password is empty.
      *
      * @param password The password to be checked.

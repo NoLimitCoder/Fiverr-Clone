@@ -111,7 +111,7 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
         View view = inflater.inflate(R.layout.fragment_job_upload, container, false);
         uploadButton = view.findViewById(R.id.uploadJobButton);
         jobTitleEditText = view.findViewById(R.id.editTextApplyFullName);
-        jobSalaryEditText = view.findViewById(R.id.editTextEmail);
+        jobSalaryEditText = view.findViewById(R.id.editTextApplyEmail);
         jobTypeEditText = view.findViewById(R.id.editTextPassword);
         jobCountryEditText = view.findViewById(R.id.editTextApplyCountry);
         jobCityEditText = view.findViewById(R.id.editTextApplyCity);

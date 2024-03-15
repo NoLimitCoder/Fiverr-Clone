@@ -99,7 +99,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
      * @return The email address entered by the user.
      */
     protected String getEmailAddress() {
-        EditText emailBox = findViewById(R.id.editTextEmail);
+        EditText emailBox = findViewById(R.id.editTextApplyEmail);
         return emailBox.getText().toString().trim();
     }
 
