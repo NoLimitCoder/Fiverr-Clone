@@ -37,7 +37,7 @@ public class BaseEmployerActivity extends AppCompatActivity  {
 
             if (itemId == R.id.uploadJobs){
                 switchFragment(new JobUploadFragment());
-            } else if (itemId == R.id.viewProfile){
+            } else if (itemId == R.id.viewEmployerProfile){
                 switchFragment(new EmployerProfileFragment());
             } else if (itemId == R.id.employerNavSettings){
                 switchFragment(new EmployerSettingsFragment());
