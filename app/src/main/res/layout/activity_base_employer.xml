@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <FrameLayout
-        android:id="@+id/baseEmployee"
+        android:id="@+id/baseEmployer"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/navLayout"

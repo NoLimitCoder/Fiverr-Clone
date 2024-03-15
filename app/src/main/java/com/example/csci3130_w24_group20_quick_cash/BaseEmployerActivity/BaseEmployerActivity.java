@@ -39,7 +39,7 @@ public class BaseEmployerActivity extends AppCompatActivity  {
                 switchFragment(new JobUploadFragment());
             } else if (itemId == R.id.viewProfile){
                 switchFragment(new EmployerProfileFragment());
-            } else if (itemId == R.id.employeeNavSettings){
+            } else if (itemId == R.id.employerNavSettings){
                 switchFragment(new EmployerSettingsFragment());
             }
 
@@ -55,7 +55,7 @@ public class BaseEmployerActivity extends AppCompatActivity  {
     private void switchFragment(Fragment fragment){
         FragmentManager fragManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragManager.beginTransaction();
-        fragmentTransaction.replace(R.id.employeeNavSettings, fragment);
+        fragmentTransaction.replace(R.id.baseEmployer, fragment);
         fragmentTransaction.commit();
     }
 

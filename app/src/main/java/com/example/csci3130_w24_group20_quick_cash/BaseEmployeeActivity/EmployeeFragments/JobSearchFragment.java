@@ -161,7 +161,7 @@ public class JobSearchFragment extends Fragment implements JobAdapter.OnJobItemC
 
         JobDetailsFragment jobDetailsFragment = JobDetailsFragment.newInstance(jobposting);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.baseEmployee, jobDetailsFragment);
+        transaction.replace(R.id.baseEmployer, jobDetailsFragment);
         transaction.addToBackStack("fragment_job_search").commit();
     }
 
