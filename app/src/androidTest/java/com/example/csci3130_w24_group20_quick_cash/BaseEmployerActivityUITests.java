@@ -25,7 +25,7 @@ import java.util.List;
 
 public class BaseEmployerActivityUITests {
 
-    public String launcherPackage = "ca.dal.cs.csci3130.w24_group20_quick_cash";
+    public String launcherPackage = "com.example.csci3130_w24_group20_quick_cash";
     public int TIME_OUT = 5000;
     UiDevice device;
 
