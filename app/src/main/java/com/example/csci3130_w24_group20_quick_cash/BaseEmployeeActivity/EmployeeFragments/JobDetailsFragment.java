@@ -1,15 +1,7 @@
 package com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments;
 
-import static android.app.Activity.RESULT_OK;
-
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -19,10 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.csci3130_w24_group20_quick_cash.JobPosting;
-import com.example.csci3130_w24_group20_quick_cash.MainActivity;
 import com.example.csci3130_w24_group20_quick_cash.R;
 
 /**
@@ -109,7 +99,7 @@ public class JobDetailsFragment extends Fragment {
     private void switchFragment(Fragment fragment){
         FragmentManager fragManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayout, fragment);
+        fragmentTransaction.replace(R.id.employeeSettings, fragment);
         fragmentTransaction.addToBackStack("fragment_job_details").commit();
     }
 

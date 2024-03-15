@@ -55,7 +55,7 @@ public class BaseEmployerActivity extends AppCompatActivity  {
     private void switchFragment(Fragment fragment){
         FragmentManager fragManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayout, fragment);
+        fragmentTransaction.replace(R.id.employeeSettings, fragment);
         fragmentTransaction.commit();
     }
 
