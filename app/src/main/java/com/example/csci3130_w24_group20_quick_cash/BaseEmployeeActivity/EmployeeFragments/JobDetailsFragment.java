@@ -99,7 +99,7 @@ public class JobDetailsFragment extends Fragment {
     private void switchFragment(Fragment fragment){
         FragmentManager fragManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragManager.beginTransaction();
-        fragmentTransaction.replace(R.id.baseEmployer, fragment);
+        fragmentTransaction.replace(R.id.baseEmployee, fragment);
         fragmentTransaction.addToBackStack("fragment_job_details").commit();
     }
 
