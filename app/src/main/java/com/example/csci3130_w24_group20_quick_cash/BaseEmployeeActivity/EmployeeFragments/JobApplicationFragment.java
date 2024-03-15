@@ -33,7 +33,7 @@ public class JobApplicationFragment extends Fragment implements View.OnClickList
     private String mParam1;
     private String mParam2;
 
-    private Button ApplyButton;
+    private Button ApplyButton, uploadResume;
     private EditText applyName, applyEmail, applyAvailability, applyAddress, applyCountry,
     applyCity, applyEducation, applyExperience, applyDetails;
 
@@ -99,7 +99,7 @@ public class JobApplicationFragment extends Fragment implements View.OnClickList
         applyEducation = view.findViewById(R.id.editTextEducation);
         applyExperience = view.findViewById(R.id.editTextJobExperience);
         applyDetails = view.findViewById(R.id.editTextApplyOtherDetails);
-
+        uploadResume = view.findViewById(R.id.uploadResume);
         jobApplicationReference = FirebaseDatabase.getInstance().getReference().child("JobApplications");
 
         ApplyButton.setOnClickListener(this);
