@@ -191,6 +191,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textApplicantOtherDetails"/>
 
+            <LinearLayout
+                android:id="@+id/filesLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="105dp"
+                android:orientation="vertical"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="106dp"
+                android:width="200dp"
+                app:layout_constraintTop_toBottomOf="@id/textApplicantDateApplied"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

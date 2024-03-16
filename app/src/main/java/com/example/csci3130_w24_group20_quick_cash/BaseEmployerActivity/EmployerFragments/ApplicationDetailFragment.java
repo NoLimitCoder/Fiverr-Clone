@@ -1,22 +1,48 @@
 package com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
+
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Typeface;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.csci3130_w24_group20_quick_cash.ApplicationPosting;
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.JobApplyFragment;
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.JobDetailsFragment;
 import com.example.csci3130_w24_group20_quick_cash.JobPosting;
 import com.example.csci3130_w24_group20_quick_cash.R;
+import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import org.w3c.dom.Text;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.Objects;
+import java.util.concurrent.ExecutionException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -76,7 +102,10 @@ public class ApplicationDetailFragment extends Fragment {
         TextView textApplicantOtherDetails = view.findViewById(R.id.textApplicantOtherDetails);
         TextView textApplicantDateApplied = view.findViewById(R.id.textApplicantDateApplied);
 
-        // Populate TextViews with job details
+        LinearLayout filesLayout = view.findViewById(R.id.filesLayout);
+
+        retrieveFileUrls(filesLayout);
+
         if (appPosting != null) {
             textJobTitle.setText(appPosting.getJobTitle());
             textApplicantName.setText(appPosting.getApplicantName());
@@ -93,10 +122,67 @@ public class ApplicationDetailFragment extends Fragment {
         return view;
     }
 
-    private void switchFragment(Fragment fragment){
-        FragmentManager fragManager = requireActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragManager.beginTransaction();
-        fragmentTransaction.replace(R.id.baseEmployee, fragment);
-        fragmentTransaction.addToBackStack("fragment_job_details").commit();
+    private void retrieveFileUrls(LinearLayout filesLayout) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+
+        String path = "ApplicantFiles/" + appPosting.getJobID() + "/" + appPosting.getApplicantUID();
+
+        StorageReference applicantFilesRef = storageRef.child(path);
+
+        applicantFilesRef.listAll()
+                .addOnSuccessListener(listResult -> {
+                    for (StorageReference fileRef : listResult.getItems()) {
+                        fileRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                            displayFileLink(filesLayout, uri.toString());
+                        }).addOnFailureListener(exception -> {
+                        });
+                    }
+                })
+                .addOnFailureListener(exception -> {
+                });
     }
+
+    private void displayFileLink(LinearLayout filesLayout, String fileUrl) {
+        String[] fileName = {Uri.decode(Uri.parse(fileUrl).getLastPathSegment())};
+        fileName[0] = fileName[0].substring(fileName[0].lastIndexOf('/') + 1);
+        TextView fileTextView = new TextView(getContext());
+        fileTextView.setText(fileName[0]);
+        configTextViews(fileTextView);
+        fileTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                downloadFile(fileName[0], fileUrl);
+            }
+        });
+        filesLayout.addView(fileTextView);
+    }
+
+    private void downloadFile(String fileName, String fileUrl) {
+        if (fileUrl != null) {
+            Uri downloadUri = Uri.parse(Environment.getExternalStoragePublicDirectory
+                    (Environment.DIRECTORY_DOWNLOADS).toString() + "/" + fileName);
+
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            StorageReference storageRef = storage.getReferenceFromUrl(fileUrl);
+
+            storageRef.getFile(downloadUri).addOnSuccessListener(taskSnapshot -> {
+                Toast.makeText(getContext(), "File downloaded successfully", Toast.LENGTH_SHORT).show();
+            }).addOnFailureListener(exception -> {
+                Toast.makeText(getContext(), "Failed to download file", Toast.LENGTH_SHORT).show();
+            });
+        } else {
+            Toast.makeText(getContext(), "Invalid file URL", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    private void configTextViews(TextView textView){
+        textView.setTextSize(18);
+        textView.setTypeface(null, Typeface.BOLD);
+        textView.setTextColor(Color.BLUE);
+        textView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+        textView.setPadding(0, 0, 0, 20);
+    }
+
 }
