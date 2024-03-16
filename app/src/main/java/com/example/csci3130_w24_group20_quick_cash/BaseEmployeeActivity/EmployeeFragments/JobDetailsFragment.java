@@ -79,6 +79,8 @@ public class JobDetailsFragment extends Fragment {
             public void onClick(View v) {
                 JobApplyFragment jobApplyFragment = new JobApplyFragment();
                 jobApplyFragment.setJobID(jobPosting.getJobID());
+                jobApplyFragment.setJobTitle(jobPosting.getJobTitle());
+                jobApplyFragment.setEmployerUID(jobPosting.getEmployerUID());
                 switchFragment(jobApplyFragment);
             }
         });

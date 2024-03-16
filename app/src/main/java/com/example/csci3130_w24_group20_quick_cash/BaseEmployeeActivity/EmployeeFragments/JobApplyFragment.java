@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.csci3130_w24_group20_quick_cash.ApplicationPosting;
 import com.example.csci3130_w24_group20_quick_cash.CredentialValidator;
 import com.example.csci3130_w24_group20_quick_cash.FirebaseAuthSingleton;
 import com.example.csci3130_w24_group20_quick_cash.FirebaseCRUD;
@@ -57,7 +58,10 @@ public class JobApplyFragment extends Fragment{
 
     private String employeeUID;
 
+    private String employerUID;
+
     FirebaseCRUD crud = null;
+    private String jobTitle;
 
     public JobApplyFragment() {
         // Required empty public constructor
@@ -83,6 +87,14 @@ public class JobApplyFragment extends Fragment{
 
     public void setJobID(String jobID){
         this.jobID = jobID;
+    }
+
+    public void setEmployerUID(String employerUID){
+        this.employerUID = employerUID;
+    }
+
+    public void setJobTitle(String jobTitle){
+        this.jobTitle = jobTitle;
     }
 
     protected void initializeDatabaseAccess() {
@@ -139,24 +151,27 @@ public class JobApplyFragment extends Fragment{
         String email = applyEmail.getText().toString().trim();
         String availability = applyAvailability.getText().toString().trim();
         String address = applyAddress.getText().toString().trim();
-        String Country = applyCountry.getText().toString().trim();
-        String City = applyCity.getText().toString().trim();
+        String country = applyCountry.getText().toString().trim();
+        String city = applyCity.getText().toString().trim();
         String education = applyEducation.getText().toString().trim();
         String experience = applyExperience.getText().toString().trim();
         String details = applyDetails.getText().toString().trim();
 
         employeeUID = mAuth.getCurrentUser().getUid();
 
-        JobPosting jobPosting = new JobPosting(name, employeeUID, email, availability, address, Country,
-                City, education, experience, details);
+        ApplicationPosting appPosting = new ApplicationPosting(name, employeeUID, email, country,
+                city, address,
+                availability, education, experience, details);
 
-        jobPosting.setJobID(jobID);
+        appPosting.setJobID(jobID);
+        appPosting.setJobTitle(jobTitle);
+        appPosting.setEmployerUID(employerUID);
 
-        if (credChecker.isJobFilledOut(name, employeeUID, email, availability, address, Country,
-                City, education, experience, details)) {
+        if (credChecker.isJobFilledOut(name, employeeUID, email, availability, address, country,
+                city, education, experience, details)) {
 
-            if (credChecker.isValidAddress(getContext(), Country, City, address)){
-                jobApplicationReference.child(jobPosting.getJobID()).child(employeeUID).setValue(jobPosting);
+            if (credChecker.isValidAddress(getContext(), country, city, address)){
+                jobApplicationReference.child(appPosting.getJobID()).child(employeeUID).setValue(appPosting);
                 Toast.makeText(getContext(), "Job Application Uploaded Successfully", Toast.LENGTH_SHORT).show();
             } else {
 

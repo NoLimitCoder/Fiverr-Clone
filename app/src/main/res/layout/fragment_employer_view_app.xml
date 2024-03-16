@@ -10,7 +10,7 @@
         android:id="@+id/editTextSearch"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:hint="@string/SearchJobsHint"
+        android:hint="@string/search_applications"
         android:textAlignment="center"
         android:inputType="text"/>
 

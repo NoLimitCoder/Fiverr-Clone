@@ -7,12 +7,15 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
-import com.example.csci3130_w24_group20_quick_cash.JobAdapter;
-import com.example.csci3130_w24_group20_quick_cash.JobPosting;
+import com.example.csci3130_w24_group20_quick_cash.ApplicationPosting;
+import com.example.csci3130_w24_group20_quick_cash.ApplicationAdapter;
 import com.example.csci3130_w24_group20_quick_cash.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -29,12 +32,12 @@ import java.util.List;
  * Use the {@link EmployerViewAppFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EmployerViewAppFragment extends Fragment {
+public class EmployerViewAppFragment extends Fragment implements ApplicationAdapter.OnApplicationItemClickListener{
 
     private RecyclerView appRecyclerView;
-    private JobAdapter appAdapter;
+    private ApplicationAdapter appAdapter;
 
-    private List<JobPosting> appPostingList = new ArrayList<>();
+    private List<ApplicationPosting> appPostingList = new ArrayList<>();
 
     private FirebaseAuth mAuth;
     private DatabaseReference appPostingRef;
@@ -87,19 +90,47 @@ public class EmployerViewAppFragment extends Fragment {
 
         appRecyclerView = view.findViewById(R.id.appRecyclerViewer);
         appRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        appAdapter = new JobAdapter(appPostingList, new JobAdapter.OnJobItemClickListener() {
-            @Override
-            public void onJobItemClick(JobPosting jobPosting) {
 
-            }
-        });
+        appAdapter = new ApplicationAdapter(appPostingList, this);
         appRecyclerView.setAdapter(appAdapter);
 
         mAuth = FirebaseAuth.getInstance();
         String employerUID = mAuth.getCurrentUser().getUid();
 
         fetchAppPostingForEmployer(employerUID);
+
+        EditText editTextSearch = view.findViewById(R.id.editTextSearch);
+        editTextSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String searchText = s.toString().toLowerCase();
+                List<ApplicationPosting> filteredList = filterJobs(appPostingList, searchText);
+                appAdapter.updateApplications(filteredList);
+            }
+        });
         return view;
+    }
+
+    private List<ApplicationPosting> filterJobs(List<ApplicationPosting> appPostings, String searchText) {
+        List<ApplicationPosting> filteredList = new ArrayList<>();
+        for (ApplicationPosting app : appPostings){
+            if (app.getJobTitle().toLowerCase().contains(searchText)
+                    || app.getApplicantEmail().toLowerCase().contains(searchText)
+                    || app.getApplicantAvailability().toLowerCase().contains(searchText)){
+                filteredList.add(app);
+            }
+        }
+        return filteredList;
     }
 
     private void fetchAppPostingForEmployer(String employerUID){
@@ -110,13 +141,13 @@ public class EmployerViewAppFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot jobSnapshot: snapshot.getChildren()){
-                    String jobID =jobSnapshot.getKey();
+                    String jobID = jobSnapshot.getKey();
 
                     jobApplicationRef.child(jobID).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             for (DataSnapshot appSnap : snapshot.getChildren()){
-                                JobPosting appPosting = appSnap.getValue(JobPosting.class);
+                                ApplicationPosting appPosting = appSnap.getValue(ApplicationPosting.class);
                                 appPostingList.add(appPosting);
                             }
                             appAdapter.notifyDataSetChanged();
@@ -135,5 +166,10 @@ public class EmployerViewAppFragment extends Fragment {
 
             }
         });
+    }
+
+    @Override
+    public void onApplicationItemClick(ApplicationPosting applicationPosting) {
+
     }
 }
