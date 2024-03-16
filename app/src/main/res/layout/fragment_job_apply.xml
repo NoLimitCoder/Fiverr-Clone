@@ -205,14 +205,14 @@
                 app:layout_constraintTop_toBottomOf="@+id/editTextJobExperience" />
 
             <Button
-                android:id="@+id/uploadResume"
+                android:id="@+id/uploadFile"
                 android:layout_width="360dp"
                 android:layout_height="60dp"
                 android:layout_marginStart="105dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="106dp"
                 android:background="@drawable/login_btn"
-                android:text="Upload Resume"
+                android:text="Resume/CV/CoverLetter/etc."
                 android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -233,7 +233,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/uploadResume"
+                app:layout_constraintTop_toBottomOf="@+id/uploadFile"
                 app:layout_constraintVertical_bias="0.0" />
 
 
