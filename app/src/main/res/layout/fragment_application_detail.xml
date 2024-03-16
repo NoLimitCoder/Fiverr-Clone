@@ -37,7 +37,7 @@
                 app:layout_constraintTop_toBottomOf="parent"/>
 
             <TextView
-                android:id="@+id/textJobType"
+                android:id="@+id/textApplicantName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="105dp"
@@ -52,7 +52,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textJobTitle"/>
             <TextView
-                android:id="@+id/textJobSalary"
+                android:id="@+id/textApplicantEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="105dp"
@@ -65,10 +65,10 @@
                 android:width="200dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textJobType"/>
+                app:layout_constraintTop_toBottomOf="@+id/textApplicantName"/>
 
             <TextView
-                android:id="@+id/textJobCountry"
+                android:id="@+id/textApplicantAvailability"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="105dp"
@@ -81,10 +81,10 @@
                 android:width="200dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textJobSalary"/>
+                app:layout_constraintTop_toBottomOf="@+id/textApplicantEmail"/>
 
             <TextView
-                android:id="@+id/textJobCity"
+                android:id="@+id/textApplicantCountry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="105dp"
@@ -97,10 +97,10 @@
                 android:width="200dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textJobCountry"/>
+                app:layout_constraintTop_toBottomOf="@+id/textApplicantAvailability"/>
 
             <TextView
-                android:id="@+id/textJobLocation"
+                android:id="@+id/textApplicantCity"
                 android:layout_width="wrap_content"
                 android:textStyle="bold"
                 android:textSize="18sp"
@@ -113,9 +113,9 @@
                 android:width="200dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textJobCity"/>
+                app:layout_constraintTop_toBottomOf="@+id/textApplicantCountry"/>
             <TextView
-                android:id="@+id/textJobDescription"
+                android:id="@+id/textApplicantAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="105dp"
@@ -128,9 +128,9 @@
                 android:width="200dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textJobLocation"/>
+                app:layout_constraintTop_toBottomOf="@+id/textApplicantCity"/>
             <TextView
-                android:id="@+id/textOtherDetails"
+                android:id="@+id/textApplicantEducation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="105dp"
@@ -143,9 +143,9 @@
                 android:width="200dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textJobDescription"/>
+                app:layout_constraintTop_toBottomOf="@+id/textApplicantAddress"/>
             <TextView
-                android:id="@+id/textEmployerName"
+                android:id="@+id/textApplicantExperience"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="105dp"
@@ -158,39 +158,39 @@
                 android:width="200dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textOtherDetails"/>
+                app:layout_constraintTop_toBottomOf="@+id/textApplicantEducation"/>
 
-            <Button
-                android:id="@+id/applyJobButton"
-                android:layout_width="360dp"
-                android:layout_height="60dp"
+            <TextView
+                android:id="@+id/textApplicantOtherDetails"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="105dp"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="8dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="106dp"
-                android:background="@drawable/login_btn"
-                android:text="Apply"
-                android:textSize="16dp"
+                android:width="200dp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.501"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textEmployerName"
-                app:layout_constraintVertical_bias="0.154" />
+                app:layout_constraintTop_toBottomOf="@+id/textApplicantExperience"/>
+            <TextView
+                android:id="@+id/textApplicantDateApplied"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="105dp"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="106dp"
+                android:width="200dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textApplicantOtherDetails"/>
 
-            <Button
-                android:id="@+id/favoriteJobButton"
-                android:layout_width="360dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="105dp"
-                android:layout_marginTop="32dp"
-                android:layout_marginEnd="106dp"
-                android:background="@drawable/login_btn"
-                android:text="favorite"
-                android:textSize="16dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.501"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/applyJobButton"
-                app:layout_constraintVertical_bias="0.154" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

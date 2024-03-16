@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,6 +17,8 @@ import android.widget.EditText;
 
 import com.example.csci3130_w24_group20_quick_cash.ApplicationPosting;
 import com.example.csci3130_w24_group20_quick_cash.ApplicationAdapter;
+import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.JobDetailsFragment;
+import com.example.csci3130_w24_group20_quick_cash.JobPosting;
 import com.example.csci3130_w24_group20_quick_cash.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -168,8 +171,16 @@ public class EmployerViewAppFragment extends Fragment implements ApplicationAdap
         });
     }
 
-    @Override
-    public void onApplicationItemClick(ApplicationPosting applicationPosting) {
+    private void openApplicationDetailFragments(ApplicationPosting appPosting){
 
+        ApplicationDetailFragment appDetailFragments = ApplicationDetailFragment.newInstance(appPosting);
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.baseEmployer, appDetailFragments);
+        transaction.addToBackStack("fragment_employer_view_app").commit();
+    }
+
+    @Override
+    public void onApplicationItemClick(ApplicationPosting appPosting) {
+        openApplicationDetailFragments(appPosting);
     }
 }
