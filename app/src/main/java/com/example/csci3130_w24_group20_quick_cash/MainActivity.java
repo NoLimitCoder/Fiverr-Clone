@@ -277,22 +277,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return ret;
     }
-
-    public void buttonUploadFile(View view) {
-        Intent intent = new Intent(Intent.ACTION_CREATE_DOCUMENT, MediaStore.Downloads.EXTERNAL_CONTENT_URI);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        //intent.setType("application/pdf");
-        intent.setType("*/*");
-        this.startActivity(intent);
-    }
-
-    public void buttonOpenFile(View view) {
-        Intent intent = new Intent(Intent.ACTION_VIEW, MediaStore.Downloads.EXTERNAL_CONTENT_URI);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        //intent.setType("application/pdf");
-        intent.setType("*/*");
-        this.startActivity(intent);
-    }
-
-
 }

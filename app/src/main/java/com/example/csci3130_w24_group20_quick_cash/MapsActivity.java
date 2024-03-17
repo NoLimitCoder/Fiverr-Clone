@@ -11,6 +11,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -67,6 +68,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 LatLng location = getLocationFromAddress(job.getJobCountry(), job.getJobCity(), job.getJobAddress());
                 if (location != null) {
                     mMap.addMarker(new MarkerOptions().position(location).title(job.getJobTitle()));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15));
                 }
             }
         }
