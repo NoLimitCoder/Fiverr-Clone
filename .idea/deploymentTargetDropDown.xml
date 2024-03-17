@@ -24,6 +24,15 @@
           <timeTargetWasSelectedWithDropDown value="2024-03-15T00:21:35.891726600Z" />
         </State>
       </entry>
+      <entry key="filterForNonExistingJob()">
+        <State />
+      </entry>
+      <entry key="testActivityLaunch()">
+        <State />
+      </entry>
+      <entry key="testMarkersDisplayedCorrectly()">
+        <State />
+      </entry>
     </value>
   </component>
 </project>
