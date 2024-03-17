@@ -22,7 +22,7 @@ import com.example.csci3130_w24_group20_quick_cash.databinding.ActivityBaseEmplo
 
 
 public class BaseEmployerActivity extends AppCompatActivity  {
-    ActivityBaseEmployerBinding binding;
+    public ActivityBaseEmployerBinding binding;
 
 
     @Override
@@ -55,7 +55,7 @@ public class BaseEmployerActivity extends AppCompatActivity  {
      *
      * @param fragment The fragment to be displayed.
      */
-    private void switchFragment(Fragment fragment){
+    public void switchFragment(Fragment fragment){
         FragmentManager fragManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragManager.beginTransaction();
         fragmentTransaction.replace(R.id.baseEmployer, fragment);
