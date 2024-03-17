@@ -2,10 +2,10 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="BaseEmployeeActivityExpressoTests">
+      <entry key="GoogleMapsUITests">
         <State />
       </entry>
-      <entry key="BaseEmployeerActivityExpressoTests">
+      <entry key="SearchUITests">
         <State />
       </entry>
       <entry key="app">
@@ -23,12 +23,6 @@
           </targetSelectedWithDropDown>
           <timeTargetWasSelectedWithDropDown value="2024-03-15T00:21:35.891726600Z" />
         </State>
-      </entry>
-      <entry key="testSwitchToProfileFragment()">
-        <State />
-      </entry>
-      <entry key="testSwitchToSettingsFragment()">
-        <State />
       </entry>
     </value>
   </component>
