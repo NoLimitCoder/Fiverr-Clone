@@ -73,8 +73,10 @@ dependencies {
 
     //pdf
 
-
-
+    /*Mockito*/
+    testImplementation "org.mockito:mockito-inline:3.4.0"
+    androidTestImplementation project(path: ':app')
+    testImplementation 'org.robolectric:robolectric:4.6.1'
 
 
 
