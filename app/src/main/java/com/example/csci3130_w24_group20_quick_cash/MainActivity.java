@@ -21,6 +21,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.BaseEmployeeActivity;
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.BaseEmployerActivity;
 import com.google.android.material.snackbar.Snackbar;
@@ -32,7 +34,21 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private static final String FireBaseServerKey = " AAAAJULKPZc:APA91bH7AZ59ApuLLtTpHUiC4l3Mu5CoKerK7CD8UGqEQXj0RmUE5x0JCkm1nMh8FwBo5O3lBoF3KK7cOifd-9ZNyoks7R7jKXHi26qwgfFTDLMOUS2hdnJ9vbs-1WLoM4kNg-P71GRB";
+    private static final String FireBaseEndpoint = "https://fcm.googleapis.com/fcm.send";
+    private RequestQueue requestQueue;
     protected FirebaseAuth mAuth;
     protected FirebaseDatabase database = null;
     protected FirebaseCRUD crud = null;
@@ -76,6 +92,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (currentUser != null) {
             move2WelcomeWindow();
         }
+    }
+
+    private void init(){
+        requestQueue = Volley.newRequestQueue(this);
+        FirebaseMessaging.getInstance().subscribeToTopic("JobPostings");
     }
 
     /**
@@ -300,6 +321,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         intent.setType("*/*");
         this.startActivity(intent);
     }
-
 
 }

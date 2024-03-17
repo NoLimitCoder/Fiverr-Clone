@@ -2,6 +2,7 @@ package com.example.csci3130_w24_group20_quick_cash;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,8 @@ import androidx.core.app.NotificationManagerCompat;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.Map;
+
 
 public class FavJobTypeNotifService extends FirebaseMessagingService {
 
@@ -19,8 +22,10 @@ public class FavJobTypeNotifService extends FirebaseMessagingService {
     private static final String CHANNEL_NAME = "Job Notifications";
     private static final int NOTIFICATION_ID = 1;
 
+
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
+
         if (remoteMessage.getData().size() > 0) {
             String jobTitle = remoteMessage.getData().get("jobTitle");
             showNotification(jobTitle);
