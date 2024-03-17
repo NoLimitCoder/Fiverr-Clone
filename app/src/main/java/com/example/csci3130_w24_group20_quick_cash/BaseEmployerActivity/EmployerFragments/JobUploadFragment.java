@@ -1,10 +1,13 @@
 package com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
 import com.example.csci3130_w24_group20_quick_cash.CredentialValidator;
 import com.example.csci3130_w24_group20_quick_cash.FirebaseAuthSingleton;
 import com.example.csci3130_w24_group20_quick_cash.FirebaseCRUD;
@@ -23,6 +28,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 /**
  * A fragment responsible for uploading job postings to the Firebase Realtime Database.
@@ -30,6 +36,10 @@ import com.google.firebase.database.ValueEventListener;
  * for uploading the job posting data to the database.
  */
 public class JobUploadFragment extends Fragment implements View.OnClickListener {
+
+    public static final String FIREBASE_SERVER_KEY = String.valueOf(R.string.CLOUD_MESSAGING_API);
+    private static final String PUSH_NOTIFICATION_ENDPOINT = "https://fcm.googleapis.com/fcm/send";
+    private RequestQueue requestQueue;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -79,6 +89,20 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
         return fragment;
     }
 
+    //method to subscribe users to topics based on their favorite job types
+    private void subscribeUserToJobTypeTopic(String jobType) {
+        FirebaseMessaging.getInstance().subscribeToTopic(jobType)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "Subscribed to topic: " + jobType);
+                        Toast.makeText(getActivity(), "Subscribed to topic: " + jobType, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Log.w(TAG, "Subscription to topic " + jobType + " failed", task.getException());
+                        Toast.makeText(getActivity(), "Subscription to topic " + jobType + " failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
     /**
      * Initializes database access by creating instances of FirebaseDatabase and FirebaseCRUD.
      */
@@ -96,6 +120,7 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        requestQueue = Volley.newRequestQueue(this);
     }
 
     /**
@@ -127,6 +152,13 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
         return view;
     }
 
+
+
+
+
+
+
+
     /**
      * Uploads a job posting to the Firebase Realtime Database.
      * This method retrieves the job posting details from the input fields, validates them,
@@ -157,6 +189,8 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
             if (credChecker.isValidAddress(getContext(),jobCountry, jobCity, jobAddress)){
                 jobPostingReference.child(employerUID).child(jobPosting.getJobID()).setValue(jobPosting);
                 Toast.makeText(getContext(), "Job Posting Uploaded Successfully", Toast.LENGTH_SHORT).show();
+                // Trigger notifications for users subscribed to the job type
+                subscribeUserToJobTypeTopic(jobType);
             } else {
                 Toast.makeText(getContext(), "Address Is Not Valid", Toast.LENGTH_SHORT).show();
             }
@@ -164,6 +198,14 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
             Toast.makeText(getContext(), "Please Fill Out All The Fields", Toast.LENGTH_SHORT).show();
         }
     }
+
+
+
+
+
+
+
+
 
     /**
      * Fetches the employer's name from the Firebase Realtime Database using their unique user ID.

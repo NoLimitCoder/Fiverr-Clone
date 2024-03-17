@@ -18,7 +18,6 @@ import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.Employee
 import com.example.csci3130_w24_group20_quick_cash.databinding.ActivityBaseEmployeeBinding;
 
 public class BaseEmployeeActivity extends AppCompatActivity{
-
     ActivityBaseEmployeeBinding binding;
 
     @Override

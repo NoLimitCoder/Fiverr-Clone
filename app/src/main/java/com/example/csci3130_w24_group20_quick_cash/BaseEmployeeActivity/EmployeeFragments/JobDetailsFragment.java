@@ -1,11 +1,14 @@
 package com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -84,12 +88,31 @@ public class JobDetailsFragment extends Fragment {
                     DatabaseReference favoriteRef = database.getReference("users").child(userID);
 
                     favoriteRef.child("favoriteJobTypes").push().setValue(preferredJobType)
-                            .addOnSuccessListener(aVoid -> Toast.makeText(getActivity(), "Job favorited!", Toast.LENGTH_SHORT).show())
+                            .addOnSuccessListener(aVoid -> {
+                                Toast.makeText(getActivity(), "Job favorited!", Toast.LENGTH_SHORT).show();
+                                // Subscribe the user to the job type topic
+                                subscribeUserToJobTypeTopic(preferredJobType);
+                            })
                             .addOnFailureListener(e -> Toast.makeText(getActivity(), "Failed to favorite job!", Toast.LENGTH_SHORT).show());
                 }
             }
         });
     }
+
+    private void subscribeUserToJobTypeTopic(String jobType) {
+        FirebaseMessaging.getInstance().subscribeToTopic(jobType)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "Subscribed to topic: " + jobType);
+                        Toast.makeText(getActivity(), "Subscribed to topic: " + jobType, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Log.w(TAG, "Subscription to topic " + jobType + " failed", task.getException());
+                        Toast.makeText(getActivity(), "Subscription to topic " + jobType + " failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+
 
     public static JobDetailsFragment newInstance(JobPosting jobPosting) {
         JobDetailsFragment fragment = new JobDetailsFragment();

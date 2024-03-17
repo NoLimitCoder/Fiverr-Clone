@@ -3,6 +3,7 @@
     <string name="EMPTY_USER_NAME">Empty Username</string>
     <string name="EMPTY_PASSWORD">Empty Password</string>
     <string name="FIREBASE_DB_URL">https://csci-w24-group20-quick-cash-default-rtdb.firebaseio.com/</string>
+    <string name="CLOUD_MESSAGING_API">AAAAJULKPZc:APA91bGzH2lEPHbwncKfFCJwMTqBnNqUSB2jccmHJpUR6fyDrri7dNG8E5OWiNIj-kSWDtqtQcYvt3WzuedgihB51VpZ9nT-n7pg1RAnI-dzaAo8wOdtYR1jsbipW8pDrJRHYZoitE5_</string>
     <string name="INVALID_NAME">Invalid name</string>
     <string name="INVALID_EMAIL_ADDRESS">Invalid email address</string>
     <string name="INVALID_ROLE">Invalid user role</string>
