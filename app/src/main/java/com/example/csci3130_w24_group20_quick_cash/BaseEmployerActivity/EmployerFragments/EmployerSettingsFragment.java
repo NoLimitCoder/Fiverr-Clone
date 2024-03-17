@@ -22,18 +22,12 @@ import com.google.firebase.auth.FirebaseAuth;
  */
 public class EmployerSettingsFragment extends Fragment implements View.OnClickListener {
 
-    private Button logoutButton;
     private FirebaseAuth mAuth;
 
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public EmployerSettingsFragment() {
         // Required empty public constructor
@@ -47,7 +41,6 @@ public class EmployerSettingsFragment extends Fragment implements View.OnClickLi
      * @param param2 Parameter 2.
      * @return A new instance of fragment SettingsFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static EmployerSettingsFragment newInstance(String param1, String param2) {
         EmployerSettingsFragment fragment = new EmployerSettingsFragment();
         Bundle args = new Bundle();
@@ -61,10 +54,6 @@ public class EmployerSettingsFragment extends Fragment implements View.OnClickLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuthSingleton.getInstance();
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     /**
@@ -74,7 +63,7 @@ public class EmployerSettingsFragment extends Fragment implements View.OnClickLi
      * @param view The parent view containing the logout button.
      */
     protected void setupLogoutButton(View view) {
-        logoutButton = view.findViewById(R.id.logoutButton); // Correct ID of the logout button
+        Button logoutButton = view.findViewById(R.id.logoutButton); // Correct ID of the logout button
         logoutButton.setOnClickListener(this);
     }
 

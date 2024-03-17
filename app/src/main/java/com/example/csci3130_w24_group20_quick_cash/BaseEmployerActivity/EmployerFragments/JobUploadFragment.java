@@ -36,10 +36,6 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private EditText jobTitleEditText, jobSalaryEditText, jobTypeEditText, jobCountryEditText,
     jobCityEditText, jobAdressEditText, jobDescriptionEditText, jobOtherDetailsEditText;
 
@@ -67,7 +63,6 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
      * @param param2 Parameter 2.
      * @return A new instance of fragment UploadFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static JobUploadFragment newInstance(String param1, String param2) {
         JobUploadFragment fragment = new JobUploadFragment();
         Bundle args = new Bundle();
@@ -90,10 +85,6 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         initializeDatabaseAccess();
         mAuth = FirebaseAuthSingleton.getInstance();
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     /**
@@ -182,7 +173,7 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                //no onCancelled logic
             }
         });
 

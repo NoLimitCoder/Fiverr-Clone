@@ -86,7 +86,7 @@ public class FirebaseCRUD {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                    //no onCancelled changes
             }
         });
     }
@@ -100,7 +100,7 @@ public class FirebaseCRUD {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                //no onCancelled changes
             }
         });
     }
@@ -114,7 +114,7 @@ public class FirebaseCRUD {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                //no onCancelled changes
             }
         });
     }
@@ -128,7 +128,7 @@ public class FirebaseCRUD {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                //no onCancelled changes
             }
         });
     }
@@ -141,7 +141,7 @@ public class FirebaseCRUD {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                //no onCancelled changes
             }
         });
     }
@@ -159,7 +159,7 @@ public class FirebaseCRUD {
         this.setEmailListener();
         this.setPasswordListener();
         this.setContactNumberListener();
-        this.setRoleListener();;
+        this.setRoleListener();
     }
 
 }

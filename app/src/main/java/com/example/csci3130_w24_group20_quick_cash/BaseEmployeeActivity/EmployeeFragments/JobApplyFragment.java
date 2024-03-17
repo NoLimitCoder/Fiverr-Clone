@@ -33,9 +33,9 @@ public class JobApplyFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private String mParam1;
+
     private ActivityResultLauncher<String> mGetContent;
-    private String mParam2;
+
 
     private String jobID;
 
@@ -47,12 +47,10 @@ public class JobApplyFragment extends Fragment {
     private FirebaseAuth mAuth;
 
     private StorageReference storageRef;
-    private FirebaseDatabase database = null;
 
     private String employeeUID;
     private String employerUID;
 
-    private FirebaseCRUD crud = null;
     private String jobTitle;
 
     public JobApplyFragment() {
@@ -88,10 +86,6 @@ public class JobApplyFragment extends Fragment {
         this.jobTitle = jobTitle;
     }
 
-    protected void initializeDatabaseAccess() {
-        database = FirebaseDatabase.getInstance(getResources().getString(R.string.FIREBASE_DB_URL));
-        crud = new FirebaseCRUD(database);
-    }
 
     protected void setupUploadFileButton(View view) {
         uploadFileButton = view.findViewById(R.id.uploadFile);
@@ -116,11 +110,6 @@ public class JobApplyFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-        initializeDatabaseAccess();
         mAuth = FirebaseAuthSingleton.getInstance();
         storageRef = FirebaseStorage.getInstance().getReference();
         mGetContent = registerForActivityResult(new ActivityResultContracts.GetContent(),

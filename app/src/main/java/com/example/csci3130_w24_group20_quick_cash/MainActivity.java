@@ -54,13 +54,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.setupForgotButton();
         this.initializeDatabaseAccess();
         mAuth = FirebaseAuthSingleton.getInstance();
-
-        /*ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        Manifest.permission.READ_EXTERNAL_STORAGE},
-                PackageManager.PERMISSION_GRANTED);
-
-         */
     }
 
     /**
@@ -138,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                //no onCancelled logic
             }
         });
     }

@@ -1,17 +1,14 @@
 package com.example.csci3130_w24_group20_quick_cash;
-import android.net.Uri;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.text.SimpleDateFormat;
-import java.util.UUID;
 
 public class ApplicationPosting implements Serializable {
     private String jobID;
     private String applicantName;
     private String applicantUID;
     private String employerUID;
-    private Uri resumeUri;
     private String jobTitle;
     private String applicantCountry;
     private String applicantCity;
@@ -114,8 +111,6 @@ public class ApplicationPosting implements Serializable {
         return dateReceived;
     }
 
-    public Uri getResumeUri(){return resumeUri;}
-
 
     public void setJobID(String jobID) {
         this.jobID = jobID;
@@ -173,9 +168,6 @@ public class ApplicationPosting implements Serializable {
         this.dateReceived = dateReceived;
     }
 
-    public void setResumeUri(Uri resumeUri) {
-        this.resumeUri = resumeUri;
-    }
 
     /**
      * Retrieves the current date.

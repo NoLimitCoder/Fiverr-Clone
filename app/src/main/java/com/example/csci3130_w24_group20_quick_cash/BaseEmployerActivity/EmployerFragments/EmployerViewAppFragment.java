@@ -43,16 +43,9 @@ public class EmployerViewAppFragment extends Fragment implements ApplicationAdap
     private List<ApplicationPosting> appPostingList = new ArrayList<>();
 
     private FirebaseAuth mAuth;
-    private DatabaseReference appPostingRef;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public EmployerViewAppFragment() {
         // Required empty public constructor
@@ -66,7 +59,6 @@ public class EmployerViewAppFragment extends Fragment implements ApplicationAdap
      * @param param2 Parameter 2.
      * @return A new instance of fragment EmployerViewAppFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static EmployerViewAppFragment newInstance(String param1, String param2) {
         EmployerViewAppFragment fragment = new EmployerViewAppFragment();
         Bundle args = new Bundle();
@@ -74,15 +66,6 @@ public class EmployerViewAppFragment extends Fragment implements ApplicationAdap
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -106,12 +89,12 @@ public class EmployerViewAppFragment extends Fragment implements ApplicationAdap
         editTextSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                //no application filter before text change
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                //no application filter after text change
             }
 
             @Override
@@ -158,7 +141,7 @@ public class EmployerViewAppFragment extends Fragment implements ApplicationAdap
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
-
+                            //no on cancelled logic
                         }
                     });
                 }
@@ -166,7 +149,7 @@ public class EmployerViewAppFragment extends Fragment implements ApplicationAdap
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                //no on cancelled logic
             }
         });
     }
