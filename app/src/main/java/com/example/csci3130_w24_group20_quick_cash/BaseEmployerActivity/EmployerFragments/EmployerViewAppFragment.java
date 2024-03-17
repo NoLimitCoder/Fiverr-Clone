@@ -68,6 +68,17 @@ public class EmployerViewAppFragment extends Fragment implements ApplicationAdap
         return fragment;
     }
 
+    /**
+     * Inflates the layout for this fragment and initializes views.
+     * Sets up RecyclerView for displaying job applications.
+     * Fetches job applications from Firebase for the current employer.
+     * Sets up text watcher for filtering job applications.
+     *
+     * @param inflater           The LayoutInflater object that can be used to inflate any views in the fragment.
+     * @param container          The parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState The previously saved state of the fragment.
+     * @return The root view of the fragment.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -162,6 +173,11 @@ public class EmployerViewAppFragment extends Fragment implements ApplicationAdap
         transaction.addToBackStack("fragment_employer_view_app").commit();
     }
 
+    /**
+     * Handles click events on application items in the RecyclerView.
+     *
+     * @param appPosting The application posting that was clicked.
+     */
     @Override
     public void onApplicationItemClick(ApplicationPosting appPosting) {
         openApplicationDetailFragments(appPosting);

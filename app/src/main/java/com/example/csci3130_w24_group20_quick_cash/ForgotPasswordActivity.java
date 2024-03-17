@@ -30,6 +30,12 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         this.setupSendButton();
     }
 
+    /**
+     * Called when the user clicks off the keyboard, putting it away
+     * @param event The touch screen event.
+     *
+     * @return true once the user clicks anywhere else on the screen
+     */
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         View view = getCurrentFocus();

@@ -61,9 +61,7 @@ public class JobPosting implements Serializable {
     public String getJobTitle(){
         return this.jobTitle;
     }
-
     public String getJobCountry(){return this.jobCountry;}
-
     public String getJobCity(){return this.jobCity;}
     public String getJobAddress(){
         return this.jobAddress;
@@ -81,37 +79,13 @@ public class JobPosting implements Serializable {
         return this.otherDetails;
     }
 
-    public void setJobID(String jobID){
-        this.jobID = jobID;
-    }
+    /**
+     * Sets the name of the employer associated with the job posting.
+     *
+     * @param employerName The name of the employer to be set.
+     */
     public void setEmployerName(String employerName){
         this.employerName = employerName;
-    }
-    public void setEmployerID(String employerUID){
-        this.employerUID = employerUID;
-    }
-    public void setJobTitle(String jobTitle){
-        this.jobTitle = jobTitle;
-    }
-
-    public void setJobCountry(String jobCountry){this.jobCountry = jobCountry;}
-
-    public void setJobCity(String jobCity){this.jobCity = jobCity;}
-    public void setJobAddress(String jobAddress){
-        this.jobAddress = jobAddress;
-    }
-
-    public void setJobSalary(String jobSalary){
-        this.jobSalary = jobSalary;
-    }
-    public void setJobDescription(String jobDescription){
-        this.jobDescription = jobDescription;
-    }
-    public void setJobType(String jobType){
-        this.jobType = jobType;
-    }
-    public void setOtherDetails(String otherDetails){
-        this.otherDetails = otherDetails;
     }
 
     public String getDatePosted(){

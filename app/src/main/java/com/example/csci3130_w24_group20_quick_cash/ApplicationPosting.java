@@ -112,62 +112,32 @@ public class ApplicationPosting implements Serializable {
     }
 
 
+    /**
+     * Sets the job ID of the application posting.
+     *
+     * @param jobID The job ID to be set for the application posting.
+     */
     public void setJobID(String jobID) {
         this.jobID = jobID;
     }
 
-    public void setApplicantName(String applicantName) {
-        this.applicantName = applicantName;
-    }
-
-    public void setApplicantUID(String applicantUID) {
-        this.applicantUID = applicantUID;
-    }
-
+    /**
+     * Sets the employer's unique ID associated with the application posting.
+     *
+     * @param employerUID The employer's unique ID to be set for the application posting.
+     */
     public void setEmployerUID(String employerUID) {
         this.employerUID = employerUID;
     }
 
+    /**
+     * Sets the job title associated with the application posting.
+     *
+     * @param jobTitle The job title to be set for the application posting.
+     */
     public void setJobTitle(String jobTitle) {
         this.jobTitle = jobTitle;
     }
-
-    public void setApplicantCountry(String applicantCountry) {
-        this.applicantCountry = applicantCountry;
-    }
-
-    public void setApplicantCity(String applicantCity) {
-        this.applicantCity = applicantCity;
-    }
-
-    public void setApplicantAddress(String applicantAddress) {
-        this.applicantAddress = applicantAddress;
-    }
-
-    public void setApplicantEmail(String applicantEmail) {
-        this.applicantEmail = applicantEmail;
-    }
-
-    public void setApplicantAvailability(String applicantAvailability) {
-        this.applicantAvailability = applicantAvailability;
-    }
-
-    public void setApplicantEducation(String applicantEducation) {
-        this.applicantEducation = applicantEducation;
-    }
-
-    public void setApplicantExperience(String applicantExperience) {
-        this.applicantExperience = applicantExperience;
-    }
-
-    public void setAppOtherDetails(String appOtherDetails) {
-        this.appOtherDetails = appOtherDetails;
-    }
-
-    public void setDateReceived(String dateReceived) {
-        this.dateReceived = dateReceived;
-    }
-
 
     /**
      * Retrieves the current date.

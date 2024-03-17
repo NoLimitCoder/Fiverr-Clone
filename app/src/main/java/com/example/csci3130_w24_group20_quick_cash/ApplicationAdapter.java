@@ -92,7 +92,11 @@ public class ApplicationAdapter extends RecyclerView.Adapter<ApplicationAdapter.
 
             itemView.setOnClickListener(this);
         }
-
+        /**
+         * Called when the application item view is clicked.
+         *
+         * @param view The view that was clicked.
+         */
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
