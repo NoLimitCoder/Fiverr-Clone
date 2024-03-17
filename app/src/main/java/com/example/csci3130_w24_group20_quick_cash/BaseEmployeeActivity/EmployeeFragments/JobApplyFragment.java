@@ -140,11 +140,16 @@ public class JobApplyFragment extends Fragment {
 
         if (credChecker.isJobFilledOut(name, employeeUID, email, availability, address, country,
                 city, education, experience, details)) {
-            if (credChecker.isValidAddress(getContext(), country, city, address)) {
-                uploadApplicationDetails(name, email, availability, address, country, city,
-                        education, experience, details);
+            if (credChecker.isValidEmailAddress(email) && credChecker.isValidName(name)) {
+                if (credChecker.isValidAddress(getContext(), country, city, address)) {
+                    uploadApplicationDetails(name, email, availability, address, country, city,
+                            education, experience, details);
+                } else {
+                    Toast.makeText(getContext(), "Address Is Not Valid", Toast.LENGTH_SHORT).show();
+                }
             } else {
-                Toast.makeText(getContext(), "Address Is Not Valid", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Email Or Name Is Not Valid", Toast.LENGTH_SHORT).show();
+
             }
         } else {
             Toast.makeText(getContext(), "Please Fill Out All The Fields", Toast.LENGTH_SHORT).show();

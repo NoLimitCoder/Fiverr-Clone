@@ -74,7 +74,7 @@ public class CredentialValidator {
      * @param name The name to be validated.
      * @return True if the name is valid, otherwise false.
      */
-    protected boolean isValidName(String name) {
+    public boolean isValidName(String name) {
         return Pattern.matches("^[a-zA-Z]{2,}(?: [a-zA-Z]+){0,2}$", name);
     }
 
@@ -84,7 +84,7 @@ public class CredentialValidator {
      * @param emailAddress The email address to be validated.
      * @return True if the email address is valid, otherwise false.
      */
-    protected boolean isValidEmailAddress(String emailAddress) {
+    public boolean isValidEmailAddress(String emailAddress) {
         return Pattern.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$", emailAddress);
     }
 
