@@ -213,8 +213,6 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
         } else {
             Toast.makeText(getContext(), "Please Fill Out All The Fields", Toast.LENGTH_SHORT).show();
         }
-
-
     }
 
 
