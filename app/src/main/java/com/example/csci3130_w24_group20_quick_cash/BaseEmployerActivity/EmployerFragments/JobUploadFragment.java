@@ -125,7 +125,6 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
         if (userIsLoggedIn()) {
             subscribeToJobTopic();
         }
-
     }
 
     private boolean userIsLoggedIn() {
