@@ -41,12 +41,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         final String jobID = data.get("jobID");
         final String jobLocation = data.get("jobLocation");
 
-        Intent intenet = new Intent(this, FavJobTypeNotifService.class);
-        intenet.putExtra("title", title);
-        intenet.putExtra("body", body);
-        intenet.putExtra("jobID", jobID);
-        intenet.putExtra("jobLocation", jobLocation);
-        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 10, intenet, PendingIntent.FLAG_IMMUTABLE);
+        Intent intent = new Intent(this, FavJobTypeNotifService.class);
+        intent.putExtra("title", title);
+        intent.putExtra("body", body);
+        intent.putExtra("jobID", jobID);
+        intent.putExtra("jobLocation", jobLocation);
+        PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 10, intent, PendingIntent.FLAG_IMMUTABLE);
 
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, "JOBS")
@@ -64,29 +64,5 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         notificationManager.createNotificationChannel(channel);
 
         notificationManager.notify(id, notificationBuilder.build());
-    }
-
-    private void createNotification(String title, String body) {
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        String channelId = "channel_id";
-        String channelName = "Channel Name";
-
-        NotificationChannel channel = new NotificationChannel(channelId,
-                channelName,
-                NotificationManager.IMPORTANCE_DEFAULT);
-        notificationManager.createNotificationChannel(channel);
-
-        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
-        NotificationCompat.Builder notificationBuilder =
-                new NotificationCompat.Builder(this, channelId)
-                        .setContentTitle(title)
-                        .setContentText(body)
-                        .setAutoCancel(true)
-                        .setSound(defaultSoundUri);
-
-        notificationManager.notify(0, notificationBuilder.build());
     }
 }

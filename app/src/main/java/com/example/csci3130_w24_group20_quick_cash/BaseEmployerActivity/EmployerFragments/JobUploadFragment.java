@@ -122,10 +122,29 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
         }
         init();
 
+        if (userIsLoggedIn()) {
+            subscribeToJobTopic();
+        }
+
+    }
+
+    private boolean userIsLoggedIn() {
+        return FirebaseAuth.getInstance().getCurrentUser() != null;
+    }
+
+    private void subscribeToJobTopic() {
+        FirebaseMessaging.getInstance().subscribeToTopic("jobs")
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "Successfully subscribed to topic 'jobs'");
+                    } else {
+                        Log.e(TAG, "Failed to subscribe to topic 'jobs'", task.getException());
+                    }
+                });
     }
 
     private void init(){
-        //requestQueue = Volley.newRequestQueue();
+        requestQueue = Volley.newRequestQueue(getActivity());
         FirebaseMessaging.getInstance().subscribeToTopic("JOBS");
     }
     /**
@@ -238,42 +257,62 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
         sendNotification();
     }
 
-    private void sendNotification(){
-        try{
-            final JSONObject notificationBody = new JSONObject();
-            notificationBody.put(jobTitleEditText.getText().toString().trim(), "New Job Created");
-            notificationBody.put(jobTypeEditText.getText().toString().trim(), "New job postings in your area");
+    private void sendNotification() {
+        try {
+            // Logging job title
+            Log.d("Notification", "Job Title: " + jobTitleEditText.getText().toString().trim());
+            Log.d("Notification", "Job Description: " + jobDescriptionEditText.getText().toString().trim());
+            Log.d("Notification", "Job Location: " + jobCityEditText.getText().toString().trim());
 
-            final JSONObject dataBody = new JSONObject();
-            dataBody.put("jobID", "FF-128369");
+            JSONObject notificationBody = new JSONObject();
+            notificationBody.put("title", "New Job Created"); // Assuming "title" is the key for job title
+            notificationBody.put("body", "New job postings in your area"); // Assuming "body" is the key for job description
+
+            // Logging job description
+            Log.d("Notification", "Job Title: " + jobTitleEditText.getText().toString().trim());
+            Log.d("Notification", "Job Description: " + jobDescriptionEditText.getText().toString().trim());
+            Log.d("Notification", "Job Location: " + jobCityEditText.getText().toString().trim());
+
+
+            JSONObject dataBody = new JSONObject();
+            dataBody.put("jobID", "");
             dataBody.put("jobLocation", jobCityEditText.getText().toString().trim());
 
-            final JSONObject pushnotiBody = new JSONObject();
-            notificationBody.put("to", "/topics/jobs");
-            notificationBody.put("notification", notificationBody);
-            notificationBody.put("data", dataBody);
+            // Logging job location
+            Log.d("Notification", "Job Location: " + jobCityEditText.getText().toString().trim());
+
+            JSONObject pushnotiBody = new JSONObject();
+            pushnotiBody.put("to", "/topics/jobs");
+            pushnotiBody.put("notification", notificationBody);
+            pushnotiBody.put("data", dataBody);
 
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
                     PUSH_NOTIFICATION_ENDPOINT,
                     pushnotiBody,
-                    response ->
-                            Toast.makeText(getActivity(),
-                                    "Notificaiton Sent",
-                                    Toast.LENGTH_SHORT).show(),
-
-                    Throwable::printStackTrace) {
+                    response -> {
+                        Log.d("Notification", "Notification Sent");
+                        Toast.makeText(getActivity(),
+                                "Notification Sent",
+                                Toast.LENGTH_SHORT).show();
+                    },
+                    error -> {
+                        Log.e("Notification", "Notification Sending Failed: " + error.toString());
+                        error.printStackTrace();
+                    }) {
                 @Override
-                public Map<String, String> getHeaders(){
-                    final Map<String, String> headers = new HashMap<>();
-                    headers.put("content-type", "application/json");
-                    headers.put("authorization", "key=" + FIREBASE_SERVER_KEY);
+                public Map<String, String> getHeaders() {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Content-Type", "application/json");
+                    headers.put("Authorization", "key=" + FIREBASE_SERVER_KEY);
                     return headers;
                 }
             };
             requestQueue.add(request);
 
-        } catch (JSONException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+            Log.e("Notification", "Exception occurred: " + e.getMessage());
+            e.printStackTrace();
         }
     }
+
 }

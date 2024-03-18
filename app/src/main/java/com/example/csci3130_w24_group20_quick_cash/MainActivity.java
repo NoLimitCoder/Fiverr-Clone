@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
          */
     }
 
+
     /**
      * Called when the activity is about to start.
      * Checks if the user is already signed in, if yes, redirects to the appropriate activity.
