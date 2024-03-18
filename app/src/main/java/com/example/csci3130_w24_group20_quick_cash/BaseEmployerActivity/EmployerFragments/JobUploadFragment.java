@@ -1,10 +1,10 @@
 package com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments;
 
+import static android.content.ContentValues.TAG;
+
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
+import android.telecom.Call;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,17 +12,36 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.BaseEmployerActivity;
 import com.example.csci3130_w24_group20_quick_cash.CredentialValidator;
 import com.example.csci3130_w24_group20_quick_cash.FirebaseAuthSingleton;
 import com.example.csci3130_w24_group20_quick_cash.FirebaseCRUD;
 import com.example.csci3130_w24_group20_quick_cash.JobPosting;
+import com.example.csci3130_w24_group20_quick_cash.MainActivity;
 import com.example.csci3130_w24_group20_quick_cash.R;
+import com.google.common.net.MediaType;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * A fragment responsible for uploading job postings to the Firebase Realtime Database.
@@ -31,10 +50,11 @@ import com.google.firebase.database.ValueEventListener;
  */
 public class JobUploadFragment extends Fragment implements View.OnClickListener {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private static final String FIREBASE_SERVER_KEY = "AAAAJULKPZc:APA91bH7AZ59ApuLLtTpHUiC4l3Mu5CoKerK7CD8UGqEQXj0RmUE5x0JCkm1nMh8FwBo5O3lBoF3KK7cOifd-9ZNyoks7R7jKXHi26qwgfFTDLMOUS2hdnJ9vbs-1WLoM4kNg-P71GRB";
+    private static final String PUSH_NOTIFICATION_ENDPOINT = "https://fcm.googleapis.com/fcm/send";
 
     private EditText jobTitleEditText, jobSalaryEditText, jobTypeEditText, jobCountryEditText,
     jobCityEditText, jobAdressEditText, jobDescriptionEditText, jobOtherDetailsEditText;
@@ -50,6 +70,8 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
 
     Button uploadButton;
     FirebaseCRUD crud = null;
+
+    private RequestQueue requestQueue;
 
     public JobUploadFragment() {
         // Required empty public constructor
@@ -85,8 +107,31 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         initializeDatabaseAccess();
         mAuth = FirebaseAuthSingleton.getInstance();
+        init();
+        if (userIsLoggedIn()) {
+            subscribeToJobTopic();
+        }
     }
 
+    private boolean userIsLoggedIn() {
+        return FirebaseAuth.getInstance().getCurrentUser() != null;
+    }
+
+    private void subscribeToJobTopic() {
+        FirebaseMessaging.getInstance().subscribeToTopic("jobs")
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "Successfully subscribed to topic 'jobs'");
+                    } else {
+                        Log.e(TAG, "Failed to subscribe to topic 'jobs'", task.getException());
+                    }
+                });
+    }
+
+    private void init(){
+        requestQueue = Volley.newRequestQueue(getActivity());
+        FirebaseMessaging.getInstance().subscribeToTopic("JOBS");
+    }
     /**
      * Called to create the view hierarchy associated with this fragment.
      *
@@ -98,6 +143,7 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_job_upload, container, false);
         uploadButton = view.findViewById(R.id.uploadJobButton);
@@ -154,6 +200,8 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
         }
     }
 
+
+
     /**
      * Fetches the employer's name from the Firebase Realtime Database using their unique user ID.
      * This method retrieves the employer's name associated with the provided user ID and stores it
@@ -189,5 +237,65 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onClick(View v) {
         uploadJobPosting();
+        sendNotification();
     }
+
+    private void sendNotification() {
+        try {
+            // Logging job title
+            Log.d("Notification", "Job Title: " + jobTitleEditText.getText().toString().trim());
+            Log.d("Notification", "Job Description: " + jobDescriptionEditText.getText().toString().trim());
+            Log.d("Notification", "Job Location: " + jobCityEditText.getText().toString().trim());
+
+            JSONObject notificationBody = new JSONObject();
+            notificationBody.put("title", "New Job Created"); // Assuming "title" is the key for job title
+            notificationBody.put("body", "New job postings in your area"); // Assuming "body" is the key for job description
+
+            // Logging job description
+            Log.d("Notification", "Job Title: " + jobTitleEditText.getText().toString().trim());
+            Log.d("Notification", "Job Description: " + jobDescriptionEditText.getText().toString().trim());
+            Log.d("Notification", "Job Location: " + jobCityEditText.getText().toString().trim());
+
+
+            JSONObject dataBody = new JSONObject();
+            dataBody.put("jobID", "");
+            dataBody.put("jobLocation", jobCityEditText.getText().toString().trim());
+
+            // Logging job location
+            Log.d("Notification", "Job Location: " + jobCityEditText.getText().toString().trim());
+
+            JSONObject pushnotiBody = new JSONObject();
+            pushnotiBody.put("to", "/topics/jobs");
+            pushnotiBody.put("notification", notificationBody);
+            pushnotiBody.put("data", dataBody);
+
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
+                    PUSH_NOTIFICATION_ENDPOINT,
+                    pushnotiBody,
+                    response -> {
+                        Log.d("Notification", "Notification Sent");
+                        Toast.makeText(getActivity(),
+                                "Notification Sent",
+                                Toast.LENGTH_SHORT).show();
+                    },
+                    error -> {
+                        Log.e("Notification", "Notification Sending Failed: " + error.toString());
+                        error.printStackTrace();
+                    }) {
+                @Override
+                public Map<String, String> getHeaders() {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Content-Type", "application/json");
+                    headers.put("Authorization", "key=" + FIREBASE_SERVER_KEY);
+                    return headers;
+                }
+            };
+            requestQueue.add(request);
+
+        } catch (Exception e) {
+            Log.e("Notification", "Exception occurred: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
 }

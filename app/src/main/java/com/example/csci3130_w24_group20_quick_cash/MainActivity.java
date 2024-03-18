@@ -21,6 +21,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.Request;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.BaseEmployeeActivity;
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.BaseEmployerActivity;
 import com.google.android.material.snackbar.Snackbar;
@@ -32,7 +34,18 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
     protected FirebaseAuth mAuth;
     protected FirebaseDatabase database = null;
     protected FirebaseCRUD crud = null;
@@ -55,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.initializeDatabaseAccess();
         mAuth = FirebaseAuthSingleton.getInstance();
     }
+
 
     /**
      * Called when the activity is about to start.
@@ -277,4 +291,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         return ret;
     }
+
 }

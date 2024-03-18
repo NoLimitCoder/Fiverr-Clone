@@ -42,14 +42,14 @@ dependencies {
     implementation 'androidx.activity:activity:1.8.2'
 
     //Firebase
-    implementation 'com.google.firebase:firebase-database:20.3.0'
+    implementation 'com.google.firebase:firebase-database:20.3.1'
     implementation platform('com.google.firebase:firebase-bom:32.7.2')
     implementation("com.google.firebase:firebase-auth")
-    //implementation 'com.google.firebase:firebase-admin:9.2.0'
     implementation 'com.google.firebase:firebase-analytics'
-    implementation 'com.google.android.gms:play-services-auth:20.7.0'
+    implementation 'com.google.android.gms:play-services-auth:21.0.0'
+    implementation 'com.google.firebase:firebase-messaging:23.4.1'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'com.google.firebase:firebase-storage:20.0.0'
+    implementation 'com.google.firebase:firebase-storage:20.3.0'
 
     /*JUnit*/
     testImplementation 'junit:junit:4.13.2'
@@ -61,18 +61,19 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.2'
 
     /*UI Automator library*/
-    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
+    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.3.0'
 
     androidTestImplementation project(path: ':app')
 
     /*Google Maps*/
     implementation 'com.google.android.gms:play-services-maps:18.2.0'
-    implementation 'com.google.android.gms:play-services-location:21.1.0'
+    implementation 'com.google.android.gms:play-services-location:21.2.0'
     implementation 'com.google.maps.android:android-maps-utils:0.4'
 
 
     //pdf
 
+<<<<<<< HEAD
     /*Mockito*/
     testImplementation "org.mockito:mockito-inline:3.4.0"
     androidTestImplementation project(path: ':app')
@@ -81,3 +82,11 @@ dependencies {
 
 
 }
+=======
+
+    /*Notification*/
+    //implementation("androidx.core:core-ktx:2.2.0")
+    implementation 'com.google.firebase:firebase-messaging:23.4.1'
+    implementation 'com.android.volley:volley:1.2.1'
+}
+>>>>>>> NotifSystem

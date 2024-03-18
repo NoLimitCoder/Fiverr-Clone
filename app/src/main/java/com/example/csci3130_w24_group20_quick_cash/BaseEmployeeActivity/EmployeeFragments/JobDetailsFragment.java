@@ -11,9 +11,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.csci3130_w24_group20_quick_cash.FirebaseAuthSingleton;
+import com.example.csci3130_w24_group20_quick_cash.FirebaseCRUD;
 import com.example.csci3130_w24_group20_quick_cash.JobPosting;
 import com.example.csci3130_w24_group20_quick_cash.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,13 +29,59 @@ import com.example.csci3130_w24_group20_quick_cash.R;
  */
 public class JobDetailsFragment extends Fragment {
 
-
     private static final String ARG_JOB_POSTING = "argJobPosting";
 
     private JobPosting jobPosting;
 
+    private Button applyButton, favoriteButton;
+
+    private FirebaseAuth mAuth;
+
+    private FirebaseDatabase database = null;
+
+    private FirebaseCRUD crud = null;
+
     public JobDetailsFragment() {
         // Required empty public constructor
+    }
+
+    protected void initializeDatabaseAccess() {
+        database = FirebaseDatabase.getInstance(getResources().getString(R.string.FIREBASE_DB_URL));
+        crud = new FirebaseCRUD(database);
+    }
+
+    protected void setupApplyButton(View view) {
+        applyButton = view.findViewById(R.id.applyJobButton);
+        applyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                JobApplyFragment jobApplyFragment = new JobApplyFragment();
+                jobApplyFragment.setJobID(jobPosting.getJobID());
+                jobApplyFragment.setJobTitle(jobPosting.getJobTitle());
+                jobApplyFragment.setEmployerUID(jobPosting.getEmployerUID());
+                switchFragment(jobApplyFragment);
+            }
+        });
+    }
+
+    protected void setupFavoriteButton(View view) {
+        favoriteButton = view.findViewById(R.id.favoriteJobButton);
+        favoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String preferredJobType = jobPosting.getJobType();
+                FirebaseUser user = mAuth.getCurrentUser();
+
+                if (user != null) {
+                    String userID = user.getUid();
+                    DatabaseReference favoriteRef = database.getReference("users").child(userID);
+
+                    favoriteRef.child("favoriteJobTypes").push().setValue(preferredJobType)
+                            .addOnSuccessListener(aVoid -> Toast.makeText(getActivity(), "Job favorited!", Toast.LENGTH_SHORT).show())
+                            .addOnFailureListener(e -> Toast.makeText(getActivity(), "Failed to favorite job!", Toast.LENGTH_SHORT).show());
+                }
+            }
+        });
     }
 
     public static JobDetailsFragment newInstance(JobPosting jobPosting) {
@@ -45,6 +98,9 @@ public class JobDetailsFragment extends Fragment {
         if (getArguments() != null){
              jobPosting = (JobPosting) getArguments().getSerializable(ARG_JOB_POSTING);
         }
+        initializeDatabaseAccess();
+        mAuth = FirebaseAuthSingleton.getInstance();
+
     }
 
 
@@ -63,19 +119,9 @@ public class JobDetailsFragment extends Fragment {
         TextView textJobCountry = view.findViewById(R.id.textJobCountry);
         TextView textJobCity = view.findViewById(R.id.textJobCity);
 
-        Button applyButton = view.findViewById(R.id.applyJobButton);
-        Button favoriteButton = view.findViewById(R.id.favoriteJobButton);
+        setupApplyButton(view);
+        setupFavoriteButton(view);
 
-        applyButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                JobApplyFragment jobApplyFragment = new JobApplyFragment();
-                jobApplyFragment.setJobID(jobPosting.getJobID());
-                jobApplyFragment.setJobTitle(jobPosting.getJobTitle());
-                jobApplyFragment.setEmployerUID(jobPosting.getEmployerUID());
-                switchFragment(jobApplyFragment);
-            }
-        });
 
         if (jobPosting != null){
             textJobTitle.setText(jobPosting.getJobTitle());
