@@ -24,4 +24,12 @@
         >
     </item>
 
+    <item
+
+        android:id="@+id/employeeChats"
+        android:icon="@drawable/baseline_chat_24"
+        android:title="Chats"
+        >
+    </item>
+
 </menu>

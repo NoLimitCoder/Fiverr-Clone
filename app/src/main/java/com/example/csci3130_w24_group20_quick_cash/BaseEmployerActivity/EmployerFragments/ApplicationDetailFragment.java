@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -38,11 +39,18 @@ import com.android.volley.toolbox.Volley;
 import com.example.csci3130_w24_group20_quick_cash.ApplicationPosting;
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.JobApplyFragment;
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.JobDetailsFragment;
+import com.example.csci3130_w24_group20_quick_cash.ChatData;
+import com.example.csci3130_w24_group20_quick_cash.FirebaseAuthSingleton;
 import com.example.csci3130_w24_group20_quick_cash.JobPosting;
 import com.example.csci3130_w24_group20_quick_cash.R;
 import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -56,6 +64,7 @@ import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -67,6 +76,8 @@ public class ApplicationDetailFragment extends Fragment {
 
     private static final String ARG_APP_POSTING = "argAppPosting";
     private ApplicationPosting appPosting;
+
+    String []employerNameARR = new String[1];
 
     RequestQueue requestQueue;
 
@@ -88,7 +99,25 @@ public class ApplicationDetailFragment extends Fragment {
         initShortlistedNotif();
         if (getArguments() != null){
             appPosting = (ApplicationPosting) getArguments().getSerializable(ARG_APP_POSTING);
+            fetchEmployerName();
         }
+    }
+
+    private void fetchEmployerName() {
+        DatabaseReference employerRef = FirebaseDatabase.getInstance().getReference("users").child(appPosting.getEmployerUID());
+        employerRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    employerNameARR[0] = snapshot.child("name").getValue(String.class);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // No Error Handling for OnCancelled
+            }
+        });
     }
 
     protected void setupShortlistButton(View view) {
@@ -100,7 +129,7 @@ public class ApplicationDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 AppRef.child("applicationStatus").setValue("Shortlisted");
-                sendShortlistNotification();
+                createChatInstance();
             }
         });
     }
@@ -119,8 +148,48 @@ public class ApplicationDetailFragment extends Fragment {
     }
 
     private void initShortlistedNotif(){
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue = Volley.newRequestQueue(getActivity());
         FirebaseMessaging.getInstance().subscribeToTopic("SHORTLISTING");
+    }
+
+    private void createChatInstance(){
+
+        String jobID = appPosting.getJobID();
+        String employerUID = appPosting.getEmployerUID();
+        String applicantUID = appPosting.getApplicantUID();
+        String applicantName = appPosting.getApplicantName();
+        String jobTitle = appPosting.getJobTitle();
+        String employerName = employerNameARR[0];
+
+        DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference().child("Chats");
+        Query query = chatRef.orderByChild("jobID").equalTo(jobID);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                boolean conversationExists = false;
+                for (DataSnapshot chatSnapshot : dataSnapshot.getChildren()) {
+                    ChatData chatData = chatSnapshot.getValue(ChatData.class);
+                    if (chatData != null && chatData.getApplicantUID().equals(applicantUID)) {
+                        conversationExists = true;
+                        break;
+                    }
+                }
+                if (!conversationExists) {
+                    ChatData chatData = new ChatData(jobID, employerUID, applicantUID, applicantName, employerName, jobTitle);
+                    DatabaseReference newChatRef = chatRef.push();
+                    newChatRef.setValue(chatData);
+                    sendShortlistNotification();
+                    Toast.makeText(getActivity(), "Contact With Employee Established!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "You have Already Shortlisted this applicant", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override
@@ -244,9 +313,8 @@ public class ApplicationDetailFragment extends Fragment {
                     PUSH_NOTIFICATION_ENDPOINT,
                     pushnotiBody,
                     response -> {
-                        Log.d("Notification", "Notification Sent");
                         Toast.makeText(getActivity(),
-                                "Notification Sent",
+                                "Shortlist Notification Sent",
                                 Toast.LENGTH_SHORT).show();
                     },
                     error -> {
