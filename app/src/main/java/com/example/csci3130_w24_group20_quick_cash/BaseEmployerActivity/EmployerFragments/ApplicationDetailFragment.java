@@ -2,6 +2,9 @@ package com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.Employe
 
 import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 
+import static com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.JobUploadFragment.FIREBASE_SERVER_KEY;
+import static com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.JobUploadFragment.PUSH_NOTIFICATION_ENDPOINT;
+
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.graphics.Color;
@@ -11,6 +14,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.appcompat.view.menu.MenuBuilder;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -27,6 +31,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.csci3130_w24_group20_quick_cash.ApplicationPosting;
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.JobApplyFragment;
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.JobDetailsFragment;
@@ -35,14 +43,18 @@ import com.example.csci3130_w24_group20_quick_cash.R;
 import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
@@ -55,6 +67,8 @@ public class ApplicationDetailFragment extends Fragment {
 
     private static final String ARG_APP_POSTING = "argAppPosting";
     private ApplicationPosting appPosting;
+
+    RequestQueue requestQueue;
 
     public ApplicationDetailFragment() {
         // Required empty public constructor
@@ -71,6 +85,7 @@ public class ApplicationDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initShortlistedNotif();
         if (getArguments() != null){
             appPosting = (ApplicationPosting) getArguments().getSerializable(ARG_APP_POSTING);
         }
@@ -85,6 +100,7 @@ public class ApplicationDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 AppRef.child("applicationStatus").setValue("Shortlisted");
+                sendShortlistNotification();
             }
         });
     }
@@ -100,6 +116,11 @@ public class ApplicationDetailFragment extends Fragment {
                 AppRef.child("applicationStatus").setValue("Rejected");
             }
         });
+    }
+
+    private void initShortlistedNotif(){
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        FirebaseMessaging.getInstance().subscribeToTopic("SHORTLISTING");
     }
 
     @Override
@@ -202,6 +223,50 @@ public class ApplicationDetailFragment extends Fragment {
         textView.setTextColor(Color.BLUE);
         textView.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
         textView.setPadding(0, 0, 0, 20);
+    }
+
+    private void sendShortlistNotification() {
+        try {
+            JSONObject notificationBody = new JSONObject();
+
+            notificationBody.put("title", "Shortlisted!");
+            notificationBody.put("body", "You've been shortlisted for a job you've applied to!");
+
+            JSONObject dataBody = new JSONObject();
+            dataBody.put("Job name", appPosting.getJobTitle());
+
+            JSONObject pushnotiBody = new JSONObject();
+            pushnotiBody.put("to", "/topics/jobs");
+            pushnotiBody.put("notification", notificationBody);
+            pushnotiBody.put("data", dataBody);
+
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,
+                    PUSH_NOTIFICATION_ENDPOINT,
+                    pushnotiBody,
+                    response -> {
+                        Log.d("Notification", "Notification Sent");
+                        Toast.makeText(getActivity(),
+                                "Notification Sent",
+                                Toast.LENGTH_SHORT).show();
+                    },
+                    error -> {
+                        Log.e("Notification", "Notification Sending Failed: " + error.toString());
+                        error.printStackTrace();
+                    }) {
+                @Override
+                public Map<String, String> getHeaders() {
+                    Map<String, String> headers = new HashMap<>();
+                    headers.put("Content-Type", "application/json");
+                    headers.put("Authorization", "key=" + FIREBASE_SERVER_KEY);
+                    return headers;
+                }
+            };
+            requestQueue.add(request);
+
+        } catch (Exception e) {
+            Log.e("Notification", "Exception occurred: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
 }
