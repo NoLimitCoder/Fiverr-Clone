@@ -33,6 +33,8 @@ import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.Employee
 import com.example.csci3130_w24_group20_quick_cash.JobPosting;
 import com.example.csci3130_w24_group20_quick_cash.R;
 import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -74,6 +76,31 @@ public class ApplicationDetailFragment extends Fragment {
         }
     }
 
+    protected void setupShortlistButton(View view) {
+        Button shortlistButton = view.findViewById(R.id.shortlistButton);
+        DatabaseReference AppRef = FirebaseDatabase.getInstance().getReference().child("JobApplications")
+                .child(appPosting.getJobID()).child(appPosting.getApplicantUID());
+
+        shortlistButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppRef.child("applicationStatus").setValue("Shortlisted");
+            }
+        });
+    }
+
+    protected void setupRejectButton(View view) {
+        Button shortlistButton = view.findViewById(R.id.rejectButton);
+        DatabaseReference AppRef = FirebaseDatabase.getInstance().getReference().child("JobApplications")
+                .child(appPosting.getJobID()).child(appPosting.getApplicantUID());
+
+        shortlistButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppRef.child("applicationStatus").setValue("Rejected");
+            }
+        });
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -95,6 +122,8 @@ public class ApplicationDetailFragment extends Fragment {
         LinearLayout filesLayout = view.findViewById(R.id.filesLayout);
 
         retrieveFileUrls(filesLayout);
+        setupShortlistButton(view);
+        setupRejectButton(view);
 
         if (appPosting != null) {
             textJobTitle.setText(appPosting.getJobTitle());
