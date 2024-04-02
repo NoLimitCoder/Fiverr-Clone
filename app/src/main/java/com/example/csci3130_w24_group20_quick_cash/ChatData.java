@@ -1,8 +1,9 @@
 package com.example.csci3130_w24_group20_quick_cash;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class ChatData {
+public class ChatData implements Serializable {
     private String chatID;
     private String jobID;
     private String employerUID;
@@ -34,7 +35,7 @@ public class ChatData {
     }
 
     public String getChatID() {
-        return chatID;
+        return this.chatID;
     }
 
     public void setChatID(String chatID) {

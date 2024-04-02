@@ -4,13 +4,17 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
+import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.BaseEmployeeActivity;
+import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.JobDetailsFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -24,10 +28,10 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link UserChatOverview#newInstance} factory method to
+ * Use the {@link UserChatOverviewFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class UserChatOverview extends Fragment implements ChatAdapter.OnChatItemClickListener{
+public class UserChatOverviewFragment extends Fragment implements ChatAdapter.OnChatItemClickListener{
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,7 +48,7 @@ public class UserChatOverview extends Fragment implements ChatAdapter.OnChatItem
     private List<ChatData> chatList = new ArrayList<>();
     private FirebaseAuth mAuth;
 
-    public UserChatOverview() {
+    public UserChatOverviewFragment() {
         // Required empty public constructor
     }
 
@@ -57,8 +61,8 @@ public class UserChatOverview extends Fragment implements ChatAdapter.OnChatItem
      * @return A new instance of fragment UserChatOverview.
      */
     // TODO: Rename and change types and number of parameters
-    public static UserChatOverview newInstance(String param1, String param2) {
-        UserChatOverview fragment = new UserChatOverview();
+    public static UserChatOverviewFragment newInstance(String param1, String param2) {
+        UserChatOverviewFragment fragment = new UserChatOverviewFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -86,7 +90,7 @@ public class UserChatOverview extends Fragment implements ChatAdapter.OnChatItem
         chatRecyclerView.setAdapter(chatAdapter);
 
         mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();;
+        FirebaseUser currentUser = mAuth.getCurrentUser();
 
         if (currentUser != null){
             String currentUserId = currentUser.getUid();
@@ -95,6 +99,20 @@ public class UserChatOverview extends Fragment implements ChatAdapter.OnChatItem
 
         return view;
     }
+
+    private void openChatInstanceFragment(ChatData chatData){
+
+        ChatInstanceFragment chatInstanceFragment = ChatInstanceFragment.newInstance(chatData);
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        if (getActivity() instanceof BaseEmployeeActivity){
+            transaction.replace(R.id.baseEmployee, chatInstanceFragment);
+        } else {
+            transaction.replace(R.id.baseEmployer, chatInstanceFragment);
+        }
+        transaction.addToBackStack("fragment_job_search").commit();
+    }
+
+
 
     private void fetchChatsForCurrentUser(String currentUserId) {
         DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference().child("Chats");
@@ -122,6 +140,6 @@ public class UserChatOverview extends Fragment implements ChatAdapter.OnChatItem
 
     @Override
     public void onChatItemClick(ChatData chatData) {
-
+        openChatInstanceFragment(chatData);
     }
 }

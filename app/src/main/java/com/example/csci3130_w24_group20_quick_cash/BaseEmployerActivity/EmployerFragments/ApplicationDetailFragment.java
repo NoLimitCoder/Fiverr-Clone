@@ -177,6 +177,8 @@ public class ApplicationDetailFragment extends Fragment {
                 if (!conversationExists) {
                     ChatData chatData = new ChatData(jobID, employerUID, applicantUID, applicantName, employerName, jobTitle);
                     DatabaseReference newChatRef = chatRef.push();
+                    String chatID = newChatRef.getKey();
+                    chatData.setChatID(chatID);
                     newChatRef.setValue(chatData);
                     sendShortlistNotification();
                     Toast.makeText(getActivity(), "Contact With Employee Established!", Toast.LENGTH_SHORT).show();
