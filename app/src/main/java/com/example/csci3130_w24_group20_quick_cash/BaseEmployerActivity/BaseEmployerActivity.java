@@ -14,10 +14,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.EmployerViewAppFragment;
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.JobUploadFragment;
+import com.example.csci3130_w24_group20_quick_cash.OngoingJobListFragment;
 import com.example.csci3130_w24_group20_quick_cash.R;
 
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.EmployerProfileFragment;
-import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.EmployerSettingsFragment;
 import com.example.csci3130_w24_group20_quick_cash.UserChatOverviewFragment;
 import com.example.csci3130_w24_group20_quick_cash.databinding.ActivityBaseEmployerBinding;
 
@@ -41,12 +41,12 @@ public class BaseEmployerActivity extends AppCompatActivity  {
                 switchFragment(new JobUploadFragment());
             } else if (itemId == R.id.viewEmployerProfile){
                 switchFragment(new EmployerProfileFragment());
-            } else if (itemId == R.id.employerNavSettings){
-                switchFragment(new EmployerSettingsFragment());
             } else if (itemId == R.id.viewEmployeeApplications){
                 switchFragment(new EmployerViewAppFragment());
             } else if (itemId == R.id.employerChats) {
-            switchFragment(new UserChatOverviewFragment());
+                switchFragment(new UserChatOverviewFragment());
+            } else if (itemId == R.id.currentJobs){
+                switchFragment(new OngoingJobListFragment());
             }
 
             return true;

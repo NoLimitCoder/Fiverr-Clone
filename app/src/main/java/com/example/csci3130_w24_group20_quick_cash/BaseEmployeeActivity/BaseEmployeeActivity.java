@@ -12,9 +12,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.EmployeeProfileFragment;
+import com.example.csci3130_w24_group20_quick_cash.OngoingJobListFragment;
 import com.example.csci3130_w24_group20_quick_cash.R;
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.JobSearchFragment;
-import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.EmployeeSettingsFragment;
 import com.example.csci3130_w24_group20_quick_cash.UserChatOverviewFragment;
 import com.example.csci3130_w24_group20_quick_cash.databinding.ActivityBaseEmployeeBinding;
 
@@ -36,10 +36,10 @@ public class BaseEmployeeActivity extends AppCompatActivity{
                 switchFragment(new JobSearchFragment());
             } else if (itemId == R.id.viewProfile) {
                 switchFragment((new EmployeeProfileFragment()));
-            } else if (itemId == R.id.employeeNavSettings) {
-                switchFragment(new EmployeeSettingsFragment());
             } else if (itemId == R.id.employeeChats) {
                 switchFragment(new UserChatOverviewFragment());
+            } else if (itemId == R.id.currentJobs) {
+                switchFragment(new OngoingJobListFragment());
             }
             return true;
         });

@@ -1,29 +1,17 @@
 package com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
-
 import static com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.JobUploadFragment.FIREBASE_SERVER_KEY;
 import static com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.JobUploadFragment.PUSH_NOTIFICATION_ENDPOINT;
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.view.menu.MenuBuilder;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,19 +20,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.csci3130_w24_group20_quick_cash.ApplicationPosting;
-import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.JobApplyFragment;
-import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.JobDetailsFragment;
 import com.example.csci3130_w24_group20_quick_cash.ChatData;
-import com.example.csci3130_w24_group20_quick_cash.FirebaseAuthSingleton;
-import com.example.csci3130_w24_group20_quick_cash.JobPosting;
+import com.example.csci3130_w24_group20_quick_cash.JobOffer;
 import com.example.csci3130_w24_group20_quick_cash.R;
-import com.google.android.gms.tasks.Tasks;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -56,16 +42,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
-import java.util.concurrent.ExecutionException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -75,11 +54,12 @@ import java.util.concurrent.ExecutionException;
 public class ApplicationDetailFragment extends Fragment {
 
     private static final String ARG_APP_POSTING = "argAppPosting";
-    private ApplicationPosting appPosting;
 
-    String []employerNameARR = new String[1];
-
+    String[] employerNameARR = new String[1];
     RequestQueue requestQueue;
+
+    Button offerButton;
+    private ApplicationPosting appPosting;
 
     public ApplicationDetailFragment() {
         // Required empty public constructor
@@ -97,7 +77,7 @@ public class ApplicationDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initShortlistedNotif();
-        if (getArguments() != null){
+        if (getArguments() != null) {
             appPosting = (ApplicationPosting) getArguments().getSerializable(ARG_APP_POSTING);
             fetchEmployerName();
         }
@@ -143,16 +123,35 @@ public class ApplicationDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 AppRef.child("applicationStatus").setValue("Rejected");
+                Toast.makeText(getActivity(), "Applicant Rejected", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void initShortlistedNotif(){
+    protected void setupOfferButton(View view) {
+        offerButton = view.findViewById(R.id.sendOfferButton);
+        offerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navigateToSendJobOfferFragment();
+            }
+        });
+    }
+
+    private void navigateToSendJobOfferFragment() {
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.baseEmployer, SendJobOfferFragment.newInstance(appPosting))
+                .addToBackStack("fragment_application_detail")
+                .commit();
+    }
+
+
+    private void initShortlistedNotif() {
         requestQueue = Volley.newRequestQueue(getActivity());
         FirebaseMessaging.getInstance().subscribeToTopic("SHORTLISTING");
     }
 
-    private void createChatInstance(){
+    private void createChatInstance() {
 
         String jobID = appPosting.getJobID();
         String employerUID = appPosting.getEmployerUID();
@@ -181,7 +180,7 @@ public class ApplicationDetailFragment extends Fragment {
                     chatData.setChatID(chatID);
                     newChatRef.setValue(chatData);
                     sendShortlistNotification();
-                    Toast.makeText(getActivity(), "Contact With Employee Established!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Connected! Please Check Chats Section", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(getActivity(), "You have Already Shortlisted this applicant", Toast.LENGTH_SHORT).show();
                 }
@@ -189,7 +188,7 @@ public class ApplicationDetailFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                //No OnCancelled activity
             }
         });
     }
@@ -215,6 +214,7 @@ public class ApplicationDetailFragment extends Fragment {
 
         retrieveFileUrls(filesLayout);
         setupShortlistButton(view);
+        setupOfferButton(view);
         setupRejectButton(view);
 
         if (appPosting != null) {
@@ -288,7 +288,7 @@ public class ApplicationDetailFragment extends Fragment {
     }
 
 
-    private void configTextViews(TextView textView){
+    private void configTextViews(TextView textView) {
         textView.setTextSize(18);
         textView.setTypeface(null, Typeface.BOLD);
         textView.setTextColor(Color.BLUE);
