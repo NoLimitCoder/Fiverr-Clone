@@ -5,21 +5,27 @@
 package com.example.csci3130_w24_group20_quick_cash;
 
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.view.View;
 
+import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.BaseEmployeeActivity;
+import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.JobDetailsFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.example.csci3130_w24_group20_quick_cash.databinding.ActivityMapsBinding;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -28,6 +34,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private List<JobPosting> jobPostings;
     private ActivityMapsBinding binding;
+
+    private HashMap<Marker, JobPosting> markerJobPostingHashMap;
+
 
     /**
      * Called when the activity is starting.
@@ -45,7 +54,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra("jobPostings")) {
             jobPostings = (List<JobPosting>) intent.getSerializableExtra("jobPostings");
-
+            markerJobPostingHashMap = new HashMap<>();
             // Obtain the SupportMapFragment and get notified when the map is ready to be used.
             SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.map);
@@ -67,12 +76,31 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             for (JobPosting job : jobPostings) {
                 LatLng location = getLocationFromAddress(job.getJobCountry(), job.getJobCity(), job.getJobAddress());
                 if (location != null) {
-                    mMap.addMarker(new MarkerOptions().position(location).title(job.getJobTitle()));
+                    Marker marker = mMap.addMarker(new MarkerOptions().position(location).title(job.getJobTitle()));
+                    markerJobPostingHashMap.put(marker, job);
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 15));
                 }
             }
+            mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(Marker marker) {
+                    JobPosting job = markerJobPostingHashMap.get(marker);
+                    if (job != null) {
+                        openJobPostingDetailsFragment(job);
+                    }
+                    return true;
+                }
+            });
         }
+        }
+
+    private void openJobPostingDetailsFragment(JobPosting job) {
+        Intent intent = new Intent(this, BaseEmployeeActivity.class);
+        intent.putExtra("jobDetails", job);
+        startActivity(intent);
     }
+
+
 
     /**
      * Retrieves latitude and longitude coordinates from an address string.
