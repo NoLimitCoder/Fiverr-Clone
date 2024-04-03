@@ -90,7 +90,7 @@ public class RegistrationActivity extends AppCompatActivity implements View.OnCl
      * @return The name entered by the user.
      */
     protected String getName() {
-        EditText nameBox = findViewById(R.id.editTextFullName);
+        EditText nameBox = findViewById(R.id.performanceReview);
         return nameBox.getText().toString().trim();
     }
 

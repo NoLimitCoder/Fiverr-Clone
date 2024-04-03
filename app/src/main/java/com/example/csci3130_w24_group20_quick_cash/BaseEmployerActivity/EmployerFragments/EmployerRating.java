@@ -1,4 +1,4 @@
-package com.example.csci3130_w24_group20_quick_cash;
+package com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments;
 
 import android.os.Bundle;
 
@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.csci3130_w24_group20_quick_cash.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link employer_rating#newInstance} factory method to
+ * Use the {@link EmployerRating#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class employer_rating extends Fragment {
+public class EmployerRating extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -24,7 +26,7 @@ public class employer_rating extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public employer_rating() {
+    public EmployerRating() {
         // Required empty public constructor
     }
 
@@ -37,8 +39,8 @@ public class employer_rating extends Fragment {
      * @return A new instance of fragment employer_rating.
      */
     // TODO: Rename and change types and number of parameters
-    public static employer_rating newInstance(String param1, String param2) {
-        employer_rating fragment = new employer_rating();
+    public static EmployerRating newInstance(String param1, String param2) {
+        EmployerRating fragment = new EmployerRating();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

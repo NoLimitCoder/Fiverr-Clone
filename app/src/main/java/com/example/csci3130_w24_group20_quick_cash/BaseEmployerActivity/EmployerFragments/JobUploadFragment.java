@@ -3,7 +3,6 @@ package com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.Employe
 import static android.content.ContentValues.TAG;
 
 import android.os.Bundle;
-import android.telecom.Call;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,17 +16,13 @@ import androidx.fragment.app.Fragment;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.BaseEmployerActivity;
 import com.example.csci3130_w24_group20_quick_cash.CredentialValidator;
 import com.example.csci3130_w24_group20_quick_cash.FirebaseAuthSingleton;
 import com.example.csci3130_w24_group20_quick_cash.FirebaseCRUD;
 import com.example.csci3130_w24_group20_quick_cash.JobPosting;
-import com.example.csci3130_w24_group20_quick_cash.MainActivity;
 import com.example.csci3130_w24_group20_quick_cash.R;
-import com.google.common.net.MediaType;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,7 +31,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -147,7 +141,7 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_job_upload, container, false);
         uploadButton = view.findViewById(R.id.uploadJobButton);
-        jobTitleEditText = view.findViewById(R.id.editTextFullName);
+        jobTitleEditText = view.findViewById(R.id.performanceReview);
         jobSalaryEditText = view.findViewById(R.id.editTextEmail);
         jobTypeEditText = view.findViewById(R.id.editTextPassword);
         jobCountryEditText = view.findViewById(R.id.editTextNumber);
