@@ -13,9 +13,23 @@ public class JobOfferAdapter extends RecyclerView.Adapter<JobOfferAdapter.ViewHo
 
     private List<JobOffer> jobOffers;
 
-    public JobOfferAdapter(List<JobOffer> jobOffers) {
-        this.jobOffers = jobOffers;
+    private OnGoingJobItemClickListener clickListener;
+
+    public interface OnGoingJobItemClickListener {
+        void OnGoingJobItemClickListener(JobOffer jobOffer);
     }
+
+    /**
+     * Constructor for JobOfferAdapter.
+     *
+     * @param jobOffers The list of ongoing job offers to be displayed.
+     * @param clickListener The click listener for job items.
+     */
+    public JobOfferAdapter(List<JobOffer> jobOffers, OnGoingJobItemClickListener clickListener) {
+        this.jobOffers = jobOffers;
+        this.clickListener = clickListener;
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView jobTitle;
@@ -27,6 +41,17 @@ public class JobOfferAdapter extends RecyclerView.Adapter<JobOfferAdapter.ViewHo
             jobTitle = itemView.findViewById(R.id.textJobTitle);
             jobSalary = itemView.findViewById(R.id.textJobSalary);
             startDate = itemView.findViewById(R.id.textJobStartDate);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION && clickListener != null) {
+                        JobOffer jobOffer = jobOffers.get(position);
+                        clickListener.OnGoingJobItemClickListener(jobOffer);
+                    }
+                }
+            });
         }
     }
 

@@ -5,6 +5,7 @@ import static com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.E
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -23,8 +24,11 @@ import com.example.csci3130_w24_group20_quick_cash.ApplicationPosting;
 import com.example.csci3130_w24_group20_quick_cash.CredentialValidator;
 import com.example.csci3130_w24_group20_quick_cash.JobOffer;
 import com.example.csci3130_w24_group20_quick_cash.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONObject;
@@ -40,6 +44,8 @@ import java.util.Map;
 public class SendJobOfferFragment extends Fragment {
 
     private ApplicationPosting appPosting;
+
+    private String []employerNameARR = new String[1];
 
     RequestQueue requestQueue;
 
@@ -57,7 +63,25 @@ public class SendJobOfferFragment extends Fragment {
         initOfferNotif();
         if (getArguments() != null) {
             appPosting = (ApplicationPosting) getArguments().getSerializable("appPosting");
+            fetchEmployerName();
         }
+    }
+
+    private void fetchEmployerName() {
+        DatabaseReference employerRef = FirebaseDatabase.getInstance().getReference("users").child(appPosting.getEmployerUID());
+        employerRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    employerNameARR[0] = snapshot.child("name").getValue(String.class);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                // No Error Handling for OnCancelled
+            }
+        });
     }
 
     @Override
@@ -81,7 +105,8 @@ public class SendJobOfferFragment extends Fragment {
                     Toast.makeText(getContext(), "Please fill in all fields", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                JobOffer jobOffer = new JobOffer(appPosting, salary, startDate, otherTerms);
+
+                JobOffer jobOffer = new JobOffer(appPosting, salary, startDate, otherTerms, employerNameARR[0]);
 
                 uploadJobOffer(jobOffer);
             }
@@ -131,9 +156,6 @@ public class SendJobOfferFragment extends Fragment {
                     PUSH_NOTIFICATION_ENDPOINT,
                     pushnotiBody,
                     response -> {
-                        //Toast.makeText(getActivity(),
-                              //  "JobOffer Notification Sent",
-                                //Toast.LENGTH_SHORT).show();
                     },
                     error -> {
                         Log.e("Notification", "Notification Sending Failed: " + error.toString());
@@ -148,9 +170,7 @@ public class SendJobOfferFragment extends Fragment {
                 }
             };
             requestQueue.add(request);
-            if (getActivity() != null) {
                 getParentFragmentManager().popBackStack();
-            }
         } catch (Exception e) {
             Log.e("Notification", "Exception occurred: " + e.getMessage());
             e.printStackTrace();

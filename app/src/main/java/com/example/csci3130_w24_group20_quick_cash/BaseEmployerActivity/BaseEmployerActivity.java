@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.EmployerViewAppFragment;
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.JobUploadFragment;
-import com.example.csci3130_w24_group20_quick_cash.OngoingJobListFragment;
+import com.example.csci3130_w24_group20_quick_cash.OnGoingJobListFragment;
 import com.example.csci3130_w24_group20_quick_cash.R;
 
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.EmployerProfileFragment;
@@ -46,7 +46,7 @@ public class BaseEmployerActivity extends AppCompatActivity  {
             } else if (itemId == R.id.employerChats) {
                 switchFragment(new UserChatOverviewFragment());
             } else if (itemId == R.id.currentJobs){
-                switchFragment(new OngoingJobListFragment());
+                switchFragment(new OnGoingJobListFragment());
             }
 
             return true;

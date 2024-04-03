@@ -1,5 +1,8 @@
 package com.example.csci3130_w24_group20_quick_cash;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.io.Serializable;
 
 public class JobOffer implements Serializable {
@@ -14,14 +17,18 @@ public class JobOffer implements Serializable {
     private String otherTerms;
     private String isAccepted;
     private String isComplete;
+    private DatabaseReference databaseReference;
 
     public JobOffer(){
         //Default Constructor
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("JobOffers");
     }
 
-    public JobOffer(ApplicationPosting appPosting, String salary, String startDate, String otherTerms) {
+    public JobOffer(ApplicationPosting appPosting, String salary, String startDate, String otherTerms,
+                    String employerName) {
         this.jobID = appPosting.getJobID();
         this.employerUID = appPosting.getEmployerUID();
+        this.employerName = employerName;
         this.applicantUID = appPosting.getApplicantUID();
         this.jobTitle = appPosting.getJobTitle();
         this.applicantName = appPosting.getApplicantName();
@@ -30,6 +37,8 @@ public class JobOffer implements Serializable {
         this.otherTerms = otherTerms;
         this.isAccepted = "pending";
         this.isComplete = "pending";
+        this.databaseReference = FirebaseDatabase.getInstance().getReference().child("JobOffers");
+
     }
 
     public String getJobID() {
@@ -72,13 +81,14 @@ public class JobOffer implements Serializable {
         return isAccepted;
     }
 
-    public String getIssComplete() {
+    public String getIsComplete() {
         return isComplete;
     }
 
     public void setJobID(String jobID){
         this.jobID = jobID;
     }
+
     public void setSalary(String salary) {
         this.salary = salary;
     }
@@ -93,9 +103,11 @@ public class JobOffer implements Serializable {
 
     public void setAccepted(String accepted) {
         isAccepted = accepted;
+        databaseReference.child(jobID).child("isAccepted").setValue(isAccepted);
     }
 
     public void setComplete(String complete) {
         isComplete = complete;
+        databaseReference.child(jobID).child("isComplete").setValue(isAccepted);
     }
 }

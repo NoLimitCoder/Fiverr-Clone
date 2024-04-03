@@ -12,7 +12,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.EmployeeProfileFragment;
-import com.example.csci3130_w24_group20_quick_cash.OngoingJobListFragment;
+import com.example.csci3130_w24_group20_quick_cash.OnGoingJobListFragment;
 import com.example.csci3130_w24_group20_quick_cash.R;
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.JobSearchFragment;
 import com.example.csci3130_w24_group20_quick_cash.UserChatOverviewFragment;
@@ -39,7 +39,7 @@ public class BaseEmployeeActivity extends AppCompatActivity{
             } else if (itemId == R.id.employeeChats) {
                 switchFragment(new UserChatOverviewFragment());
             } else if (itemId == R.id.currentJobs) {
-                switchFragment(new OngoingJobListFragment());
+                switchFragment(new OnGoingJobListFragment());
             }
             return true;
         });
