@@ -19,6 +19,7 @@ import com.example.csci3130_w24_group20_quick_cash.JobPosting;
 import com.example.csci3130_w24_group20_quick_cash.R;
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.JobSearchFragment;
 import com.example.csci3130_w24_group20_quick_cash.UserChatOverviewFragment;
+import com.example.csci3130_w24_group20_quick_cash.ViewAppFragment;
 import com.example.csci3130_w24_group20_quick_cash.databinding.ActivityBaseEmployeeBinding;
 
 public class BaseEmployeeActivity extends AppCompatActivity{
@@ -43,6 +44,8 @@ public class BaseEmployeeActivity extends AppCompatActivity{
                 switchFragment(new UserChatOverviewFragment());
             } else if (itemId == R.id.currentJobs) {
                 switchFragment(new OnGoingJobListFragment());
+            } else if (itemId == R.id.viewEmployeeApplications){
+                switchFragment(new ViewAppFragment());
             }
             return true;
         });
