@@ -18,10 +18,16 @@
 
     <item
 
-        android:id="@+id/employeeNavSettings"
-        android:icon="@drawable/baseline_settings_24"
-        android:title="Settings"
+        android:id="@+id/employeeChats"
+        android:icon="@drawable/baseline_chat_24"
+        android:title="Chats"
         >
+    </item>
+
+    <item
+        android:id="@+id/currentJobs"
+        android:icon="@drawable/baseline_checklist_24"
+        android:title="Ongoing Jobs">
     </item>
 
 </menu>
