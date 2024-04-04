@@ -1,5 +1,8 @@
 package com.example.csci3130_w24_group20_quick_cash;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -13,15 +16,19 @@ public class ApplicationPosting implements Serializable {
     private String applicantCountry;
     private String applicantCity;
     private String applicantAddress;
-
+    private String applicationStatus;
     private String applicantEmail;
     private String applicantAvailability;
     private String applicantEducation;
     private String applicantExperience;
     private String appOtherDetails;
     private String dateReceived;
+    private DatabaseReference databaseReference;
 
-    public ApplicationPosting(){}
+    public ApplicationPosting(){
+        //Default Constructor
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("JobApplications");
+    }
     /**
      * Parameterized constructor for JobPosting.
      * @param applicantName The name of the employee applying.
@@ -53,6 +60,8 @@ public class ApplicationPosting implements Serializable {
         this.applicantExperience = applicantExperience;
         this.appOtherDetails = appOtherDetails;
         this.dateReceived = setCurrentDate();
+        this.applicationStatus = "pending";
+        this.databaseReference = FirebaseDatabase.getInstance().getReference().child("JobApplications");
     }
 
     public String getJobID() {
@@ -111,6 +120,8 @@ public class ApplicationPosting implements Serializable {
         return dateReceived;
     }
 
+    public String getApplicationStatus() {return applicationStatus;}
+
 
     /**
      * Sets the job ID of the application posting.
@@ -137,6 +148,12 @@ public class ApplicationPosting implements Serializable {
      */
     public void setJobTitle(String jobTitle) {
         this.jobTitle = jobTitle;
+    }
+
+    public void setApplicationStatus(String appStatus){
+        applicationStatus = appStatus;
+        databaseReference.child(jobID).child(applicantUID).child("applicationStatus").
+                setValue(applicationStatus);
     }
 
     /**

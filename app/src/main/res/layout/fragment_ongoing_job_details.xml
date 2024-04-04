@@ -100,7 +100,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textJobOtherTerms"/>
 
             <TextView
-                android:id="@+id/textJobAcceptance"
+                android:id="@+id/textJobEmployee"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="105dp"
@@ -114,6 +114,22 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textJobEmployer"/>
+
+            <TextView
+                android:id="@+id/textJobAcceptance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="105dp"
+                android:layout_marginTop="32dp"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="106dp"
+                android:width="200dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textJobEmployee"/>
 
             <TextView
                 android:id="@+id/textJobCompletion"

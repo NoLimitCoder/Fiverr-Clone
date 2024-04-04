@@ -191,6 +191,22 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textApplicantOtherDetails"/>
 
+            <TextView
+                android:id="@+id/textApplicantStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="105dp"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="106dp"
+                android:width="200dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textApplicantDateApplied"/>
+
             <LinearLayout
                 android:id="@+id/filesLayout"
                 android:layout_width="match_parent"
@@ -202,7 +218,7 @@
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="106dp"
                 android:width="200dp"
-                app:layout_constraintTop_toBottomOf="@id/textApplicantDateApplied"
+                app:layout_constraintTop_toBottomOf="@id/textApplicantStatus"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 

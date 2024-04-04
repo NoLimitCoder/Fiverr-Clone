@@ -1,5 +1,6 @@
 package com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 import static com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.JobUploadFragment.FIREBASE_SERVER_KEY;
 import static com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.JobUploadFragment.PUSH_NOTIFICATION_ENDPOINT;
 
@@ -31,6 +32,8 @@ import com.example.csci3130_w24_group20_quick_cash.ApplicationPosting;
 import com.example.csci3130_w24_group20_quick_cash.ChatData;
 import com.example.csci3130_w24_group20_quick_cash.JobOffer;
 import com.example.csci3130_w24_group20_quick_cash.R;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -102,13 +105,10 @@ public class ApplicationDetailFragment extends Fragment {
 
     protected void setupShortlistButton(View view) {
         Button shortlistButton = view.findViewById(R.id.shortlistButton);
-        DatabaseReference AppRef = FirebaseDatabase.getInstance().getReference().child("JobApplications")
-                .child(appPosting.getJobID()).child(appPosting.getApplicantUID());
-
         shortlistButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppRef.child("applicationStatus").setValue("Shortlisted");
+                appPosting.setApplicationStatus("Shortlisted");
                 createChatInstance();
             }
         });
@@ -116,13 +116,10 @@ public class ApplicationDetailFragment extends Fragment {
 
     protected void setupRejectButton(View view) {
         Button shortlistButton = view.findViewById(R.id.rejectButton);
-        DatabaseReference AppRef = FirebaseDatabase.getInstance().getReference().child("JobApplications")
-                .child(appPosting.getJobID()).child(appPosting.getApplicantUID());
-
         shortlistButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppRef.child("applicationStatus").setValue("Rejected");
+                appPosting.setApplicationStatus("Rejected");
                 Toast.makeText(getActivity(), "Applicant Rejected", Toast.LENGTH_SHORT).show();
             }
         });
@@ -133,6 +130,8 @@ public class ApplicationDetailFragment extends Fragment {
         offerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                appPosting.setApplicationStatus("Job Offer Sent");
+                Toast.makeText(getActivity(), "Applicant Rejected", Toast.LENGTH_SHORT).show();
                 navigateToSendJobOfferFragment();
             }
         });
@@ -209,6 +208,7 @@ public class ApplicationDetailFragment extends Fragment {
         TextView textApplicantExperience = view.findViewById(R.id.textApplicantExperience);
         TextView textApplicantOtherDetails = view.findViewById(R.id.textApplicantOtherDetails);
         TextView textApplicantDateApplied = view.findViewById(R.id.textApplicantDateApplied);
+        TextView textApplicationStatus = view.findViewById(R.id.textApplicantStatus);
 
         LinearLayout filesLayout = view.findViewById(R.id.filesLayout);
 
@@ -229,6 +229,7 @@ public class ApplicationDetailFragment extends Fragment {
             textApplicantExperience.setText(appPosting.getApplicantExperience());
             textApplicantOtherDetails.setText(appPosting.getAppOtherDetails());
             textApplicantDateApplied.setText(appPosting.getDateReceived());
+            textApplicationStatus.setText(appPosting.getApplicationStatus());
         }
         return view;
     }

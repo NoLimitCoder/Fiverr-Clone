@@ -11,7 +11,7 @@ public class JobOffer implements Serializable {
     private String applicantUID;
     private String jobTitle;
     private String employerName;
-    private String applicantName;
+    private String employeeName;
     private String salary;
     private String startDate;
     private String otherTerms;
@@ -29,9 +29,9 @@ public class JobOffer implements Serializable {
         this.jobID = appPosting.getJobID();
         this.employerUID = appPosting.getEmployerUID();
         this.employerName = employerName;
+        this.employeeName = appPosting.getApplicantName();
         this.applicantUID = appPosting.getApplicantUID();
         this.jobTitle = appPosting.getJobTitle();
-        this.applicantName = appPosting.getApplicantName();
         this.salary = salary;
         this.startDate = startDate;
         this.otherTerms = otherTerms;
@@ -49,7 +49,7 @@ public class JobOffer implements Serializable {
         return employerUID;
     }
 
-    public String getApplicantUID() {
+    public String getEmployeeUID() {
         return applicantUID;
     }
 
@@ -61,8 +61,8 @@ public class JobOffer implements Serializable {
         return employerName;
     }
 
-    public String getApplicantName() {
-        return applicantName;
+    public String getEmployeeName() {
+        return employeeName;
     }
 
     public String getSalary() {

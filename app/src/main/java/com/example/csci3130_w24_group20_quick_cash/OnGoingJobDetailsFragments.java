@@ -1,5 +1,6 @@
 package com.example.csci3130_w24_group20_quick_cash;
 
+import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 import static com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.JobUploadFragment.FIREBASE_SERVER_KEY;
 import static com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.JobUploadFragment.PUSH_NOTIFICATION_ENDPOINT;
 
@@ -12,13 +13,18 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONObject;
@@ -38,6 +44,8 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
     private TextView textJobEmployer;
 
     private TextView textJobOtherTerms;
+
+    private TextView textJobEmployee;
 
     private TextView acceptanceStatus;
 
@@ -88,6 +96,7 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
         textJobSalary = rootView.findViewById(R.id.textJobSalary);
         textJobStartDate = rootView.findViewById(R.id.textJobStartDate);
         textJobEmployer = rootView.findViewById(R.id.textJobEmployer);
+        textJobEmployee = rootView.findViewById(R.id.textJobEmployee);
         textJobOtherTerms = rootView.findViewById(R.id.textJobOtherTerms);
         acceptanceStatus = rootView.findViewById(R.id.textJobAcceptance);
         completionStatus = rootView.findViewById(R.id.textJobCompletion);
@@ -103,6 +112,7 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
             textJobSalary.setText(jobOffer.getSalary());
             textJobStartDate.setText(jobOffer.getStartDate());
             textJobEmployer.setText(jobOffer.getEmployerName());
+            textJobEmployee.setText(jobOffer.getEmployeeName());
             textJobOtherTerms.setText(jobOffer.getOtherTerms());
             acceptanceStatus.setText(jobOffer.getIsAccepted());
             completionStatus.setText(jobOffer.getIsComplete());
@@ -113,9 +123,10 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
 
     private void updateUI() {
         String UID = mAuth.getCurrentUser().getUid();
-        if (UID.equals(jobOffer.getApplicantUID())) {
+        if (UID.equals(jobOffer.getEmployeeUID())) {
             if ("accepted".equals(jobOffer.getIsAccepted())) {
                 completeJobButton.setVisibility(View.VISIBLE);
+                declineJobButton.setVisibility(View.GONE);
             } else {
                 completeJobButton.setVisibility(View.GONE);
             }
@@ -145,19 +156,38 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
         } else if (v.getId() == R.id.declineJobButton) {
             jobOffer.setAccepted("declined");
             updateUI();
-            requireActivity().getSupportFragmentManager().popBackStack();
+            Toast.makeText(getContext(), "Job offer declined", Toast.LENGTH_SHORT).show();
+            DeleteJobOffer();
         } else if (v.getId() == R.id.completeJobButton) {
             jobOffer.setComplete("completed");
             updateUI();
         }
     }
 
+    private void DeleteJobOffer() {
+        DatabaseReference jobOfferRef = FirebaseDatabase.getInstance().getReference().child("JobOffers").child(jobOffer.getJobID());
+        jobOfferRef.removeValue()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        requireActivity().getSupportFragmentManager().popBackStack();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "Error removing applicant from job offer", e);
+                    }
+                });
+    }
+
+
     private void sendAcceptedNotification() {
         try {
             JSONObject notificationBody = new JSONObject();
 
             notificationBody.put("title", "Accepted!");
-            notificationBody.put("body", jobOffer.getApplicantName() + "has been accepted the job: " + jobOffer.getJobTitle());
+            notificationBody.put("body", jobOffer.getEmployeeName() + "has been accepted the job: " + jobOffer.getJobTitle());
 
             JSONObject dataBody = new JSONObject();
             dataBody.put("Job name", jobOffer.getJobTitle());
