@@ -5,6 +5,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,6 +14,8 @@ import android.widget.EditText;
 
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.EmployeeProfileFragment;
 import com.example.csci3130_w24_group20_quick_cash.OnGoingJobListFragment;
+import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.JobDetailsFragment;
+import com.example.csci3130_w24_group20_quick_cash.JobPosting;
 import com.example.csci3130_w24_group20_quick_cash.R;
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.JobSearchFragment;
 import com.example.csci3130_w24_group20_quick_cash.UserChatOverviewFragment;
@@ -43,6 +46,17 @@ public class BaseEmployeeActivity extends AppCompatActivity{
             }
             return true;
         });
+
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra("jobDetails")) {
+            JobPosting job = (JobPosting) intent.getSerializableExtra("jobDetails");
+
+            // Create and display the JobDetailsFragment
+            JobDetailsFragment jobDetailsFragment = JobDetailsFragment.newInstance(job);
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.baseEmployee, jobDetailsFragment);
+            transaction.addToBackStack("fragment_job_search").commit();
+        }
     }
 
     @Override
