@@ -46,11 +46,11 @@ public class CredentialValidator {
     /**
      * Checks if all job fields are filled out.
      *
-     * @param jobFields The job fields to be checked.
+     * @param fields The job fields to be checked.
      * @return True if all job fields are filled out, otherwise false.
      */
-    public boolean isJobFilledOut(String... jobFields){
-        for (String field : jobFields){
+    public boolean areFieldsFilled(String... fields){
+        for (String field : fields){
             if(field.trim().isEmpty()){
                 return false;
             }

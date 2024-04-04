@@ -20,7 +20,6 @@ import android.widget.Toast;
 import com.example.csci3130_w24_group20_quick_cash.ApplicationPosting;
 import com.example.csci3130_w24_group20_quick_cash.CredentialValidator;
 import com.example.csci3130_w24_group20_quick_cash.FirebaseAuthSingleton;
-import com.example.csci3130_w24_group20_quick_cash.FirebaseCRUD;
 import com.example.csci3130_w24_group20_quick_cash.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -138,7 +137,7 @@ public class JobApplyFragment extends Fragment {
 
         employeeUID = getEmployeeID();
 
-        if (credChecker.isJobFilledOut(name, employeeUID, email, availability, address, country,
+        if (credChecker.areFieldsFilled(name, employeeUID, email, availability, address, country,
                 city, education, experience, details)) {
             if (credChecker.isValidEmailAddress(email) && credChecker.isValidName(name)) {
                 if (credChecker.isValidAddress(getContext(), country, city, address)) {

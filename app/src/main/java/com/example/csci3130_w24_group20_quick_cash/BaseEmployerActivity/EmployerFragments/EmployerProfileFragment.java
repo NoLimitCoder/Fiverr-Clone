@@ -1,25 +1,33 @@
 package com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.csci3130_w24_group20_quick_cash.FirebaseAuthSingleton;
+import com.example.csci3130_w24_group20_quick_cash.MainActivity;
 import com.example.csci3130_w24_group20_quick_cash.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A fragment representing the employer's profile.
  * This fragment displays information related to the employer's profile.
  */
-public class EmployerProfileFragment extends Fragment {
+public class EmployerProfileFragment extends Fragment implements View.OnClickListener {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
+
+    private FirebaseAuth mAuth;
 
     public EmployerProfileFragment() {
         // Required empty public constructor
@@ -45,16 +53,50 @@ public class EmployerProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        mAuth = FirebaseAuthSingleton.getInstance();
+    }
+
+    /**
+     * Sets up the logout button functionality by finding the button in the provided view and
+     * attaching an OnClickListener to it.
+     *
+     * @param view The parent view containing the logout button.
+     */
+    protected void setupLogoutButton(View view) {
+        Button logoutButton = view.findViewById(R.id.logoutButton); // Correct ID of the logout button
+        logoutButton.setOnClickListener(this);
+    }
+
+    /**
+     * Logs the current user out of the application by signing out from Firebase authentication
+     * and redirecting to the MainActivity.
+     */
+    void logout() {
+        mAuth.signOut();
+        Intent intent = new Intent(getActivity(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+    }
+
+    /**
+     * Handles the onClick event for the logout button.
+     * This method is invoked when the logout button is clicked.
+     * It logs the click event and initiates the logout process.
+     *
+     * @param v The View object that was clicked, in this case, the logout button.
+     */
+    @Override
+    public void onClick(View v) {
+        Log.d("clicked", "clicked");
+        logout();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_employer_profile, container, false);
+        View view =  inflater.inflate(R.layout.fragment_employer_profile, container, false);
+        setupLogoutButton(view);
+        return view;
     }
 }
