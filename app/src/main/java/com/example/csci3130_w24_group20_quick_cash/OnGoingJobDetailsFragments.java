@@ -23,8 +23,11 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONObject;
@@ -38,6 +41,7 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
     private Button completeJobButton;
     private Button acceptJobButton;
     private Button declineJobButton;
+    private Button favoriteEmployeeButton;
     private TextView textJobTitle;
     private TextView textJobSalary;
     private TextView textJobStartDate;
@@ -88,9 +92,10 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_ongoing_job_details, container, false);
 
-         acceptJobButton = rootView.findViewById(R.id.acceptJobButton);
-         declineJobButton = rootView.findViewById(R.id.declineJobButton);
-         completeJobButton = rootView.findViewById(R.id.completeJobButton);
+        acceptJobButton = rootView.findViewById(R.id.acceptJobButton);
+        declineJobButton = rootView.findViewById(R.id.declineJobButton);
+        completeJobButton = rootView.findViewById(R.id.completeJobButton);
+        favoriteEmployeeButton = rootView.findViewById(R.id.favoriteEmployeeButton);
 
         textJobTitle = rootView.findViewById(R.id.textJobTitle);
         textJobSalary = rootView.findViewById(R.id.textJobSalary);
@@ -104,6 +109,7 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
         acceptJobButton.setOnClickListener(this);
         declineJobButton.setOnClickListener(this);
         completeJobButton.setOnClickListener(this);
+        favoriteEmployeeButton.setOnClickListener(this);
 
         updateUI();
 
@@ -122,8 +128,9 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
     }
 
     private void updateUI() {
-        String UID = mAuth.getCurrentUser().getUid();
-        if (UID.equals(jobOffer.getEmployeeUID())) {
+        String currentUID = mAuth.getCurrentUser().getUid();
+        String employeeUID = jobOffer.getApplicantUID();
+        if (currentUID.equals(employeeUID)) {
             if ("accepted".equals(jobOffer.getIsAccepted())) {
                 completeJobButton.setVisibility(View.VISIBLE);
                 declineJobButton.setVisibility(View.GONE);
@@ -144,8 +151,10 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
             completeJobButton.setVisibility(View.GONE);
             acceptJobButton.setVisibility(View.GONE);
             declineJobButton.setVisibility(View.GONE);
+            favoriteEmployeeButton.setVisibility(View.VISIBLE);
         }
     }
+
 
     @Override
     public void onClick(View v) {
@@ -161,7 +170,43 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
         } else if (v.getId() == R.id.completeJobButton) {
             jobOffer.setComplete("completed");
             updateUI();
+        } else if (v.getId() == R.id.favoriteEmployeeButton){
+            favoriteEmployee();
         }
+    }
+
+    private void favoriteEmployee() {
+        DatabaseReference employeesRef = FirebaseDatabase.getInstance().getReference().child("users").child(jobOffer.getApplicantUID());
+        employeesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String employeeName = dataSnapshot.child("name").getValue(String.class);
+                    String employeeUID = jobOffer.getApplicantUID();
+                    DatabaseReference employerRef = FirebaseDatabase.getInstance().getReference().child("users").child(mAuth.getCurrentUser().getUid());
+                    employerRef.child("favoriteEmployees").child(employeeUID).setValue(employeeName)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(getContext(), "Employee added to favorites", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(getContext(), "Failed to add employee to favorites", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                } else {
+                    Toast.makeText(getContext(), "Employee data not found", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                //No OnCancelled Activity
+            }
+        });
     }
 
     private void DeleteJobOffer() {

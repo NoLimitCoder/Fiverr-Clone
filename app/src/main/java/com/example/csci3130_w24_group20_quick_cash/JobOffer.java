@@ -20,7 +20,6 @@ public class JobOffer implements Serializable {
     private DatabaseReference databaseReference;
 
     public JobOffer(){
-        //Default Constructor
         databaseReference = FirebaseDatabase.getInstance().getReference().child("JobOffers");
     }
 
@@ -49,7 +48,7 @@ public class JobOffer implements Serializable {
         return employerUID;
     }
 
-    public String getEmployeeUID() {
+    public String getApplicantUID() {
         return applicantUID;
     }
 

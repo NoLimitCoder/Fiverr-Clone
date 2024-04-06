@@ -9,11 +9,24 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.csci3130_w24_group20_quick_cash.FavoriteEmployeesAdapter;
 import com.example.csci3130_w24_group20_quick_cash.FirebaseAuthSingleton;
 import com.example.csci3130_w24_group20_quick_cash.MainActivity;
 import com.example.csci3130_w24_group20_quick_cash.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A fragment representing the employer's profile.
@@ -27,7 +40,13 @@ public class EmployerProfileFragment extends Fragment implements View.OnClickLis
     private String mParam1;
     private String mParam2;
 
+    private RecyclerView recyclerView;
+    private FavoriteEmployeesAdapter adapter;
+    private List<String> favoriteEmployeesList;
+
     private FirebaseAuth mAuth;
+
+    private DatabaseReference favoriteEmployeesRef;
 
     public EmployerProfileFragment() {
         // Required empty public constructor
@@ -54,6 +73,11 @@ public class EmployerProfileFragment extends Fragment implements View.OnClickLis
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuthSingleton.getInstance();
+        favoriteEmployeesRef = FirebaseDatabase.getInstance().getReference().child("users")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("favoriteEmployees");
+
+        favoriteEmployeesList = new ArrayList<>();
+        adapter = new FavoriteEmployeesAdapter(favoriteEmployeesList);
     }
 
     /**
@@ -97,6 +121,32 @@ public class EmployerProfileFragment extends Fragment implements View.OnClickLis
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_employer_profile, container, false);
         setupLogoutButton(view);
+
+        recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
+
+        fetchFavoriteEmployees();
+
         return view;
+    }
+
+    private void fetchFavoriteEmployees() {
+        favoriteEmployeesRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                favoriteEmployeesList.clear();
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String employeeName = snapshot.getValue(String.class);
+                    favoriteEmployeesList.add(employeeName);
+                }
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle onCancelled
+            }
+        });
     }
 }
