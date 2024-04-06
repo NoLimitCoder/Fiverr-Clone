@@ -12,16 +12,27 @@
 
     <!-- TODO: Update blank fragment layout -->
 
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="169dp"
+        android:layout_height="127dp"
+        android:layout_marginEnd="206dp"
+        android:src="@drawable/shape"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/employeeReviewText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="57dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="150dp"
         android:layout_marginEnd="57dp"
+        android:gravity="center"
         android:text="Employee performance review"
         android:textSize="28dp"
-        android:gravity="center"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,20 +47,20 @@
         android:layout_constraintTop_toTopOf="parent"
         android:layout_gravity="center_horizontal"
         android:layout_marginStart="105dp"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="350dp"
         android:layout_marginEnd="106dp"
         android:numStars="5"
         android:stepSize=".5" />
-
 
     <EditText
         android:id="@+id/performanceReview"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="250dp"
         android:layout_marginEnd="50dp"
         android:background="@drawable/input"
+        app:layout_constraintTop_toBottomOf="@+id/employeeReviewText"
         android:hint="Performance Review"
         android:textSize="16dp"
         android:visibility="visible" />
@@ -59,11 +70,10 @@
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginTop="500dp"
-        android:layout_marginBottom="500dp"
-
+        android:layout_marginTop="450dp"
+        android:layout_marginBottom="450dp"
         android:background="@drawable/login_btn"
-        android:text="Register"
+        android:text="Submit Review"
         android:textSize="16dp" />
 
 

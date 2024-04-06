@@ -166,6 +166,6 @@ public class EmployerRating extends Fragment implements View.OnClickListener{
      * @return The role selected by the user.
      */
     protected double getRatingNum() {
-        return ratingBar.getRating();
+        return ratingBar.getRating() % 5;
     }
 }
