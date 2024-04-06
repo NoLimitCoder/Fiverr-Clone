@@ -47,8 +47,8 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private static final String FIREBASE_SERVER_KEY = "AAAAJULKPZc:APA91bH7AZ59ApuLLtTpHUiC4l3Mu5CoKerK7CD8UGqEQXj0RmUE5x0JCkm1nMh8FwBo5O3lBoF3KK7cOifd-9ZNyoks7R7jKXHi26qwgfFTDLMOUS2hdnJ9vbs-1WLoM4kNg-P71GRB";
-    private static final String PUSH_NOTIFICATION_ENDPOINT = "https://fcm.googleapis.com/fcm/send";
+    public static final String FIREBASE_SERVER_KEY = "AAAAJULKPZc:APA91bH7AZ59ApuLLtTpHUiC4l3Mu5CoKerK7CD8UGqEQXj0RmUE5x0JCkm1nMh8FwBo5O3lBoF3KK7cOifd-9ZNyoks7R7jKXHi26qwgfFTDLMOUS2hdnJ9vbs-1WLoM4kNg-P71GRB";
+    public static final String PUSH_NOTIFICATION_ENDPOINT = "https://fcm.googleapis.com/fcm/send";
 
     private EditText jobTitleEditText, jobSalaryEditText, jobTypeEditText, jobCountryEditText,
     jobCityEditText, jobAdressEditText, jobDescriptionEditText, jobOtherDetailsEditText;
@@ -180,7 +180,7 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
         JobPosting jobPosting = new JobPosting(employerName[0], employerUID, jobTitle, jobCountry, jobCity, jobAddress, jobSalary,
                 jobDescription, jobType, jobOtherDetails);
 
-        if (credChecker.isJobFilledOut(jobTitle, jobCountry, jobCity, jobAddress, jobSalary,
+        if (credChecker.areFieldsFilled(jobTitle, jobCountry, jobCity, jobAddress, jobSalary,
                 jobDescription, jobType, jobOtherDetails)) {
 
             if (credChecker.isValidAddress(getContext(),jobCountry, jobCity, jobAddress)){
@@ -236,27 +236,15 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
 
     private void sendNotification() {
         try {
-            // Logging job title
-            Log.d("Notification", "Job Title: " + jobTitleEditText.getText().toString().trim());
-            Log.d("Notification", "Job Description: " + jobDescriptionEditText.getText().toString().trim());
-            Log.d("Notification", "Job Location: " + jobCityEditText.getText().toString().trim());
-
             JSONObject notificationBody = new JSONObject();
-            notificationBody.put("title", "New Job Created"); // Assuming "title" is the key for job title
-            notificationBody.put("body", "New job postings in your area"); // Assuming "body" is the key for job description
 
-            // Logging job description
-            Log.d("Notification", "Job Title: " + jobTitleEditText.getText().toString().trim());
-            Log.d("Notification", "Job Description: " + jobDescriptionEditText.getText().toString().trim());
-            Log.d("Notification", "Job Location: " + jobCityEditText.getText().toString().trim());
-
+            notificationBody.put("title", "New Job Created");
+            notificationBody.put("body", "New job postings in your area");
 
             JSONObject dataBody = new JSONObject();
             dataBody.put("jobID", "");
             dataBody.put("jobLocation", jobCityEditText.getText().toString().trim());
 
-            // Logging job location
-            Log.d("Notification", "Job Location: " + jobCityEditText.getText().toString().trim());
 
             JSONObject pushnotiBody = new JSONObject();
             pushnotiBody.put("to", "/topics/jobs");
@@ -285,6 +273,7 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
                 }
             };
             requestQueue.add(request);
+            getParentFragmentManager().popBackStack();
 
         } catch (Exception e) {
             Log.e("Notification", "Exception occurred: " + e.getMessage());
