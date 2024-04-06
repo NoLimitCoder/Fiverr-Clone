@@ -20,7 +20,6 @@ public class JobOffer implements Serializable {
     private DatabaseReference databaseReference;
 
     public JobOffer(){
-        //Default Constructor
         databaseReference = FirebaseDatabase.getInstance().getReference().child("JobOffers");
     }
 

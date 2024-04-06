@@ -48,6 +48,7 @@ public class OnGoingJobListFragment extends Fragment implements JobOfferAdapter.
 
 
     private void fetchOngoingJobOffers() {
+        String UID = mAuth.getCurrentUser().getUid();
         DatabaseReference jobOffersRef = FirebaseDatabase.getInstance().getReference("JobOffers");
             jobOffersRef.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -55,7 +56,8 @@ public class OnGoingJobListFragment extends Fragment implements JobOfferAdapter.
                     ongoingJobList.clear();
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         JobOffer jobOffer = snapshot.getValue(JobOffer.class);
-                        if (jobOffer != null) {
+                        if (jobOffer != null && (jobOffer.getApplicantUID().equals(UID)
+                        || jobOffer.getEmployerUID().equals(UID))){
                             ongoingJobList.add(jobOffer);
                         }
                     }

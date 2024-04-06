@@ -124,6 +124,7 @@ public class SendJobOfferFragment extends Fragment {
             jobOffersRef.child(jobOfferId).setValue(jobOffer)
                     .addOnSuccessListener(aVoid -> {
                         Toast.makeText(getContext(), "Job offer sent successfully", Toast.LENGTH_SHORT).show();
+                        appPosting.setApplicationStatus("Job Offer Sent");
                         sendJobOfferNotification();
                     })
                     .addOnFailureListener(e -> {

@@ -139,8 +139,6 @@ public class ApplicationDetailFragment extends Fragment {
         offerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                appPosting.setApplicationStatus("Job Offer Sent");
-                Toast.makeText(getActivity(), "Applicant Rejected", Toast.LENGTH_SHORT).show();
                 navigateToSendJobOfferFragment();
             }
         });
