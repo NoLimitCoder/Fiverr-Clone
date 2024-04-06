@@ -1,4 +1,4 @@
-package com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments;
+package com.example.csci3130_w24_group20_quick_cash;
 
 import android.os.Bundle;
 
@@ -15,11 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.example.csci3130_w24_group20_quick_cash.ApplicationPosting;
-import com.example.csci3130_w24_group20_quick_cash.ApplicationAdapter;
-import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.JobDetailsFragment;
-import com.example.csci3130_w24_group20_quick_cash.JobPosting;
-import com.example.csci3130_w24_group20_quick_cash.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,13 +27,15 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link EmployerViewAppFragment#newInstance} factory method to
+ * Use the {@link ViewAppFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class EmployerViewAppFragment extends Fragment implements ApplicationAdapter.OnApplicationItemClickListener{
+public class ViewAppFragment extends Fragment implements ApplicationAdapter.OnApplicationItemClickListener{
 
     private RecyclerView appRecyclerView;
     private ApplicationAdapter appAdapter;
+
+    private String uid;
 
     private List<ApplicationPosting> appPostingList = new ArrayList<>();
 
@@ -47,7 +44,7 @@ public class EmployerViewAppFragment extends Fragment implements ApplicationAdap
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    public EmployerViewAppFragment() {
+    public ViewAppFragment() {
         // Required empty public constructor
     }
 
@@ -59,8 +56,8 @@ public class EmployerViewAppFragment extends Fragment implements ApplicationAdap
      * @param param2 Parameter 2.
      * @return A new instance of fragment EmployerViewAppFragment.
      */
-    public static EmployerViewAppFragment newInstance(String param1, String param2) {
-        EmployerViewAppFragment fragment = new EmployerViewAppFragment();
+    public static ViewAppFragment newInstance(String param1, String param2) {
+        ViewAppFragment fragment = new ViewAppFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -83,7 +80,7 @@ public class EmployerViewAppFragment extends Fragment implements ApplicationAdap
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_employer_view_app, container, false);
+        View view = inflater.inflate(R.layout.fragment_view_app, container, false);
 
         appRecyclerView = view.findViewById(R.id.appRecyclerViewer);
         appRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -92,9 +89,11 @@ public class EmployerViewAppFragment extends Fragment implements ApplicationAdap
         appRecyclerView.setAdapter(appAdapter);
 
         mAuth = FirebaseAuth.getInstance();
-        String employerUID = mAuth.getCurrentUser().getUid();
+        uid = mAuth.getCurrentUser().getUid();
 
-        fetchAppPostingForEmployer(employerUID);
+        fetchEmployerAppPostings(uid);
+        fetchEmployeeAppPostings(uid);
+
 
         EditText editTextSearch = view.findViewById(R.id.editTextSearch);
         editTextSearch.addTextChangedListener(new TextWatcher() {
@@ -118,6 +117,31 @@ public class EmployerViewAppFragment extends Fragment implements ApplicationAdap
         return view;
     }
 
+    private void fetchEmployeeAppPostings(String uid) {
+        DatabaseReference jobApplicationRef = FirebaseDatabase.getInstance().getReference().child("JobApplications");
+
+        jobApplicationRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                appPostingList.clear();
+                for (DataSnapshot jobSnapshot : dataSnapshot.getChildren()) {
+                    for (DataSnapshot appSnapshot : jobSnapshot.getChildren()) {
+                        ApplicationPosting appPosting = appSnapshot.getValue(ApplicationPosting.class);
+                        if (appPosting != null && appPosting.getApplicantUID().equals(uid)) {
+                            appPostingList.add(appPosting);
+                            appAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // No OnCancelled logic
+            }
+        });
+    }
+
     private List<ApplicationPosting> filterJobs(List<ApplicationPosting> appPostings, String searchText) {
         List<ApplicationPosting> filteredList = new ArrayList<>();
         for (ApplicationPosting app : appPostings){
@@ -130,13 +154,14 @@ public class EmployerViewAppFragment extends Fragment implements ApplicationAdap
         return filteredList;
     }
 
-    private void fetchAppPostingForEmployer(String employerUID){
+    private void fetchEmployerAppPostings(String uid){
         DatabaseReference jobApplicationRef = FirebaseDatabase.getInstance().getReference().child("JobApplications");
-        DatabaseReference jobPostingRef = FirebaseDatabase.getInstance().getReference().child("JobPostings").child(employerUID);
+        DatabaseReference jobPostingRef = FirebaseDatabase.getInstance().getReference().child("JobPostings").child(uid);
 
         jobPostingRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                appPostingList.clear();
                 for (DataSnapshot jobSnapshot: snapshot.getChildren()){
                     String jobID = jobSnapshot.getKey();
 
@@ -169,7 +194,11 @@ public class EmployerViewAppFragment extends Fragment implements ApplicationAdap
 
         ApplicationDetailFragment appDetailFragments = ApplicationDetailFragment.newInstance(appPosting);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.baseEmployer, appDetailFragments);
+        if (uid.equals(appPosting.getApplicantUID())){
+            transaction.replace(R.id.baseEmployee, appDetailFragments);
+        } else {
+            transaction.replace(R.id.baseEmployer, appDetailFragments);
+        }
         transaction.addToBackStack("fragment_employer_view_app").commit();
     }
 
