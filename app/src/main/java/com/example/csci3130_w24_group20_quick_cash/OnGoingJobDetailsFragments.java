@@ -20,6 +20,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.PaymentIntegrationFragment;
+import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.SendJobOfferFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,6 +44,7 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
     private Button acceptJobButton;
     private Button declineJobButton;
     private Button favoriteEmployeeButton;
+    private Button makePaymentButton;
     private TextView textJobTitle;
     private TextView textJobSalary;
     private TextView textJobStartDate;
@@ -96,6 +99,7 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
         declineJobButton = rootView.findViewById(R.id.declineJobButton);
         completeJobButton = rootView.findViewById(R.id.completeJobButton);
         favoriteEmployeeButton = rootView.findViewById(R.id.favoriteEmployeeButton);
+        makePaymentButton = rootView.findViewById(R.id.makePaymentButton);
 
         textJobTitle = rootView.findViewById(R.id.textJobTitle);
         textJobSalary = rootView.findViewById(R.id.textJobSalary);
@@ -110,6 +114,7 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
         declineJobButton.setOnClickListener(this);
         completeJobButton.setOnClickListener(this);
         favoriteEmployeeButton.setOnClickListener(this);
+        makePaymentButton.setOnClickListener(this);
 
         updateUI();
 
@@ -152,6 +157,11 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
             acceptJobButton.setVisibility(View.GONE);
             declineJobButton.setVisibility(View.GONE);
             favoriteEmployeeButton.setVisibility(View.VISIBLE);
+
+            if ("complete".equals(jobOffer.getIsComplete())){
+                makePaymentButton.setVisibility(View.VISIBLE);
+            }
+
         }
     }
 
@@ -172,7 +182,16 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
             updateUI();
         } else if (v.getId() == R.id.favoriteEmployeeButton){
             favoriteEmployee();
+        } else if (v.getId() == R.id.makePaymentButton){
+            openPaymentFragment();
         }
+    }
+
+    private void openPaymentFragment() {
+        getParentFragmentManager().beginTransaction()
+                .replace(R.id.baseEmployer, new PaymentIntegrationFragment())
+                .addToBackStack("fragment_ongoing_job_details")
+                .commit();
     }
 
     private void favoriteEmployee() {

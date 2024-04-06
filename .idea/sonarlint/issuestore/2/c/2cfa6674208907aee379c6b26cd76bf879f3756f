@@ -1,0 +1,21 @@
+
+ 
+java:S1450-"_Remove the "chatRecyclerView" field and declare it as a local variable in the relevant methods.(­”³îÿÿÿÿÿJ$fa931946-de73-46c8-832f-aa7bbe368713
+
+java:S14501"TRemove the "mAuth" field and declare it as a local variable in the relevant methods.(ªĞ”’J$b5319a5e-a640-468d-a3d2-ee9ebe602239
+’
+java:S1450*"VRemove the "mParam1" field and declare it as a local variable in the relevant methods.(•Íï‘J$850a565d-13e4-43f1-97d9-9b8858791659
+’
+java:S1450+"VRemove the "mParam2" field and declare it as a local variable in the relevant methods.(¡ˆ€ J$7ee05c3c-2ff4-4ed6-9538-ce8bfd7fa0ce
+s
+java:S1135$"2Complete the task associated to this TODO comment.(ÜûŠ—øÿÿÿÿJ$c0b3cff9-3d76-4d2f-844b-d982cd4b9c64
+s
+java:S1135)"2Complete the task associated to this TODO comment.(ğï¢öúÿÿÿÿJ$3077e9ae-57a4-4da4-b15f-aad63956c178
+s
+java:S1135?"2Complete the task associated to this TODO comment.(ßíŠÿÿÿÿÿJ$cff2d792-6e39-42d7-9111-2eb8d1a88ddc
+{
+java:S1874j":Remove this use of "getFragmentManager"; it is deprecated.(å¿…¶ıÿÿÿÿJ$b32e51ad-178b-4bf4-bdbc-9ecf9c558e8b
+g
+java:S1068*"+Remove this unused "mParam1" private field.(•Íï‘J$ec40fe94-479e-4d07-9384-956c1215c34a
+g
+java:S1068+"+Remove this unused "mParam2" private field.(¡ˆ€ J$730f7a15-a308-4a87-9b55-0167ecad2c59

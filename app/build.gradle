@@ -82,6 +82,10 @@ dependencies {
     androidTestImplementation project(path: ':app')
     testImplementation 'org.robolectric:robolectric:4.6.1'
 
+    /*PayPal*/
+    implementation 'com.paypal.sdk:paypal-android-sdk:2.16.0'
+    implementation "com.squareup.retrofit2:converter-gson:2.5.0"
+
 
 
 }

@@ -1,0 +1,30 @@
+
+q
+java:S1604Ï"(Make this anonymous inner class a lambda(Ïë£ùÿÿÿÿ8±‹Û§ë1J$460c3ec6-5e73-4879-955a-49bc33dcedb7
+q
+java:S1604Õ"(Make this anonymous inner class a lambda(Ÿ ¹ÿÿÿÿÿ8±‹Û§ë1J$16b9508e-b5d3-4d61-b061-3ed3460f1521
+q
+java:S1604ê"(Make this anonymous inner class a lambda(Ïë£ùÿÿÿÿ8²‹Û§ë1J$c4413d32-616f-492b-a092-d362fa5f1518
+q
+java:S1604ğ"(Make this anonymous inner class a lambda(Ÿ ¹ÿÿÿÿÿ8²‹Û§ë1J$dd79f6d8-64dc-4d76-be69-f240bb3c6f23
+¢
+java:S14509"_Remove the "acceptanceStatus" field and declare it as a local variable in the relevant methods.(£¹İ«8Õ‹Û§ë1J$96e14345-14a7-436f-aaa8-17d0b1fc592c
+¢
+java:S1450;"_Remove the "completionStatus" field and declare it as a local variable in the relevant methods.(Å¾‹Ö8Õ‹Û§ë1J$5a892457-14ed-4c72-9c97-b299c54d26ac
+¡
+java:S14507"^Remove the "textJobEmployee" field and declare it as a local variable in the relevant methods.(€ä€Ä8Õ‹Û§ë1J$f645822c-4448-4338-9bf7-08ceaecb740b
+¡
+java:S14503"^Remove the "textJobEmployer" field and declare it as a local variable in the relevant methods.(ÛµÎ»8Õ‹Û§ë1J$84c1f904-0144-47d2-86b7-375c10994e52
+£
+java:S14505"`Remove the "textJobOtherTerms" field and declare it as a local variable in the relevant methods.(’Üÿ¥8Õ‹Û§ë1J$7489f696-0bcb-4842-840d-c5216aeb0dfc
+¤
+java:S14501"\Remove the "textJobSalary" field and declare it as a local variable in the relevant methods.(­ßƒêıÿÿÿÿ8Ö‹Û§ë1J$e9ff804c-cd7a-4c4b-9717-cdb033816aef
+¢
+java:S14502"_Remove the "textJobStartDate" field and declare it as a local variable in the relevant methods.(ÜÿÆá8Ö‹Û§ë1J$b84a67a3-51c8-4eeb-93e7-97b91edf6351
+
+java:S14500"[Remove the "textJobTitle" field and declare it as a local variable in the relevant methods.(à÷´Â8Ö‹Û§ë1J$68a2fab5-2ff9-4648-bf54-697a5a746b5f
+
+java:S1874T"7Remove this use of "getSerializable"; it is deprecated.(şÔğ™ÿÿÿÿÿ8İ‹Û§ë1J$ceb62215-f146-432b-bb94-2eb967c5681c
+–	java:S100ç"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(·¼Ô²ıÿÿÿÿ8ë‹Û§ë1J$89d721cf-b299-40b7-8000-c3f161e9c098
+p
+java:S1602‹",Remove useless curly braces around statement(š×ĞÔ8ğ‹Û§ë1J$8ec45654-098b-4dfb-8453-f5aca60db02b
