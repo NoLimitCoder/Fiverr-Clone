@@ -49,7 +49,7 @@ public class JobOffer implements Serializable {
         return employerUID;
     }
 
-    public String getEmployeeUID() {
+    public String getApplicantUID() {
         return applicantUID;
     }
 

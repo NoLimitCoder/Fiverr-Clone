@@ -123,7 +123,7 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
 
     private void updateUI() {
         String UID = mAuth.getCurrentUser().getUid();
-        if (UID.equals(jobOffer.getEmployeeUID())) {
+        if (UID.equals(jobOffer.getApplicantUID())) {
             if ("accepted".equals(jobOffer.getIsAccepted())) {
                 completeJobButton.setVisibility(View.VISIBLE);
                 declineJobButton.setVisibility(View.GONE);

@@ -1,11 +1,8 @@
-package com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments;
+package com.example.csci3130_w24_group20_quick_cash;
 
-import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 import static com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.JobUploadFragment.FIREBASE_SERVER_KEY;
 import static com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.JobUploadFragment.PUSH_NOTIFICATION_ENDPOINT;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
@@ -28,12 +25,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.csci3130_w24_group20_quick_cash.ApplicationPosting;
-import com.example.csci3130_w24_group20_quick_cash.ChatData;
-import com.example.csci3130_w24_group20_quick_cash.JobOffer;
-import com.example.csci3130_w24_group20_quick_cash.R;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.SendJobOfferFragment;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -61,7 +54,13 @@ public class ApplicationDetailFragment extends Fragment {
     String[] employerNameARR = new String[1];
     RequestQueue requestQueue;
 
+    FirebaseAuth mAuth;
+
     Button offerButton;
+
+    Button rejectButton;
+
+    Button shortlistButton;
     private ApplicationPosting appPosting;
 
     public ApplicationDetailFragment() {
@@ -79,10 +78,20 @@ public class ApplicationDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuthSingleton.getInstance();
         initShortlistedNotif();
         if (getArguments() != null) {
             appPosting = (ApplicationPosting) getArguments().getSerializable(ARG_APP_POSTING);
             fetchEmployerName();
+        }
+    }
+
+    private void updateEmployeeUI() {
+        String currentUid = mAuth.getCurrentUser().getUid();
+        if (currentUid.equals(appPosting.getApplicantUID())){
+            offerButton.setVisibility(View.GONE);
+            rejectButton.setVisibility(View.GONE);
+            shortlistButton.setVisibility(View.GONE);
         }
     }
 
@@ -104,7 +113,7 @@ public class ApplicationDetailFragment extends Fragment {
     }
 
     protected void setupShortlistButton(View view) {
-        Button shortlistButton = view.findViewById(R.id.shortlistButton);
+         shortlistButton = view.findViewById(R.id.shortlistButton);
         shortlistButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,8 +124,8 @@ public class ApplicationDetailFragment extends Fragment {
     }
 
     protected void setupRejectButton(View view) {
-        Button shortlistButton = view.findViewById(R.id.rejectButton);
-        shortlistButton.setOnClickListener(new View.OnClickListener() {
+         rejectButton = view.findViewById(R.id.rejectButton);
+        rejectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 appPosting.setApplicationStatus("Rejected");
@@ -216,6 +225,8 @@ public class ApplicationDetailFragment extends Fragment {
         setupShortlistButton(view);
         setupOfferButton(view);
         setupRejectButton(view);
+
+        updateEmployeeUI();
 
         if (appPosting != null) {
             textJobTitle.setText(appPosting.getJobTitle());
