@@ -26,7 +26,7 @@
 
         <meta-data
             android:name="com.paypal.ClientId"
-            android:value="AaP0P80fUj7yg_Vj55pC9TBKCKMDoZw32CAEVdx82IDhRDnb3J5O2VjjdHPCycdT8WHV7In6NGAigATA-Tk4Hf8ZE_Q993DGudKy16M" />
+            android:value="AaP0P80fUj7yg_Vj55pC9TBKCKMDoZw32CAEVdx82IDhRDnb3J5O2VjjdHPCycdT8WHV7In6NGAigATA" />
 
 
         <service

@@ -58,25 +58,6 @@ public class PaymentIntegrationFragment extends Fragment {
         paymentStatusTV = view.findViewById(R.id.paymentStatusTV);
     }
 
-    /*private void configPayPal() {
-        try {
-            ApplicationInfo appInfo = requireActivity().getPackageManager().getApplicationInfo(requireActivity().getPackageName(), PackageManager.GET_META_DATA);
-            Bundle metaData = appInfo.metaData;
-            String clientId = metaData.getString("com.paypal.ClientId");
-            if (clientId != null) {
-                payPalConfig = new PayPalConfiguration()
-                        .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
-                        .clientId(clientId);
-            } else {
-                Log.e(TAG, "PayPal client ID not found in manifest meta-data");
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            Log.e(TAG, "Package name not found", e);
-        }
-    }
-
-     */
-
     private void configPayPal() {
         //configuring paypal i.e defining we're using SANDBOX Environment and setting the paypal client id
         payPalConfig = new PayPalConfiguration()
