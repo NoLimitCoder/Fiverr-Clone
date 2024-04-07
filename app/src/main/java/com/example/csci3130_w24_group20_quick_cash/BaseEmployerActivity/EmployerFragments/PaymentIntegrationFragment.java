@@ -23,6 +23,7 @@ import org.json.JSONObject;
 
 import java.math.BigDecimal;
 
+import com.example.csci3130_w24_group20_quick_cash.BuildConfig;
 import com.example.csci3130_w24_group20_quick_cash.R;
 import com.paypal.android.sdk.payments.PayPalConfiguration;
 import com.paypal.android.sdk.payments.PayPalPayment;
@@ -57,7 +58,7 @@ public class PaymentIntegrationFragment extends Fragment {
         paymentStatusTV = view.findViewById(R.id.paymentStatusTV);
     }
 
-    private void configPayPal() {
+    /*private void configPayPal() {
         try {
             ApplicationInfo appInfo = requireActivity().getPackageManager().getApplicationInfo(requireActivity().getPackageName(), PackageManager.GET_META_DATA);
             Bundle metaData = appInfo.metaData;
@@ -73,6 +74,17 @@ public class PaymentIntegrationFragment extends Fragment {
             Log.e(TAG, "Package name not found", e);
         }
     }
+
+     */
+
+    private void configPayPal() {
+        //configuring paypal i.e defining we're using SANDBOX Environment and setting the paypal client id
+        payPalConfig = new PayPalConfiguration()
+                .environment(PayPalConfiguration.ENVIRONMENT_SANDBOX)
+                .clientId(BuildConfig.PAYPAL_CLIENT_ID);
+    }
+
+
 
     private void initActivityLauncher() {
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),

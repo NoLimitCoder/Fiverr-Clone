@@ -4,11 +4,22 @@ plugins {
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
+def credentialsPropertiesFile = rootProject.file("local.properties")
+// properties object to access key value
+def credentialsProperties = new Properties()
+//input the file
+credentialsProperties.load(new FileInputStream(credentialsPropertiesFile))
+
+
 android {
     namespace 'com.example.csci3130_w24_group20_quick_cash'
     compileSdk 34
+    buildFeatures {
+        buildConfig = true
+    }
 
-    defaultConfig {
+
+        defaultConfig {
         applicationId "com.example.csci3130_w24_group20_quick_cash"
         minSdk 30
         targetSdk 34
@@ -16,6 +27,10 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        //accessing variable -  type, name of variable, concat with string format (adding "")
+        buildConfigField "String", "PAYPAL_CLIENT_ID", ("\"".concat(credentialsProperties["PAYPAL_CLIENT_ID"]).concat("\""))
+
     }
 
     buildTypes {

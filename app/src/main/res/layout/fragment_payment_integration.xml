@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BaseEmployerActivity.EmployerFragments.PaymentIntegration">
+    tools:context=".BaseEmployerActivity.EmployerFragments.PaymentIntegrationFragment">
 
     <EditText
         android:id="@+id/enterAmtET"
