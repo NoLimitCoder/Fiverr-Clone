@@ -108,6 +108,6 @@ public class JobOffer implements Serializable {
         DatabaseReference databaseReference;
         databaseReference = FirebaseDatabase.getInstance().getReference().child("JobOffers");
         isComplete = complete;
-        databaseReference.child(jobID).child("isComplete").setValue(isAccepted);
+        databaseReference.child(jobID).child("isComplete").setValue(isComplete);
     }
 }

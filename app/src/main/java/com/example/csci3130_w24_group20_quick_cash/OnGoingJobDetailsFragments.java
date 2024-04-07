@@ -4,6 +4,7 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 import static com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.JobUploadFragment.FIREBASE_SERVER_KEY;
 import static com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.JobUploadFragment.PUSH_NOTIFICATION_ENDPOINT;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.Request;
@@ -21,6 +23,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.PaymentIntegrationFragment;
+import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.EmployeeRating;
+import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.EmployerRating;
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.SendJobOfferFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -34,6 +38,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -45,6 +50,7 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
     private Button declineJobButton;
     private Button favoriteEmployeeButton;
     private Button makePaymentButton;
+    private Button ratingButton;
     private TextView textJobTitle;
     private TextView textJobSalary;
     private TextView textJobStartDate;
@@ -59,7 +65,7 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
     private TextView completionStatus;
 
     RequestQueue requestQueue;
-
+    private String UID;
 
     FirebaseAuth mAuth;
 
@@ -100,6 +106,8 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
         completeJobButton = rootView.findViewById(R.id.completeJobButton);
         favoriteEmployeeButton = rootView.findViewById(R.id.favoriteEmployeeButton);
         makePaymentButton = rootView.findViewById(R.id.makePaymentButton);
+        ratingButton = rootView.findViewById(R.id.ratingButton);
+
 
         textJobTitle = rootView.findViewById(R.id.textJobTitle);
         textJobSalary = rootView.findViewById(R.id.textJobSalary);
@@ -115,6 +123,7 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
         completeJobButton.setOnClickListener(this);
         favoriteEmployeeButton.setOnClickListener(this);
         makePaymentButton.setOnClickListener(this);
+        ratingButton.setOnClickListener(this);
 
         updateUI();
 
@@ -133,19 +142,26 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
     }
 
     private void updateUI() {
+        acceptanceStatus.setText(jobOffer.getIsAccepted());
+        completionStatus.setText(jobOffer.getIsComplete());
         String currentUID = mAuth.getCurrentUser().getUid();
         String employeeUID = jobOffer.getApplicantUID();
         if (currentUID.equals(employeeUID)) {
+            ConstraintLayout.LayoutParams layoutParams =
+                    (ConstraintLayout.LayoutParams) ratingButton.getLayoutParams();
+            layoutParams.topToBottom = R.id.completeJobButton;
             if ("accepted".equals(jobOffer.getIsAccepted())) {
                 completeJobButton.setVisibility(View.VISIBLE);
                 declineJobButton.setVisibility(View.GONE);
+                acceptJobButton.setVisibility(View.GONE);
             } else {
                 completeJobButton.setVisibility(View.GONE);
             }
-            if ("completed".equals(jobOffer.getIsComplete())){
+            if ("complete".equals(jobOffer.getIsComplete())){
                 completeJobButton.setVisibility(View.GONE);
                 acceptJobButton.setVisibility(View.GONE);
                 declineJobButton.setVisibility(View.GONE);
+                ratingButton.setVisibility(View.VISIBLE);
             }
             if ("declined".equals(jobOffer.getIsAccepted())){
                 completeJobButton.setVisibility(View.GONE);
@@ -160,11 +176,11 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
 
             if ("complete".equals(jobOffer.getIsComplete())){
                 makePaymentButton.setVisibility(View.VISIBLE);
+                ratingButton.setVisibility(View.VISIBLE);
             }
 
         }
     }
-
 
     @Override
     public void onClick(View v) {
@@ -178,12 +194,29 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
             Toast.makeText(getContext(), "Job offer declined", Toast.LENGTH_SHORT).show();
             DeleteJobOffer();
         } else if (v.getId() == R.id.completeJobButton) {
-            jobOffer.setComplete("completed");
+            jobOffer.setComplete("complete");
             updateUI();
         } else if (v.getId() == R.id.favoriteEmployeeButton){
             favoriteEmployee();
         } else if (v.getId() == R.id.makePaymentButton){
             openPaymentFragment();
+        } else if(v.getId() == R.id.ratingButton) {
+            navigateToRatingFragment();
+        }
+    }
+
+    private void navigateToRatingFragment() {
+        UID = mAuth.getCurrentUser().getUid();
+        if(UID.equals(jobOffer.getApplicantUID())) {
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.baseEmployee, EmployeeRating.newInstance(jobOffer.getApplicantUID(), jobOffer.getEmployerUID()))
+                    .addToBackStack("fragment_ongoing_job_details")
+                    .commit();
+        } else {
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.baseEmployer, EmployerRating.newInstance(jobOffer.getApplicantUID(), UID))
+                    .addToBackStack("fragment_ongoing_job_details")
+                    .commit();
         }
     }
 
@@ -220,7 +253,6 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
                     Toast.makeText(getContext(), "Employee data not found", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 //No OnCancelled Activity
@@ -288,5 +320,5 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
             e.printStackTrace();
         }
     }
-
+    // fjaiodjfsa put the button
 }
