@@ -11,23 +11,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
-import com.example.csci3130_w24_group20_quick_cash.CredentialValidator;
+
 import com.example.csci3130_w24_group20_quick_cash.FirebaseAuthSingleton;
 import com.example.csci3130_w24_group20_quick_cash.FirebaseCRUD;
 import com.example.csci3130_w24_group20_quick_cash.R;
-import com.example.csci3130_w24_group20_quick_cash.Review;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,7 +33,6 @@ public class EmployeeRating extends Fragment implements View.OnClickListener{
 
     Button submitReview;
     RatingBar ratingBar;
-    EditText performanceReview;
     private static final String FIREBASE_SERVER_KEY = "AAAAJULKPZc:APA91bH7AZ59ApuLLtTpHUiC4l3Mu5CoKerK7CD8UGqEQXj0RmUE5x0JCkm1nMh8FwBo5O3lBoF3KK7cOifd-9ZNyoks7R7jKXHi26qwgfFTDLMOUS2hdnJ9vbs-1WLoM4kNg-P71GRB";
     private static final String PUSH_NOTIFICATION_ENDPOINT = "https://fcm.googleapis.com/fcm/send";
     private static final String ARG_PARAM1 = "param1";
@@ -55,7 +49,6 @@ public class EmployeeRating extends Fragment implements View.OnClickListener{
 
     FirebaseDatabase database = null;
 
-    final String[] employerName = new String[1];
     private String employerUID;
     private String employeeUID;
 
@@ -64,7 +57,6 @@ public class EmployeeRating extends Fragment implements View.OnClickListener{
 
     FirebaseCRUD crud = null;
 
-    private RequestQueue requestQueue;
 
 
     public EmployeeRating() {
@@ -89,11 +81,25 @@ public class EmployeeRating extends Fragment implements View.OnClickListener{
         return fragment;
     }
 
+    /**
+     * Initializes access to the Firebase Database.
+     *
+     * This method sets up the Firebase Database instance using the provided URL
+     * and initializes a FirebaseCRUD instance for performing CRUD operations.
+     */
+
     protected void initializeDatabaseAccess() {
         database = FirebaseDatabase.getInstance(getResources().getString(R.string.FIREBASE_DB_URL));
         crud = new FirebaseCRUD(database);
     }
 
+    /**
+     * Initializes necessary components including database access and Firebase authentication.
+     * Retrieves user IDs from arguments and fetches ratings for the specified employee user.
+     *
+     * @param savedInstanceState Contains the data most recently supplied by onSaveInstanceState(),
+     *                           or null if this is the first time.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,6 +110,14 @@ public class EmployeeRating extends Fragment implements View.OnClickListener{
         fetchUserRatings(employerUID);
     }
 
+    /**
+     * Called to create the view hierarchy associated with this fragment.
+     *
+     * @param inflater The LayoutInflater object that can be used to inflate any views in the fragment.
+     * @param container The parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState If non-null, this fragment is being re-constructed from a previous saved state as given here.
+     * @return Returns the View for the fragment's UI.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -119,12 +133,19 @@ public class EmployeeRating extends Fragment implements View.OnClickListener{
     }
 
 
+    /**
+     * Handles the onClick event for a view, triggering the upload of an employee review.
+     *
+     * This method is called when a view is clicked, and it initiates the process
+     * of uploading a review for an employee.
+     *
+     * @param v The view that was clicked.
+     */
     @Override
     public void onClick(View v) {
         uploadEmployerReview();
     }
     protected void uploadEmployerReview(){
-        CredentialValidator credChecker = new CredentialValidator();
         double rating = getRatingNum();
         //get the num of ratings and rating
 
@@ -132,15 +153,16 @@ public class EmployeeRating extends Fragment implements View.OnClickListener{
         newAve = newAve / (numRatings + 1);
 
         ratingReference.setValue(newAve);
-        numRatingReference.setValue(numRatings + 1);
+        numRatings++;
+        numRatingReference.setValue(numRatings);
         Toast.makeText(getContext(), "You rated: " + rating, Toast.LENGTH_SHORT).show();
         //create
         return;
     }
 
     /**
-     * Retrieves the role selected by the user.
-     * @return The role selected by the user.
+     * Retrieves the number of stars selected by the user.
+     * @return The stars selected by the user.
      */
     protected double getRatingNum() {
         return ratingBar.getRating();
@@ -152,7 +174,7 @@ public class EmployeeRating extends Fragment implements View.OnClickListener{
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    numRatings = dataSnapshot.child("numRatings").getValue(Double.class);
+                    numRatings = dataSnapshot.child("numRatings").getValue(Integer.class);
                     userRating = dataSnapshot.child("rating").getValue(Double.class);
 
                 } else {
