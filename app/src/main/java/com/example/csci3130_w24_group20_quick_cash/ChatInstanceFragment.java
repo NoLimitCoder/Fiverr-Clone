@@ -43,6 +43,13 @@ public class ChatInstanceFragment extends Fragment {
         // Required empty public constructor
     }
 
+    /**
+     * Factory method to create a new instance of this fragment.
+     *
+     * @param chatData The chat data to be displayed.
+     * @return A new instance of ChatInstanceFragment.
+     */
+
     public static ChatInstanceFragment newInstance(ChatData chatData) {
         ChatInstanceFragment fragment = new ChatInstanceFragment();
         Bundle args = new Bundle();
@@ -89,6 +96,10 @@ public class ChatInstanceFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Sends a message to the chat.
+     */
+
     private void sendMessage() {
         String messageText = chatMessageET.getText().toString().trim();
         String UID = mAuth.getCurrentUser().getUid();
@@ -111,6 +122,9 @@ public class ChatInstanceFragment extends Fragment {
             Toast.makeText(getContext(), "Message cannot be empty", Toast.LENGTH_SHORT).show();
         }
     }
+    /**
+     * Retrieves chat messages from the Firebase database.
+     */
 
     private void retrieveMessages() {
         DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference().child("Chats").child(chatData.getChatID()).child("messages");
