@@ -10,11 +10,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.csci3130_w24_group20_quick_cash.FirebaseAuthSingleton;
 import com.example.csci3130_w24_group20_quick_cash.MainActivity;
 import com.example.csci3130_w24_group20_quick_cash.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.checkerframework.checker.nullness.qual.NonNull;
+
+import java.text.DecimalFormat;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +35,8 @@ public class EmployeeProfileFragment extends Fragment implements View.OnClickLis
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    private TextView ratingText;
 
     FirebaseAuth mAuth;
 
@@ -53,6 +65,7 @@ public class EmployeeProfileFragment extends Fragment implements View.OnClickLis
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuthSingleton.getInstance();
+        DisplayRating(mAuth.getCurrentUser().getUid());
     }
 
     protected void setupLogoutButton(View view) {
@@ -81,6 +94,42 @@ public class EmployeeProfileFragment extends Fragment implements View.OnClickLis
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_employee_profile, container, false);
         setupLogoutButton(view);
+        ratingText = view.findViewById(R.id.ratingText);
+
         return view;
+    }
+
+    private void DisplayRating(String uid) {
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(uid);
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    double rating = dataSnapshot.child("rating").getValue(Double.class);
+
+                    DecimalFormat df = new DecimalFormat("#.#");
+
+                    // Format the rating value to one decimal place
+                    String formattedRating = df.format(rating);
+
+                    String existingText = ratingText.getText().toString();
+                    // Concatenate the rating value with existing text
+                    String newText = existingText + formattedRating +" ★";
+
+                    // Set the concatenated text back to the TextView
+                    ratingText.setText(newText);
+                    // Do something with the numRatings and rating, like updating UI or storing in variables
+                }
+                else {
+                    return;
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle onCancelled
+            }
+        });
     }
 }

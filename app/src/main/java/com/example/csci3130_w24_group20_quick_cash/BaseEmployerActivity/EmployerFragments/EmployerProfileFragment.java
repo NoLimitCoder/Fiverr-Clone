@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,6 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.checkerframework.checker.nullness.qual.NonNull;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,6 +49,10 @@ public class EmployerProfileFragment extends Fragment implements View.OnClickLis
     private FirebaseAuth mAuth;
 
     private DatabaseReference favoriteEmployeesRef;
+
+    private DatabaseReference employeeRatingRef;
+
+    private TextView ratingText;
 
     public EmployerProfileFragment() {
         // Required empty public constructor
@@ -76,8 +82,11 @@ public class EmployerProfileFragment extends Fragment implements View.OnClickLis
         favoriteEmployeesRef = FirebaseDatabase.getInstance().getReference().child("users")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("favoriteEmployees");
 
+        employeeRatingRef = FirebaseDatabase.getInstance().getReference().child("users")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("rating");
         favoriteEmployeesList = new ArrayList<>();
         adapter = new FavoriteEmployeesAdapter(favoriteEmployeesList);
+        fetchRating(mAuth.getCurrentUser().getUid()); //woooah
     }
 
     /**
@@ -125,9 +134,8 @@ public class EmployerProfileFragment extends Fragment implements View.OnClickLis
         recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
-
+        ratingText = view.findViewById(R.id.ratingText);
         fetchFavoriteEmployees();
-
         return view;
     }
 
@@ -138,9 +146,44 @@ public class EmployerProfileFragment extends Fragment implements View.OnClickLis
                 favoriteEmployeesList.clear();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     String employeeName = snapshot.getValue(String.class);
+                    //String rating  = snapshot.getValue()
+                    //get the employees rating as well ★
                     favoriteEmployeesList.add(employeeName);
                 }
                 adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle onCancelled
+            }
+        });
+    }
+
+    private void fetchRating(String uid) {
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference().child("users").child(uid);
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    double rating = dataSnapshot.child("rating").getValue(Double.class);
+
+                    DecimalFormat df = new DecimalFormat("#.#");
+
+                    // Format the rating value to one decimal place
+                    String formattedRating = df.format(rating);
+                    String existingText = ratingText.getText().toString();
+                    // Concatenate the rating value with existing text
+                    String newText = existingText + formattedRating +" ★";
+
+                    // Set the concatenated text back to the TextView
+                    ratingText.setText(newText);
+                    // Do something with the numRatings and rating, like updating UI or storing in variables
+                }
+                else {
+                    return;
+                }
+
             }
 
             @Override

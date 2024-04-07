@@ -5,29 +5,26 @@ import java.util.UUID;
 public class Review {
     private String reviewID;
     private String userID;
-    private String description;
     private double stars;
-    private String datePosted;
+    private String name;
+
 
     public Review(){
 
     }
 
-    public Review(String Name, String UID, String description, double stars){
-        this.reviewID = generateJobID();
+    public Review(String UID, double stars){
+        this.reviewID = generateReviewID();
         this.userID = UID;
-        this.description = description;
         this.stars = stars;
-        this.datePosted = getDatePosted();
-    }
-    public String getDatePosted(){
-        return datePosted;
     }
 
-    private String generateJobID(){
+    private String generateReviewID(){
         return UUID.randomUUID().toString();
     }
-    public String getreviewID(){
+
+
+    public String getReviewID(){
         return this.reviewID;
     }
 }

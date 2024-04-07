@@ -19,13 +19,14 @@
         android:layout_marginStart="57dp"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="57dp"
-        android:text="Employee performance review"
-        android:textSize="28dp"
         android:gravity="center"
+        android:text="Rate your experience"
+        android:textSize="28dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <RatingBar
         android:id="@+id/employee_rating_bar"
@@ -38,19 +39,6 @@
         android:numStars="5"
         android:stepSize=".5" />
 
-
-    <EditText
-        android:id="@+id/performanceReview"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginEnd="50dp"
-        android:background="@drawable/input"
-        android:hint="Performance Review"
-        android:textSize="16dp"
-        android:visibility="visible" />
-
     <Button
         android:id="@+id/submitReviewButton"
         android:layout_width="200dp"
@@ -60,7 +48,7 @@
         android:layout_marginBottom="500dp"
 
         android:background="@drawable/login_btn"
-        android:text="Register"
+        android:text="Rate"
         android:textSize="16dp" />
 
 
