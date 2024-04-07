@@ -1,0 +1,11 @@
+
+j
+java:S1604T"(Make this anonymous inner class a lambda(ÙÂ¹o8è´®ê1J$085e80fb-e44b-47ec-980d-d0748b6dadae
+
+java:S1450$"VRemove the "binding" field and declare it as a local variable in the relevant methods.(…Öéÿÿÿÿÿ8ˆµ®ê1J$2ea93261-f108-4c37-bb68-7899d29f4979
+›
+java:S1450""SRemove the "mMap" field and declare it as a local variable in the relevant methods.(—­ƒÌÿÿÿÿÿ8ˆµ®ê1J$b3782379-8205-4431-bf8d-6b3f307f4457
+
+java:S18748"<Remove this use of "getSerializableExtra"; it is deprecated.(ı¥£‹8µ®ê1J$b8000076-fc6f-4296-93a8-e407c8fde100
+~
+java:S1874s";Remove this use of "getFromLocationName"; it is deprecated.(Ò™8•µ®ê1J$dbdbd0e4-0704-4033-a324-00bb23f90215

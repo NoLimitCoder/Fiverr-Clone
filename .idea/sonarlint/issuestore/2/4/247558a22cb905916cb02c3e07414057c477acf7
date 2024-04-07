@@ -1,0 +1,13 @@
+
+o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(¶¶ρ
+C
+java:S1185"(Remove this method to simply inherit it.(ΰλω®ύÿÿÿÿ
+>
+java:S1068	")Remove this unused "title" private field.(ύ«¶h
+C
+java:S1068
+"(Remove this unused "body" private field.(¥Ύ†όÿÿÿÿ
+D
+java:S1068")Remove this unused "jobID" private field.(γ•€γωÿÿÿÿ
+E
+java:S1068"/Remove this unused "jobLocation" private field.(»ΌΙ

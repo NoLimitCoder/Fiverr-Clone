@@ -1,0 +1,7 @@
+
+Ÿ
+java:S1450#"^Remove the "appRecyclerView" field and declare it as a local variable in the relevant methods.(úÆÄŞıÿÿÿÿJ$79bd7376-2f18-4393-af57-cae32c3e1a54
+—
+java:S1450*"TRemove the "mAuth" field and declare it as a local variable in the relevant methods.(ªĞ”’8¾ƒÕê1J$bd8e1d99-8b68-4b99-804d-6c7f7d3651b8
+|
+java:S1874Ä":Remove this use of "getFragmentManager"; it is deprecated.(å¿…¶ıÿÿÿÿJ$6105a5c3-3f6d-4ed8-a8d0-20140713ca67

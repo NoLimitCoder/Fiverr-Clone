@@ -167,8 +167,8 @@
                 android:layout_marginTop="32dp"
                 android:background="@drawable/login_btn"
                 android:text="Favorite This Employee"
-                android:textSize="16dp"
                 android:visibility="gone"
+                android:textSize="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -186,6 +186,20 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/acceptJobButton" />
+
+            <Button
+                android:id="@+id/makePaymentButton"
+                android:layout_width="360dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/login_btn"
+                android:text="Payment"
+                android:visibility="gone"
+                android:textSize="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/favoriteEmployeeButton" />
 
             <Button
                 android:id="@+id/completeJobButton"

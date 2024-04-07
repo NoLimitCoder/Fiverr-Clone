@@ -1,0 +1,18 @@
+
+p
+java:S16047"(Make this anonymous inner class a lambda(¤âöÎüÿÿÿÿ8©„ïŒê1J$692eb53f-35fd-4a2a-a6f1-4177e64d2d26
+k
+java:S1604E"(Make this anonymous inner class a lambda(‡ ò¤8©„ïŒê1J$e0ddcc9a-5c5b-481c-9f5b-cb370b1c52b2
+¡	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(‡£§úÿÿÿÿ8ª„ïŒê1J$d8b23ef9-262c-43e2-b156-48af42d1f5a0
+t
+java:S1659$",Declare "favoriteButton" on a separate line.(ÊÄäçùÿÿÿÿ8»„ïŒê1J$0111d220-aaa6-4dcc-88f0-c9dc4841c41f
+¢
+java:S1450$"ZRemove the "applyButton" field and declare it as a local variable in the relevant methods.(ÊÄäçùÿÿÿÿ8»„ïŒê1J$13ca45a5-1fb4-4503-b474-81e03ad646f7
+–
+java:S1450*"SRemove the "crud" field and declare it as a local variable in the relevant methods.(«ùı8»„ïŒê1J$3f92fa2b-82fb-4730-b534-2b8e107c2dd5
+¥
+java:S1450$"]Remove the "favoriteButton" field and declare it as a local variable in the relevant methods.(ÊÄäçùÿÿÿÿ8¼„ïŒê1J$a20cd98d-7ff5-47b2-a94e-3694eda65b3e
+z
+java:S1874c"7Remove this use of "getSerializable"; it is deprecated.(Ğšòî8È„ïŒê1J$bd875857-a0db-494a-bbf2-aa3fd316464a
+k
+java:S1068*"(Remove this unused "crud" private field.(«ùı8Ê„ïŒê1J$cccd8ca1-3cf0-438b-8cb7-c14442d64651
