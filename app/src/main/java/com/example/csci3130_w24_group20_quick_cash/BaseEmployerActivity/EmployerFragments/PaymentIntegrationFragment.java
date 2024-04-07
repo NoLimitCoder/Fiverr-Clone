@@ -42,6 +42,15 @@ public class PaymentIntegrationFragment extends Fragment {
     private Button payNowBtn;
     private TextView paymentStatusTV;
 
+    /**
+     * Inflates the layout for this fragment.
+     *
+     * @param inflater           The inflater to inflate the layout.
+     * @param container          The parent view for the fragment UI.
+     * @param savedInstanceState The saved instance state of the fragment.
+     * @return The inflated view.
+     */
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_payment_integration, container, false);
@@ -52,12 +61,21 @@ public class PaymentIntegrationFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Initializes views from the layout.
+     *
+     * @param view The root view of the fragment.
+     */
+
     private void init(View view) {
         enterAmtET = view.findViewById(R.id.enterAmtET);
         payNowBtn = view.findViewById(R.id.payNowBtn);
         paymentStatusTV = view.findViewById(R.id.paymentStatusTV);
     }
 
+    /**
+     * Configures PayPal for payment processing.
+     */
     private void configPayPal() {
         //configuring paypal i.e defining we're using SANDBOX Environment and setting the paypal client id
         payPalConfig = new PayPalConfiguration()
@@ -66,6 +84,9 @@ public class PaymentIntegrationFragment extends Fragment {
     }
 
 
+    /**
+     * Initializes the activity result launcher for handling payment activity result.
+     */
 
     private void initActivityLauncher() {
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
@@ -93,9 +114,18 @@ public class PaymentIntegrationFragment extends Fragment {
                 });
     }
 
+    /**
+     * Sets listeners for UI components.
+     */
+
     private void setListeners() {
         payNowBtn.setOnClickListener(v -> processPayment());
     }
+
+
+    /**
+     * Initiates the payment process.
+     */
 
     private void processPayment() {
         final String amount = enterAmtET.getText().toString();
