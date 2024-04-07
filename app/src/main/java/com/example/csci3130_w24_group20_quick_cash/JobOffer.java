@@ -23,6 +23,16 @@ public class JobOffer implements Serializable {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("JobOffers");
     }
 
+    /**
+     * Constructs a new JobOffer object.
+     *
+     * @param appPosting   The ApplicationPosting associated with the job offer.
+     * @param salary       The salary offered for the job.
+     * @param startDate    The start date of the job.
+     * @param otherTerms   Other terms associated with the job offer.
+     * @param employerName The name of the employer making the job offer.
+     */
+
     public JobOffer(ApplicationPosting appPosting, String salary, String startDate, String otherTerms,
                     String employerName) {
         this.jobID = appPosting.getJobID();
@@ -100,10 +110,22 @@ public class JobOffer implements Serializable {
         this.otherTerms = otherTerms;
     }
 
+    /**
+     * Sets the acceptance status of the job offer.
+     *
+     * @param accepted The acceptance status to set (e.g., "accepted", "declined").
+     */
+
     public void setAccepted(String accepted) {
         isAccepted = accepted;
         databaseReference.child(jobID).child("isAccepted").setValue(isAccepted);
     }
+
+    /**
+     * Sets the completion status of the job offer.
+     *
+     * @param complete The completion status to set (e.g., "completed", "incomplete").
+     */
 
     public void setComplete(String complete) {
         isComplete = complete;

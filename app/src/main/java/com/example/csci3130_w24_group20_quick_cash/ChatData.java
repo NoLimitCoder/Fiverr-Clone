@@ -19,6 +19,17 @@ public class ChatData implements Serializable {
         //Required Empty Constructor
     }
 
+    /**
+     * Constructs a new ChatData object with the provided details.
+     *
+     * @param jobID         The ID of the job associated with the chat.
+     * @param employerUID   The UID of the employer in the chat.
+     * @param applicantUID  The UID of the applicant in the chat.
+     * @param applicantName The name of the applicant in the chat.
+     * @param employerName  The name of the employer in the chat.
+     * @param jobTitle      The title of the job associated with the chat.
+     */
+
     public ChatData(String jobID, String employerUID, String applicantUID, String applicantName, String employerName,
                     String jobTitle) {
         this.chatID = generateChatId();

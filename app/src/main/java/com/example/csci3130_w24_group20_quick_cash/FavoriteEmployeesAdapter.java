@@ -10,10 +10,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+
+/**
+ * Adapter class for displaying a list of favorite employees in a RecyclerView.
+ */
 public class FavoriteEmployeesAdapter extends RecyclerView.Adapter<FavoriteEmployeesAdapter.ViewHolder> {
 
     private List<String> favoriteEmployeesList;
 
+
+    /**
+     * Constructs a new FavoriteEmployeesAdapter with the provided list of favorite employees.
+     *
+     * @param favoriteEmployeesList The list of favorite employees to be displayed.
+     */
     public FavoriteEmployeesAdapter(List<String> favoriteEmployeesList) {
         this.favoriteEmployeesList = favoriteEmployeesList;
     }
@@ -36,6 +46,10 @@ public class FavoriteEmployeesAdapter extends RecyclerView.Adapter<FavoriteEmplo
         return favoriteEmployeesList.size();
     }
 
+    /**
+     * ViewHolder class for holding the views associated with each item in the RecyclerView.
+     */
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private TextView textViewEmployeeName;
@@ -44,6 +58,12 @@ public class FavoriteEmployeesAdapter extends RecyclerView.Adapter<FavoriteEmplo
             super(itemView);
             textViewEmployeeName = itemView.findViewById(R.id.textViewEmployeeName);
         }
+
+        /**
+         * Binds the employee name to the TextView.
+         *
+         * @param employeeName The name of the favorite employee to be displayed.
+         */
 
         public void bind(String employeeName) {
             textViewEmployeeName.setText(employeeName);
