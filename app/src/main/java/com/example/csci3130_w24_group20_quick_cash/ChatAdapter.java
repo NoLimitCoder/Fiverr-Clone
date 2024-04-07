@@ -23,10 +23,25 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         void onChatItemClick(ChatData chatData);
     }
 
+    /**
+     * Constructs a new ChatAdapter.
+     *
+     * @param chatList      The list of chat data to display.
+     * @param clickListener The click listener for chat items.
+     */
+
     public ChatAdapter(List<ChatData> chatList, OnChatItemClickListener clickListener) {
         this.chatList = chatList;
         this.clickListener = clickListener;
     }
+
+    /**
+     * Inflates the layout for a chat item.
+     *
+     * @param parent   The parent view group.
+     * @param viewType The type of view.
+     * @return A new ChatViewHolder instance.
+     */
 
     @NonNull
     @Override
@@ -34,6 +49,14 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_item, parent, false);
         return new ChatViewHolder(view);
     }
+
+
+    /**
+     * Binds chat data to the view holder.
+     *
+     * @param holder   The view holder to bind data to.
+     * @param position The position of the item in the list.
+     */
 
     @Override
     public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
@@ -55,14 +78,30 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         });
     }
 
+    /**
+     * Gets the total number of items in the chat list.
+     *
+     * @return The total number of chat items.
+     */
+
     @Override
     public int getItemCount() {
         return chatList.size();
     }
 
+    /**
+     * ViewHolder for holding views of each chat item.
+     */
+
     public static class ChatViewHolder extends RecyclerView.ViewHolder {
 
         TextView textJobTitle, textOtherUserName;
+
+        /**
+         * Constructs a new ChatViewHolder.
+         *
+         * @param itemView The view for this view holder.
+         */
 
         public ChatViewHolder(@NonNull View itemView) {
             super(itemView);

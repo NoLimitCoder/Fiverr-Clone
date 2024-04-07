@@ -23,6 +23,12 @@ public class FavJobTypeNotifService extends FirebaseMessagingService {
     private static final int NOTIFICATION_ID = 1;
 
 
+
+    /**
+     * Called when a new FCM message is received.
+     *
+     * @param remoteMessage The received FCM message.
+     */
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
 
@@ -31,6 +37,13 @@ public class FavJobTypeNotifService extends FirebaseMessagingService {
             showNotification(jobTitle);
         }
     }
+
+    /**
+     * Shows a notification with the provided job title.
+     *
+     * @param jobTitle The title of the job.
+     */
+
 
     private void showNotification(String jobTitle) {
         createNotificationChannel();
@@ -48,6 +61,10 @@ public class FavJobTypeNotifService extends FirebaseMessagingService {
         }
         notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
+
+    /**
+     * Creates a notification channel for job notifications.
+     */
 
     private void createNotificationChannel() {
         String description = "Job Notifications";
