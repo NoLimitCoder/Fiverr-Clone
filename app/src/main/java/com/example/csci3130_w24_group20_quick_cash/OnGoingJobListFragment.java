@@ -29,6 +29,10 @@ public class OnGoingJobListFragment extends Fragment implements JobOfferAdapter.
     private JobOfferAdapter adapter;
     FirebaseAuth mAuth;
 
+
+    /**
+     * Fragment displaying the list of ongoing job offers.
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ongoing_job_list, container, false);
@@ -45,6 +49,10 @@ public class OnGoingJobListFragment extends Fragment implements JobOfferAdapter.
 
         return view;
     }
+
+    /**
+     * Fetches ongoing job offers from the database.
+     */
 
 
     private void fetchOngoingJobOffers() {
@@ -70,6 +78,12 @@ public class OnGoingJobListFragment extends Fragment implements JobOfferAdapter.
                 }
             });
         }
+
+    /**
+     * Handles clicks on ongoing job items.
+     *
+     * @param jobOffer The ongoing job offer clicked.
+     */
 
     @Override
     public void OnGoingJobItemClickListener(JobOffer jobOffer) {

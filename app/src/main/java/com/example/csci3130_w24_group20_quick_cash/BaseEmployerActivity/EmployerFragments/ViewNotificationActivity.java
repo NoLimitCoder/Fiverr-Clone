@@ -5,11 +5,22 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
+/**
+ * Activity class for viewing notifications.
+ */
+
 public class ViewNotificationActivity extends AppCompatActivity {
     private TextView title;
     private TextView body;
     private TextView jobID;
     private TextView jobLocation;
+
+    /**
+     * Called when the activity is created.
+     *
+     * @param savedInstance A Bundle containing the activity's previously saved state, if any.
+     */
 
     @Override
     protected void onCreate(Bundle savedInstance){

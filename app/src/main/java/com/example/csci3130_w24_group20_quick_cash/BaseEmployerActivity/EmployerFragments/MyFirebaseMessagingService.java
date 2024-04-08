@@ -21,25 +21,26 @@ import java.util.Map;
 
 
 /**
- * Service for handling Firebase Cloud Messaging (FCM) messages.
+ * Service class responsible for handling Firebase Cloud Messaging (FCM) messages.
  */
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
     /**
-     * Called when a new token is generated.
+     * Called when a new token for the device is generated.
      *
-     * @param token The new FCM token.
+     * @param token The new token generated for the device.
      */
     @Override
     public void onNewToken(@NonNull String token){
         super.onNewToken(token);
     }
 
+
     /**
-     * Called when a new FCM message is received.
+     * Called when a message is received from Firebase Cloud Messaging.
      *
-     * @param remoteMessage The received FCM message.
+     * @param remoteMessage The message received from Firebase Cloud Messaging.
      */
 
     @Override

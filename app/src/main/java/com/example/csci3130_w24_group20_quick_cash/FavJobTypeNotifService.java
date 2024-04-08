@@ -15,7 +15,9 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
 
-
+/**
+ * Service for handling favorite job type notifications.
+ */
 public class FavJobTypeNotifService extends FirebaseMessagingService {
 
     private static final String CHANNEL_ID = "job_notification_channel";
@@ -23,11 +25,10 @@ public class FavJobTypeNotifService extends FirebaseMessagingService {
     private static final int NOTIFICATION_ID = 1;
 
 
-
     /**
-     * Called when a new FCM message is received.
+     * Called when a new message is received.
      *
-     * @param remoteMessage The received FCM message.
+     * @param remoteMessage The received remote message.
      */
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
@@ -38,12 +39,12 @@ public class FavJobTypeNotifService extends FirebaseMessagingService {
         }
     }
 
-    /**
-     * Shows a notification with the provided job title.
-     *
-     * @param jobTitle The title of the job.
-     */
 
+    /**
+     * Shows a notification for the new job posting.
+     *
+     * @param jobTitle The title of the new job posting.
+     */
 
     private void showNotification(String jobTitle) {
         createNotificationChannel();
@@ -62,10 +63,10 @@ public class FavJobTypeNotifService extends FirebaseMessagingService {
         notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
 
+
     /**
      * Creates a notification channel for job notifications.
      */
-
     private void createNotificationChannel() {
         String description = "Job Notifications";
         int importance = NotificationManager.IMPORTANCE_DEFAULT;

@@ -12,6 +12,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Adapter class for displaying chat data in a RecyclerView.
+ */
+
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder> {
 
     private List<ChatData> chatList;
@@ -23,11 +27,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         void onChatItemClick(ChatData chatData);
     }
 
+
     /**
-     * Constructs a new ChatAdapter.
+     * Constructs a ChatAdapter with the given chat list and click listener.
      *
-     * @param chatList      The list of chat data to display.
-     * @param clickListener The click listener for chat items.
+     * @param chatList     The list of chat data to display.
+     * @param clickListener The listener for chat item click events.
      */
 
     public ChatAdapter(List<ChatData> chatList, OnChatItemClickListener clickListener) {
@@ -36,11 +41,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
     }
 
     /**
-     * Inflates the layout for a chat item.
+     * Called when RecyclerView needs a new ViewHolder of the given type to represent an item.
      *
-     * @param parent   The parent view group.
-     * @param viewType The type of view.
-     * @return A new ChatViewHolder instance.
+     * @param parent   The ViewGroup into which the new View will be added after it is bound to an adapter position.
+     * @param viewType The type of the new View.
+     * @return A new ChatViewHolder that holds a View of the given view type.
      */
 
     @NonNull
@@ -52,12 +57,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
 
 
     /**
-     * Binds chat data to the view holder.
+     * Called by RecyclerView to display the data at the specified position.
      *
-     * @param holder   The view holder to bind data to.
-     * @param position The position of the item in the list.
+     * @param holder   The ViewHolder which should be updated to represent the contents of the item at the given position in the data set.
+     * @param position The position of the item within the adapter's data set.
      */
-
     @Override
     public void onBindViewHolder(@NonNull ChatViewHolder holder, int position) {
 
@@ -78,12 +82,12 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         });
     }
 
-    /**
-     * Gets the total number of items in the chat list.
-     *
-     * @return The total number of chat items.
-     */
 
+    /**
+     * Returns the total number of items in the data set held by the adapter.
+     *
+     * @return The total number of items in this adapter.
+     */
     @Override
     public int getItemCount() {
         return chatList.size();
@@ -97,11 +101,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
 
         TextView textJobTitle, textOtherUserName;
 
+
         /**
          * Constructs a new ChatViewHolder.
          *
-         * @param itemView The view for this view holder.
+         * @param itemView The view representing a single chat item.
          */
+
 
         public ChatViewHolder(@NonNull View itemView) {
             super(itemView);

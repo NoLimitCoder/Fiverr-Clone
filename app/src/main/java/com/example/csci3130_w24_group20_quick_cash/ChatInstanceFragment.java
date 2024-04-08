@@ -44,9 +44,16 @@ public class ChatInstanceFragment extends Fragment {
     }
 
     /**
+     * A fragment representing a chat instance between users.
+     */
+
+
+
+
+    /**
      * Factory method to create a new instance of this fragment.
      *
-     * @param chatData The chat data to be displayed.
+     * @param chatData The chat data to initialize the fragment with.
      * @return A new instance of ChatInstanceFragment.
      */
 
@@ -97,7 +104,7 @@ public class ChatInstanceFragment extends Fragment {
     }
 
     /**
-     * Sends a message to the chat.
+     * Sends the message typed by the user.
      */
 
     private void sendMessage() {
@@ -124,6 +131,10 @@ public class ChatInstanceFragment extends Fragment {
     }
     /**
      * Retrieves chat messages from the Firebase database.
+     */
+
+    /**
+     * Retrieves the message typed by the user.
      */
 
     private void retrieveMessages() {

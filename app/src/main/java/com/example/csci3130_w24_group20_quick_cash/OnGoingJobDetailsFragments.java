@@ -73,6 +73,13 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
         // Required empty public constructor
     }
 
+    /**
+     * Creates a new instance of OnGoingJobDetailsFragments with provided JobOffer.
+     *
+     * @param jobOffer The ongoing job offer to display details for.
+     * @return A new instance of OnGoingJobDetailsFragments.
+     */
+
     public static OnGoingJobDetailsFragments newInstance(JobOffer jobOffer) {
         OnGoingJobDetailsFragments fragment = new OnGoingJobDetailsFragments();
         Bundle args = new Bundle();
@@ -140,6 +147,16 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
 
         return rootView;
     }
+
+    /**
+     * Updates the UI based on the current state of the job offer and the user's role.
+     * If the user is the employee associated with the job offer:
+     * - Shows the complete job button if the offer is accepted.
+     * - Hides the decline job button if the offer is accepted.
+     * - Hides all buttons if the offer is completed or declined.
+     * If the user is not the employee associated with the job offer:
+     * - Hides all buttons except the favorite employee button.
+     */
 
     private void updateUI() {
         acceptanceStatus.setText(jobOffer.getIsAccepted());
@@ -260,6 +277,12 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
         });
     }
 
+
+    /**
+     * Deletes the current job offer from the Firebase database.
+     * Upon successful deletion, pops the back stack to return to the previous fragment.
+     */
+
     private void DeleteJobOffer() {
         DatabaseReference jobOfferRef = FirebaseDatabase.getInstance().getReference().child("JobOffers").child(jobOffer.getJobID());
         jobOfferRef.removeValue()
@@ -276,6 +299,11 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
                     }
                 });
     }
+
+    /**
+     * Sends a notification to the subscribed topic "jobs" indicating that the job offer has been accepted.
+     * Shows a toast message indicating success or failure.
+     */
 
 
     private void sendAcceptedNotification() {
