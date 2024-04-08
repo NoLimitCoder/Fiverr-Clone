@@ -79,7 +79,11 @@ public class JobAdapter extends RecyclerView.Adapter<JobAdapter.JobViewHolder>{
      */
     public static class JobViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        TextView textJobTitle, textJobSalary, textJobType, textJobCountry, textJobCity;
+        TextView textJobTitle;
+        TextView textJobSalary;
+        TextView textJobType;
+        TextView textJobCountry;
+        TextView textJobCity;
 
         /**
          * Constructor for JobViewHolder.

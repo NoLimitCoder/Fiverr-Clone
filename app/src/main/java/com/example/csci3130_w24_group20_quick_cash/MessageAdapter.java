@@ -12,9 +12,19 @@ import com.example.csci3130_w24_group20_quick_cash.R;
 
 import java.util.List;
 
+
+/**
+ * Adapter class for managing chat messages in a RecyclerView.
+ */
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageViewHolder> {
 
     private List<ChatMessage> messages;
+
+    /**
+     * Constructs a new MessageAdapter with the given list of chat messages.
+     *
+     * @param messages The list of chat messages to be displayed.
+     */
 
     public MessageAdapter(List<ChatMessage> messages) {
         this.messages = messages;
@@ -42,6 +52,10 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     public static class MessageViewHolder extends RecyclerView.ViewHolder {
         TextView senderTextView;
         TextView messageTextView;
+
+        /**
+         * ViewHolder class for representing individual chat message items in the RecyclerView.
+         */
 
         public MessageViewHolder(@NonNull View itemView) {
             super(itemView);

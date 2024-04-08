@@ -27,20 +27,27 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
-public class JobApplyFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+/**
+ * A fragment for applying to a job posting.
+ */
+
+public class JobApplyFragment extends Fragment {
 
 
     private ActivityResultLauncher<String> mGetContent;
 
-
     private String jobID;
 
-    private Button applyButton, uploadFileButton;
-    private EditText applyName, applyEmail, applyAvailability, applyAddress, applyCountry,
-            applyCity, applyEducation, applyExperience, applyDetails;
+    private EditText applyName;
+    private EditText applyEmail;
+    private EditText applyAvailability;
+    private EditText applyAddress;
+    private EditText applyCountry;
+    private EditText applyCity;
+    private EditText applyEducation;
+    private EditText applyExperience;
+    private EditText applyDetails;
 
     private DatabaseReference jobApplicationReference;
     private FirebaseAuth mAuth;
@@ -56,18 +63,31 @@ public class JobApplyFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static JobApplyFragment newInstance(String param1, String param2) {
-        JobApplyFragment fragment = new JobApplyFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+
+    /**
+     * Creates a new instance of JobApplyFragment.
+     * @return A new instance of JobApplyFragment.
+     */
+    public static JobApplyFragment newInstance() {
+        return new JobApplyFragment();
     }
 
+
+    /**
+     * Sets the job ID.
+     *
+     * @param jobID The job ID to set.
+     */
     public void setJobID(String jobID) {
         this.jobID = jobID;
     }
+
+
+    /**
+     * Gets the employee ID.
+     *
+     * @return The employee ID.
+     */
 
     public String getEmployeeID(){
         return employeeUID = mAuth.getCurrentUser().getUid();
@@ -77,17 +97,37 @@ public class JobApplyFragment extends Fragment {
         return jobID;
     }
 
+    /**
+     * Sets the employer UID.
+     *
+     * @param employerUID The employer UID to set.
+     */
+
     public void setEmployerUID(String employerUID) {
         this.employerUID = employerUID;
     }
+
+
+    /**
+     * Sets the job title.
+     *
+     * @param jobTitle The job title to set.
+     */
+
 
     public void setJobTitle(String jobTitle) {
         this.jobTitle = jobTitle;
     }
 
+    /**
+     * Sets up the upload file button.
+     *
+     * @param view The fragment view.
+     */
+
 
     protected void setupUploadFileButton(View view) {
-        uploadFileButton = view.findViewById(R.id.uploadFile);
+        Button uploadFileButton = view.findViewById(R.id.uploadFile);
         uploadFileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,8 +136,14 @@ public class JobApplyFragment extends Fragment {
         });
     }
 
+    /**
+     * Sets up the apply button.
+     *
+     * @param view The fragment view.
+     */
+
     protected void setupApplyButton(View view) {
-        applyButton = view.findViewById(R.id.SubmitApplicationButton);
+        Button applyButton = view.findViewById(R.id.SubmitApplicationButton);
         applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,6 +151,8 @@ public class JobApplyFragment extends Fragment {
             }
         });
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -121,6 +169,10 @@ public class JobApplyFragment extends Fragment {
                     }
                 });
     }
+
+    /**
+     * Uploads the job application.
+     */
 
     public void uploadJobApplication() {
         CredentialValidator credChecker = new CredentialValidator();
@@ -154,6 +206,20 @@ public class JobApplyFragment extends Fragment {
             Toast.makeText(getContext(), "Please Fill Out All The Fields", Toast.LENGTH_SHORT).show();
         }
     }
+
+    /**
+     * Uploads the application details.
+     *
+     * @param name        The name of the applicant.
+     * @param email       The email of the applicant.
+     * @param availability The availability of the applicant.
+     * @param address     The address of the applicant.
+     * @param country     The country of the applicant.
+     * @param city        The city of the applicant.
+     * @param education   The education of the applicant.
+     * @param experience  The experience of the applicant.
+     * @param details     The details of the applicant.
+     */
 
     private void uploadApplicationDetails(String name, String email, String availability, String address,
                                           String country, String city, String education, String experience,

@@ -11,6 +11,8 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.BaseEmployerActivity;
+import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.EmployerProfileFragment;
+
 
 import org.junit.Before;
 import org.junit.Test;
@@ -39,7 +41,7 @@ public class BaseEmployeerActivityExpressoTests {
         Espresso.onView(ViewMatchers.withId(R.id.viewEmployerProfile)).perform(ViewActions.click());
 
         // Verify that the profile fragment is displayed by checking the visibility of its view
-        Espresso.onView(withId(R.id.fragment_employer_settings))
+        Espresso.onView(withId(R.id.fragment_employer_profile))
                 .check(matches(isDisplayed()));
     }
 

@@ -29,19 +29,30 @@ public class ChatInstanceFragment extends Fragment {
     private static final String ARG_CHAT_DATA = "chatData";
     private ChatData chatData;
 
-    private RecyclerView chatRecyclerView;
     private EditText chatMessageET;
 
     private MessageAdapter messageAdapter;
     List<ChatMessage> messages = new ArrayList<>();
 
-
     FirebaseAuth mAuth;
-    private Button chatSendBtn;
 
     public ChatInstanceFragment() {
         // Required empty public constructor
     }
+
+    /**
+     * A fragment representing a chat instance between users.
+     */
+
+
+
+
+    /**
+     * Factory method to create a new instance of this fragment.
+     *
+     * @param chatData The chat data to initialize the fragment with.
+     * @return A new instance of ChatInstanceFragment.
+     */
 
     public static ChatInstanceFragment newInstance(ChatData chatData) {
         ChatInstanceFragment fragment = new ChatInstanceFragment();
@@ -67,9 +78,9 @@ public class ChatInstanceFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_chat_instance, container, false);
 
         // Initialize views
-        chatRecyclerView = view.findViewById(R.id.chatRecyclerView);
+        RecyclerView chatRecyclerView = view.findViewById(R.id.chatRecyclerView);
         chatMessageET = view.findViewById(R.id.chatMessageET);
-        chatSendBtn = view.findViewById(R.id.chatSendBtn);
+        Button chatSendBtn = view.findViewById(R.id.chatSendBtn);
 
         // Setup RecyclerView
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -88,6 +99,10 @@ public class ChatInstanceFragment extends Fragment {
 
         return view;
     }
+
+    /**
+     * Sends the message typed by the user.
+     */
 
     private void sendMessage() {
         String messageText = chatMessageET.getText().toString().trim();
@@ -111,6 +126,13 @@ public class ChatInstanceFragment extends Fragment {
             Toast.makeText(getContext(), "Message cannot be empty", Toast.LENGTH_SHORT).show();
         }
     }
+    /**
+     * Retrieves chat messages from the Firebase database.
+     */
+
+    /**
+     * Retrieves the message typed by the user.
+     */
 
     private void retrieveMessages() {
         DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference().child("Chats").child(chatData.getChatID()).child("messages");

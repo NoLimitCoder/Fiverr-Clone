@@ -9,6 +9,19 @@ public class ChatMessage {
         // Required empty constructor for Firebase
     }
 
+    /**
+     * Represents a chat message containing sender's name, message content, and timestamp.
+     */
+
+
+    /**
+     * Constructs a new ChatMessage object with the specified sender name, message content, and timestamp.
+     *
+     * @param senderName     The name of the sender.
+     * @param messageContent The content of the message.
+     * @param timestamp      The timestamp of the message.
+     */
+
     public ChatMessage(String senderName, String messageContent, long timestamp) {
         this.senderName = senderName;
         this.messageContent = messageContent;

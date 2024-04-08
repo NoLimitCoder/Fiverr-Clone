@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.Request;
@@ -21,7 +22,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.PaymentIntegrationFragment;
-import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.SendJobOfferFragment;
+import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.EmployeeRating;
+import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.EmployerRating;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,14 +47,7 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
     private Button declineJobButton;
     private Button favoriteEmployeeButton;
     private Button makePaymentButton;
-    private TextView textJobTitle;
-    private TextView textJobSalary;
-    private TextView textJobStartDate;
-    private TextView textJobEmployer;
-
-    private TextView textJobOtherTerms;
-
-    private TextView textJobEmployee;
+    private Button ratingButton;
 
     private TextView acceptanceStatus;
 
@@ -60,12 +55,18 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
 
     RequestQueue requestQueue;
 
-
     FirebaseAuth mAuth;
 
     public OnGoingJobDetailsFragments() {
         // Required empty public constructor
     }
+
+    /**
+     * Creates a new instance of OnGoingJobDetailsFragments with provided JobOffer.
+     *
+     * @param jobOffer The ongoing job offer to display details for.
+     * @return A new instance of OnGoingJobDetailsFragments.
+     */
 
     public static OnGoingJobDetailsFragments newInstance(JobOffer jobOffer) {
         OnGoingJobDetailsFragments fragment = new OnGoingJobDetailsFragments();
@@ -100,13 +101,15 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
         completeJobButton = rootView.findViewById(R.id.completeJobButton);
         favoriteEmployeeButton = rootView.findViewById(R.id.favoriteEmployeeButton);
         makePaymentButton = rootView.findViewById(R.id.makePaymentButton);
+        ratingButton = rootView.findViewById(R.id.ratingButton);
 
-        textJobTitle = rootView.findViewById(R.id.textJobTitle);
-        textJobSalary = rootView.findViewById(R.id.textJobSalary);
-        textJobStartDate = rootView.findViewById(R.id.textJobStartDate);
-        textJobEmployer = rootView.findViewById(R.id.textJobEmployer);
-        textJobEmployee = rootView.findViewById(R.id.textJobEmployee);
-        textJobOtherTerms = rootView.findViewById(R.id.textJobOtherTerms);
+
+        TextView textJobTitle = rootView.findViewById(R.id.textJobTitle);
+        TextView textJobSalary = rootView.findViewById(R.id.textJobSalary);
+        TextView textJobStartDate = rootView.findViewById(R.id.textJobStartDate);
+        TextView textJobEmployer = rootView.findViewById(R.id.textJobEmployer);
+        TextView textJobEmployee = rootView.findViewById(R.id.textJobEmployee);
+        TextView textJobOtherTerms = rootView.findViewById(R.id.textJobOtherTerms);
         acceptanceStatus = rootView.findViewById(R.id.textJobAcceptance);
         completionStatus = rootView.findViewById(R.id.textJobCompletion);
 
@@ -115,6 +118,7 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
         completeJobButton.setOnClickListener(this);
         favoriteEmployeeButton.setOnClickListener(this);
         makePaymentButton.setOnClickListener(this);
+        ratingButton.setOnClickListener(this);
 
         updateUI();
 
@@ -132,20 +136,37 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
         return rootView;
     }
 
+    /**
+     * Updates the UI based on the current state of the job offer and the user's role.
+     * If the user is the employee associated with the job offer:
+     * - Shows the complete job button if the offer is accepted.
+     * - Hides the decline job button if the offer is accepted.
+     * - Hides all buttons if the offer is completed or declined.
+     * If the user is not the employee associated with the job offer:
+     * - Hides all buttons except the favorite employee button.
+     */
+
     private void updateUI() {
+        acceptanceStatus.setText(jobOffer.getIsAccepted());
+        completionStatus.setText(jobOffer.getIsComplete());
         String currentUID = mAuth.getCurrentUser().getUid();
         String employeeUID = jobOffer.getApplicantUID();
         if (currentUID.equals(employeeUID)) {
+            ConstraintLayout.LayoutParams layoutParams =
+                    (ConstraintLayout.LayoutParams) ratingButton.getLayoutParams();
+            layoutParams.topToBottom = R.id.completeJobButton;
             if ("accepted".equals(jobOffer.getIsAccepted())) {
                 completeJobButton.setVisibility(View.VISIBLE);
                 declineJobButton.setVisibility(View.GONE);
+                acceptJobButton.setVisibility(View.GONE);
             } else {
                 completeJobButton.setVisibility(View.GONE);
             }
-            if ("completed".equals(jobOffer.getIsComplete())){
+            if ("complete".equals(jobOffer.getIsComplete())){
                 completeJobButton.setVisibility(View.GONE);
                 acceptJobButton.setVisibility(View.GONE);
                 declineJobButton.setVisibility(View.GONE);
+                ratingButton.setVisibility(View.VISIBLE);
             }
             if ("declined".equals(jobOffer.getIsAccepted())){
                 completeJobButton.setVisibility(View.GONE);
@@ -160,11 +181,11 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
 
             if ("complete".equals(jobOffer.getIsComplete())){
                 makePaymentButton.setVisibility(View.VISIBLE);
+                ratingButton.setVisibility(View.VISIBLE);
             }
 
         }
     }
-
 
     @Override
     public void onClick(View v) {
@@ -176,14 +197,31 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
             jobOffer.setAccepted("declined");
             updateUI();
             Toast.makeText(getContext(), "Job offer declined", Toast.LENGTH_SHORT).show();
-            DeleteJobOffer();
+            deleteJobOffer();
         } else if (v.getId() == R.id.completeJobButton) {
-            jobOffer.setComplete("completed");
+            jobOffer.setComplete("complete");
             updateUI();
         } else if (v.getId() == R.id.favoriteEmployeeButton){
             favoriteEmployee();
         } else if (v.getId() == R.id.makePaymentButton){
             openPaymentFragment();
+        } else if(v.getId() == R.id.ratingButton) {
+            navigateToRatingFragment();
+        }
+    }
+
+    private void navigateToRatingFragment() {
+        String UID = mAuth.getCurrentUser().getUid();
+        if(UID.equals(jobOffer.getApplicantUID())) {
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.baseEmployee, EmployeeRating.newInstance(jobOffer.getApplicantUID(), jobOffer.getEmployerUID()))
+                    .addToBackStack("fragment_ongoing_job_details")
+                    .commit();
+        } else {
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.baseEmployer, EmployerRating.newInstance(jobOffer.getApplicantUID(), UID))
+                    .addToBackStack("fragment_ongoing_job_details")
+                    .commit();
         }
     }
 
@@ -220,7 +258,6 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
                     Toast.makeText(getContext(), "Employee data not found", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 //No OnCancelled Activity
@@ -228,7 +265,13 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
         });
     }
 
-    private void DeleteJobOffer() {
+
+    /**
+     * Deletes the current job offer from the Firebase database.
+     * Upon successful deletion, pops the back stack to return to the previous fragment.
+     */
+
+    private void deleteJobOffer() {
         DatabaseReference jobOfferRef = FirebaseDatabase.getInstance().getReference().child("JobOffers").child(jobOffer.getJobID());
         jobOfferRef.removeValue()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -244,6 +287,11 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
                     }
                 });
     }
+
+    /**
+     * Sends a notification to the subscribed topic "jobs" indicating that the job offer has been accepted.
+     * Shows a toast message indicating success or failure.
+     */
 
 
     private void sendAcceptedNotification() {
@@ -288,5 +336,4 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
             e.printStackTrace();
         }
     }
-
 }

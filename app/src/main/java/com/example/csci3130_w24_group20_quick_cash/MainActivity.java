@@ -277,7 +277,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         boolean ret = super.dispatchTouchEvent(event);
         if (view instanceof EditText) {
             View w = getCurrentFocus();
-            int scrcoords[] = new int[2];
+            int[] scrcoords = new int[2];
             w.getLocationOnScreen(scrcoords);
             float x = event.getRawX() + w.getLeft() - scrcoords[0];
             float y = event.getRawY() + w.getTop() - scrcoords[1];

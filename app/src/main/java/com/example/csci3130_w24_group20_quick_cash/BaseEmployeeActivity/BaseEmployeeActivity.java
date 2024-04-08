@@ -24,8 +24,17 @@ import com.example.csci3130_w24_group20_quick_cash.databinding.ActivityBaseEmplo
 
 public class BaseEmployeeActivity extends AppCompatActivity{
 
+    /**
+     * Base activity for the employee interface.
+     */
     ActivityBaseEmployeeBinding binding;
 
+
+    /**
+     * Called when the activity is created.
+     *
+     * @param savedInstanceState If the activity is being re-initialized after previously being shut down, this Bundle contains the data it most recently supplied in onSaveInstanceState(Bundle).
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +71,13 @@ public class BaseEmployeeActivity extends AppCompatActivity{
         }
     }
 
+    /**
+     * Dispatches touch events to the appropriate views.
+     *
+     * @param event The motion event.
+     * @return True if the event was handled, false otherwise.
+     */
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         View view = getCurrentFocus();
@@ -82,6 +98,11 @@ public class BaseEmployeeActivity extends AppCompatActivity{
         }
         return ret;
     }
+    /**
+     * Switches the current fragment to the given fragment.
+     *
+     * @param fragment The fragment to switch to.
+     */
 
     private void switchFragment(Fragment fragment){
         FragmentManager  fragManager = getSupportFragmentManager();
