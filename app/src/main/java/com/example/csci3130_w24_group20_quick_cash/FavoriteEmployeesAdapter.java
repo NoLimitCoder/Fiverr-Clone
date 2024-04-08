@@ -28,6 +28,15 @@ public class FavoriteEmployeesAdapter extends RecyclerView.Adapter<FavoriteEmplo
         this.favoriteEmployeesList = favoriteEmployeesList;
     }
 
+
+    /**
+     * Inflates the layout for a favorite employee item.
+     *
+     * @param parent   The parent view group.
+     * @param viewType The type of view.
+     * @return A new ViewHolder instance.
+     */
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -35,11 +44,24 @@ public class FavoriteEmployeesAdapter extends RecyclerView.Adapter<FavoriteEmplo
         return new ViewHolder(view);
     }
 
+    /**
+     * Binds favorite employee data to the view holder.
+     *
+     * @param holder   The view holder to bind data to.
+     * @param position The position of the item in the list.
+     */
+
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         String employeeName = favoriteEmployeesList.get(position);
         holder.bind(employeeName);
     }
+
+    /**
+     * Gets the total number of favorite employees in the list.
+     *
+     * @return The total number of favorite employees.
+     */
 
     @Override
     public int getItemCount() {

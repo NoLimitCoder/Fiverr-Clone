@@ -1,0 +1,29 @@
+
+v
+java:S1121I".Extract the assignment out of this expression.(›Æ±¾üÿÿÿÿ8 Ë¬àç1J$0e0aef6e-a052-4198-aea9-50fdd1ebf53e
+k
+java:S1604["(Make this anonymous inner class a lambda(‹Õºß8¡Ë¬àç1J$ea23fcb8-7462-4a5f-b3ba-03df7db69b5e
+p
+java:S1604e"(Make this anonymous inner class a lambda(¤âöÎüÿÿÿÿ8¡Ë¬àç1J$f31a089d-af09-48f2-bf68-273a41d224af
+p
+java:S1604s"(Make this anonymous inner class a lambda(•íùƒûÿÿÿÿ8¡Ë¬àç1J$263fdb83-9894-4f82-88cb-d7dc7eca7de7
+¡	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(‡£§úÿÿÿÿ8ÀéŸöä1J$cca3f602-5780-42ca-919e-845b502d2969
+v
+java:S1659)".Declare "uploadFileButton" on a separate line.(¹¨Éêÿÿÿÿÿ8ªÌ¬àç1J$83520007-630d-4e8c-b442-001b5682d6b7
+
+java:S1659*"GDeclare "applyEmail" and all following declarations on a separate line.(üœ¼•şÿÿÿÿ8ªÌ¬àç1J$225bedd8-5b23-4649-b3ca-36bec8f2c1d8
+¢
+java:S1450)"ZRemove the "applyButton" field and declare it as a local variable in the relevant methods.(¹¨Éêÿÿÿÿÿ8«Ì¬àç1J$be6589d4-f124-40ba-886e-7c6d9660dc4f
+§
+java:S1450)"_Remove the "uploadFileButton" field and declare it as a local variable in the relevant methods.(¹¨Éêÿÿÿÿÿ8«Ì¬àç1J$c67a3c3b-cb24-40b3-8567-a4d56571dc21
+	java:S107"<Method has 9 parameters, which is greater than 7 authorized.(ë“İŒ8´êŸöä1J$f35f1e4b-445a-4768-bf42-f4b3191ae6a2
+p
+java:S1602¨",Remove useless curly braces around statement(§ÀÇ8ÁêŸöä1J$cd8d995b-76fc-4dce-a124-a7acc250cd3f
+u
+java:S1602«",Remove useless curly braces around statement(ÕÊ¾øÿÿÿÿ8ÂêŸöä1J$f4ab4f1e-d7cf-49ba-925b-98eac8c359f4
+p
+java:S1602¹",Remove useless curly braces around statement(‹¦ë¢8ÄêŸöä1J$f21e30de-b2a8-45f6-8bf3-30f63863005c
+u
+java:S1602º",Remove useless curly braces around statement(âÏÕ¿ùÿÿÿÿ8ÄêŸöä1J$c436a9ab-8293-4648-81bf-64f7aa81c486
+u
+java:S1602¾",Remove useless curly braces around statement(ÕÊ¾øÿÿÿÿ8ÄêŸöä1J$162fd700-885b-4fd3-aa8d-d58bfa7b63ab

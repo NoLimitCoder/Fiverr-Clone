@@ -4,11 +4,15 @@ plugins {
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
+
 android {
     namespace 'com.example.csci3130_w24_group20_quick_cash'
     compileSdk 34
+    buildFeatures {
+        buildConfig = true
+    }
 
-    defaultConfig {
+        defaultConfig {
         applicationId "com.example.csci3130_w24_group20_quick_cash"
         minSdk 30
         targetSdk 34
@@ -16,7 +20,12 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
+
+            buildConfigField "String", "PAYPAL_CLIENT_ID", "\"AaP0P80fUj7yg_Vj55pC9TBKCKMDoZw32CAEVdx82IDhRDnb3J5O2VjjdHPCycdT8WHV7In6NGAigATA\""
+
+
+
+}
 
     buildTypes {
         release {
@@ -81,6 +90,10 @@ dependencies {
     testImplementation "org.mockito:mockito-inline:3.4.0"
     androidTestImplementation project(path: ':app')
     testImplementation 'org.robolectric:robolectric:4.6.1'
+
+    /*PayPal*/
+    implementation 'com.paypal.sdk:paypal-android-sdk:2.16.0'
+    implementation "com.squareup.retrofit2:converter-gson:2.5.0"
 
 
 

@@ -129,6 +129,9 @@ public class ChatInstanceFragment extends Fragment {
             Toast.makeText(getContext(), "Message cannot be empty", Toast.LENGTH_SHORT).show();
         }
     }
+    /**
+     * Retrieves chat messages from the Firebase database.
+     */
 
     /**
      * Retrieves the message typed by the user.

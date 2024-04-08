@@ -93,6 +93,10 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatViewHolder
         return chatList.size();
     }
 
+    /**
+     * ViewHolder for holding views of each chat item.
+     */
+
     public static class ChatViewHolder extends RecyclerView.ViewHolder {
 
         TextView textJobTitle, textOtherUserName;

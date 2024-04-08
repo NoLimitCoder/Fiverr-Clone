@@ -17,10 +17,8 @@ public class JobOffer implements Serializable {
     private String otherTerms;
     private String isAccepted;
     private String isComplete;
-    private DatabaseReference databaseReference;
 
     public JobOffer(){
-        databaseReference = FirebaseDatabase.getInstance().getReference().child("JobOffers");
     }
 
     /**
@@ -46,7 +44,6 @@ public class JobOffer implements Serializable {
         this.otherTerms = otherTerms;
         this.isAccepted = "pending";
         this.isComplete = "pending";
-        this.databaseReference = FirebaseDatabase.getInstance().getReference().child("JobOffers");
 
     }
 
@@ -117,6 +114,8 @@ public class JobOffer implements Serializable {
      */
 
     public void setAccepted(String accepted) {
+        DatabaseReference databaseReference;
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("JobOffers");
         isAccepted = accepted;
         databaseReference.child(jobID).child("isAccepted").setValue(isAccepted);
     }
@@ -128,7 +127,9 @@ public class JobOffer implements Serializable {
      */
 
     public void setComplete(String complete) {
+        DatabaseReference databaseReference;
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("JobOffers");
         isComplete = complete;
-        databaseReference.child(jobID).child("isComplete").setValue(isAccepted);
+        databaseReference.child(jobID).child("isComplete").setValue(isComplete);
     }
 }
