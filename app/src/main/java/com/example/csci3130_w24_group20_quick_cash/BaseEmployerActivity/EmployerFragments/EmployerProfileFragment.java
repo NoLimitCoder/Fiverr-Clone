@@ -50,8 +50,6 @@ public class EmployerProfileFragment extends Fragment implements View.OnClickLis
 
     private DatabaseReference favoriteEmployeesRef;
 
-    private DatabaseReference employeeRatingRef;
-
     private TextView ratingText;
 
     public EmployerProfileFragment() {
@@ -81,12 +79,9 @@ public class EmployerProfileFragment extends Fragment implements View.OnClickLis
         mAuth = FirebaseAuthSingleton.getInstance();
         favoriteEmployeesRef = FirebaseDatabase.getInstance().getReference().child("users")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("favoriteEmployees");
-
-        employeeRatingRef = FirebaseDatabase.getInstance().getReference().child("users")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("rating");
         favoriteEmployeesList = new ArrayList<>();
         adapter = new FavoriteEmployeesAdapter(favoriteEmployeesList);
-        fetchRating(mAuth.getCurrentUser().getUid()); //woooah
+        fetchRating(mAuth.getCurrentUser().getUid());
     }
 
     /**

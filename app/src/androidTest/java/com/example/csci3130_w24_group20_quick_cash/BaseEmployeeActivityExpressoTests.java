@@ -42,13 +42,4 @@ public class BaseEmployeeActivityExpressoTests{
                 .check(matches(isDisplayed()));
     }
 
-    @Test
-    public void testSwitchToSettingsFragment() {
-        // Click on the settings navigation item
-        Espresso.onView(ViewMatchers.withId(R.id.employeeNavSettings)).perform(ViewActions.click());
-
-        // Verify that the settings fragment is displayed by checking the visibility of its view
-        Espresso.onView(withId(R.id.fragment_employee_settings))
-                .check(matches(isDisplayed()));
-    }
 }

@@ -33,14 +33,8 @@ public class EmployeeRating extends Fragment implements View.OnClickListener{
 
     Button submitReview;
     RatingBar ratingBar;
-    private static final String FIREBASE_SERVER_KEY = "AAAAJULKPZc:APA91bH7AZ59ApuLLtTpHUiC4l3Mu5CoKerK7CD8UGqEQXj0RmUE5x0JCkm1nMh8FwBo5O3lBoF3KK7cOifd-9ZNyoks7R7jKXHi26qwgfFTDLMOUS2hdnJ9vbs-1WLoM4kNg-P71GRB";
-    private static final String PUSH_NOTIFICATION_ENDPOINT = "https://fcm.googleapis.com/fcm/send";
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private DatabaseReference ratingReference;
     private DatabaseReference numRatingReference;
@@ -71,7 +65,6 @@ public class EmployeeRating extends Fragment implements View.OnClickListener{
      * @param param2 Parameter 2.
      * @return A new instance of fragment employer_rating.
      */
-    // TODO: Rename and change types and number of parameters
     public static EmployeeRating newInstance(String param1, String param2) {
         EmployeeRating fragment = new EmployeeRating();
         Bundle args = new Bundle();
@@ -183,7 +176,6 @@ public class EmployeeRating extends Fragment implements View.OnClickListener{
                         userRef.child("numRatings").setValue(numRatings);
                         userRef.child("rating").setValue(userRating);
                     }
-                } else {
                 }
             }
 

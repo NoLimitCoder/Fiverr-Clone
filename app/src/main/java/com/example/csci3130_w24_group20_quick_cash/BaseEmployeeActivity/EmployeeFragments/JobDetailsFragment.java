@@ -33,13 +33,9 @@ public class JobDetailsFragment extends Fragment {
 
     private JobPosting jobPosting;
 
-    private Button applyButton, favoriteButton;
-
     private FirebaseAuth mAuth;
 
     private FirebaseDatabase database = null;
-
-    private FirebaseCRUD crud = null;
 
     public JobDetailsFragment() {
         // Required empty public constructor
@@ -47,11 +43,10 @@ public class JobDetailsFragment extends Fragment {
 
     protected void initializeDatabaseAccess() {
         database = FirebaseDatabase.getInstance(getResources().getString(R.string.FIREBASE_DB_URL));
-        crud = new FirebaseCRUD(database);
     }
 
     protected void setupApplyButton(View view) {
-        applyButton = view.findViewById(R.id.applyJobButton);
+        Button applyButton = view.findViewById(R.id.applyJobButton);
         applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +60,7 @@ public class JobDetailsFragment extends Fragment {
     }
 
     protected void setupFavoriteButton(View view) {
-        favoriteButton = view.findViewById(R.id.favoriteJobButton);
+        Button favoriteButton = view.findViewById(R.id.favoriteJobButton);
         favoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -4,7 +4,6 @@ import static androidx.constraintlayout.helper.widget.MotionEffect.TAG;
 import static com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.JobUploadFragment.FIREBASE_SERVER_KEY;
 import static com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.JobUploadFragment.PUSH_NOTIFICATION_ENDPOINT;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,7 +24,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.PaymentIntegrationFragment;
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.EmployeeFragments.EmployeeRating;
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.EmployerRating;
-import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.SendJobOfferFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,7 +36,6 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,21 +48,12 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
     private Button favoriteEmployeeButton;
     private Button makePaymentButton;
     private Button ratingButton;
-    private TextView textJobTitle;
-    private TextView textJobSalary;
-    private TextView textJobStartDate;
-    private TextView textJobEmployer;
-
-    private TextView textJobOtherTerms;
-
-    private TextView textJobEmployee;
 
     private TextView acceptanceStatus;
 
     private TextView completionStatus;
 
     RequestQueue requestQueue;
-    private String UID;
 
     FirebaseAuth mAuth;
 
@@ -116,12 +104,12 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
         ratingButton = rootView.findViewById(R.id.ratingButton);
 
 
-        textJobTitle = rootView.findViewById(R.id.textJobTitle);
-        textJobSalary = rootView.findViewById(R.id.textJobSalary);
-        textJobStartDate = rootView.findViewById(R.id.textJobStartDate);
-        textJobEmployer = rootView.findViewById(R.id.textJobEmployer);
-        textJobEmployee = rootView.findViewById(R.id.textJobEmployee);
-        textJobOtherTerms = rootView.findViewById(R.id.textJobOtherTerms);
+        TextView textJobTitle = rootView.findViewById(R.id.textJobTitle);
+        TextView textJobSalary = rootView.findViewById(R.id.textJobSalary);
+        TextView textJobStartDate = rootView.findViewById(R.id.textJobStartDate);
+        TextView textJobEmployer = rootView.findViewById(R.id.textJobEmployer);
+        TextView textJobEmployee = rootView.findViewById(R.id.textJobEmployee);
+        TextView textJobOtherTerms = rootView.findViewById(R.id.textJobOtherTerms);
         acceptanceStatus = rootView.findViewById(R.id.textJobAcceptance);
         completionStatus = rootView.findViewById(R.id.textJobCompletion);
 
@@ -209,7 +197,7 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
             jobOffer.setAccepted("declined");
             updateUI();
             Toast.makeText(getContext(), "Job offer declined", Toast.LENGTH_SHORT).show();
-            DeleteJobOffer();
+            deleteJobOffer();
         } else if (v.getId() == R.id.completeJobButton) {
             jobOffer.setComplete("complete");
             updateUI();
@@ -223,7 +211,7 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
     }
 
     private void navigateToRatingFragment() {
-        UID = mAuth.getCurrentUser().getUid();
+        String UID = mAuth.getCurrentUser().getUid();
         if(UID.equals(jobOffer.getApplicantUID())) {
             getParentFragmentManager().beginTransaction()
                     .replace(R.id.baseEmployee, EmployeeRating.newInstance(jobOffer.getApplicantUID(), jobOffer.getEmployerUID()))
@@ -283,7 +271,7 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
      * Upon successful deletion, pops the back stack to return to the previous fragment.
      */
 
-    private void DeleteJobOffer() {
+    private void deleteJobOffer() {
         DatabaseReference jobOfferRef = FirebaseDatabase.getInstance().getReference().child("JobOffers").child(jobOffer.getJobID());
         jobOfferRef.removeValue()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -348,5 +336,4 @@ public class OnGoingJobDetailsFragments extends Fragment implements View.OnClick
             e.printStackTrace();
         }
     }
-    // fjaiodjfsa put the button
 }

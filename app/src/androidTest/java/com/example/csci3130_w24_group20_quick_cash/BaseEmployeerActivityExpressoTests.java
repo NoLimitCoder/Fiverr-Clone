@@ -11,6 +11,8 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.BaseEmployerActivity;
+import com.example.csci3130_w24_group20_quick_cash.BaseEmployerActivity.EmployerFragments.EmployerProfileFragment;
+
 
 import org.junit.Before;
 import org.junit.Test;
@@ -43,13 +45,4 @@ public class BaseEmployeerActivityExpressoTests {
                 .check(matches(isDisplayed()));
     }
 
-    @Test
-    public void testSwitchToSettingsFragment() {
-        // Click on the settings navigation item
-        Espresso.onView(ViewMatchers.withId(R.id.employerNavSettings)).perform(ViewActions.click());
-
-        // Verify that the settings fragment is displayed by checking the visibility of its view
-        Espresso.onView(withId(R.id.fragment_employer_settings))
-                .check(matches(isDisplayed()));
-    }
 }

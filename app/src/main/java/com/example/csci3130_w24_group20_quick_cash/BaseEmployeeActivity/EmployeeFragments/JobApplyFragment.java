@@ -34,18 +34,20 @@ import com.google.firebase.storage.StorageReference;
 
 public class JobApplyFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
 
     private ActivityResultLauncher<String> mGetContent;
 
-
     private String jobID;
 
-    private Button applyButton, uploadFileButton;
-    private EditText applyName, applyEmail, applyAvailability, applyAddress, applyCountry,
-            applyCity, applyEducation, applyExperience, applyDetails;
+    private EditText applyName;
+    private EditText applyEmail;
+    private EditText applyAvailability;
+    private EditText applyAddress;
+    private EditText applyCountry;
+    private EditText applyCity;
+    private EditText applyEducation;
+    private EditText applyExperience;
+    private EditText applyDetails;
 
     private DatabaseReference jobApplicationReference;
     private FirebaseAuth mAuth;
@@ -64,18 +66,10 @@ public class JobApplyFragment extends Fragment {
 
     /**
      * Creates a new instance of JobApplyFragment.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of JobApplyFragment.
      */
-    public static JobApplyFragment newInstance(String param1, String param2) {
-        JobApplyFragment fragment = new JobApplyFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static JobApplyFragment newInstance() {
+        return new JobApplyFragment();
     }
 
 
@@ -133,7 +127,7 @@ public class JobApplyFragment extends Fragment {
 
 
     protected void setupUploadFileButton(View view) {
-        uploadFileButton = view.findViewById(R.id.uploadFile);
+        Button uploadFileButton = view.findViewById(R.id.uploadFile);
         uploadFileButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -149,7 +143,7 @@ public class JobApplyFragment extends Fragment {
      */
 
     protected void setupApplyButton(View view) {
-        applyButton = view.findViewById(R.id.SubmitApplicationButton);
+        Button applyButton = view.findViewById(R.id.SubmitApplicationButton);
         applyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -50,8 +50,14 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
     public static final String FIREBASE_SERVER_KEY = "AAAAJULKPZc:APA91bH7AZ59ApuLLtTpHUiC4l3Mu5CoKerK7CD8UGqEQXj0RmUE5x0JCkm1nMh8FwBo5O3lBoF3KK7cOifd-9ZNyoks7R7jKXHi26qwgfFTDLMOUS2hdnJ9vbs-1WLoM4kNg-P71GRB";
     public static final String PUSH_NOTIFICATION_ENDPOINT = "https://fcm.googleapis.com/fcm/send";
 
-    private EditText jobTitleEditText, jobSalaryEditText, jobTypeEditText, jobCountryEditText,
-    jobCityEditText, jobAdressEditText, jobDescriptionEditText, jobOtherDetailsEditText;
+    private EditText jobTitleEditText;
+    private EditText jobSalaryEditText;
+    private EditText jobTypeEditText;
+    private EditText jobCountryEditText;
+    private EditText jobCityEditText;
+    private EditText jobAdressEditText;
+    private EditText jobDescriptionEditText;
+    private EditText jobOtherDetailsEditText;
 
     private DatabaseReference jobPostingReference;
 
@@ -60,7 +66,6 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
     FirebaseDatabase database = null;
 
     final String[] employerName = new String[1];
-    private String employerUID;
 
     Button uploadButton;
     FirebaseCRUD crud = null;
@@ -174,7 +179,7 @@ public class JobUploadFragment extends Fragment implements View.OnClickListener 
         String jobDescription = jobDescriptionEditText.getText().toString().trim();
         String jobOtherDetails = jobOtherDetailsEditText.getText().toString().trim();
 
-        employerUID = mAuth.getCurrentUser().getUid();
+        String employerUID = mAuth.getCurrentUser().getUid();
         fetchEmployerName(employerUID);
 
         JobPosting jobPosting = new JobPosting(employerName[0], employerUID, jobTitle, jobCountry, jobCity, jobAddress, jobSalary,
