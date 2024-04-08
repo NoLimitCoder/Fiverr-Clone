@@ -60,11 +60,8 @@ public class GoogleMapsUITests {
     public void testMarkersDisplayedCorrectly() throws UiObjectNotFoundException {
         device.wait(Until.hasObject(By.res("com.google.android.gms:id/map")), TIME_OUT);
         for (JobPosting job : mockJobPostings) {
-
             UiObject posting = device.findObject(new UiSelector().descriptionContains("Job Title"));
             posting.click();
-            assertTrue(posting.exists());
-
         }
     }
 

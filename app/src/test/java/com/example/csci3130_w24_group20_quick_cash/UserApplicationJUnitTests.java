@@ -31,7 +31,7 @@ public class UserApplicationJUnitTests {
         ApplicationAdapter adapter = new ApplicationAdapter(applicationList, clickListener);
         assertNotNull(adapter);
         assertEquals(applicationList.size(), adapter.getItemCount());
-        assertNotEquals(applicationList.size(), adapter.toString());
+        assertEquals(applicationList.size(), adapter.toString());
         assertNotEquals(applicationList.size(), adapter.getClass());
     }
 

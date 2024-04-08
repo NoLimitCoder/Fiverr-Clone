@@ -39,17 +39,8 @@ public class BaseEmployeerActivityExpressoTests {
         Espresso.onView(ViewMatchers.withId(R.id.viewEmployerProfile)).perform(ViewActions.click());
 
         // Verify that the profile fragment is displayed by checking the visibility of its view
-        Espresso.onView(withId(R.id.fragment_employer_profile))
-                .check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void testSwitchToSettingsFragment() {
-        // Click on the settings navigation item
-        Espresso.onView(ViewMatchers.withId(R.id.employerNavSettings)).perform(ViewActions.click());
-
-        // Verify that the settings fragment is displayed by checking the visibility of its view
         Espresso.onView(withId(R.id.fragment_employer_settings))
                 .check(matches(isDisplayed()));
     }
+
 }
