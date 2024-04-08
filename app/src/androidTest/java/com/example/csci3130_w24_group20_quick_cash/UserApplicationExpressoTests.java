@@ -1,3 +1,4 @@
+
 package com.example.csci3130_w24_group20_quick_cash;
 import androidx.test.core.app.ActivityScenario;
 import androidx.test.espresso.Espresso;
@@ -6,6 +7,7 @@ import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 
 import com.example.csci3130_w24_group20_quick_cash.BaseEmployeeActivity.BaseEmployeeActivity;
+import com.example.csci3130_w24_group20_quick_cash.R;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,9 +16,8 @@ import org.junit.runner.RunWith;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
-
 @RunWith(AndroidJUnit4.class)
-public class BaseEmployeeActivityExpressoTests{
+public class UserApplicationExpressoTests{
 
     public ActivityScenario<BaseEmployeeActivity> scenario;
 
@@ -33,7 +34,7 @@ public class BaseEmployeeActivityExpressoTests{
     }
 
     @Test
-    public void testSwitchToProfileFragment() {
+    public void testSwitchToApplicationsFragment() {
         // Click on the profile navigation item
         Espresso.onView(ViewMatchers.withId(R.id.viewProfile)).perform(ViewActions.click());
 
