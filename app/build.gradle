@@ -1,13 +1,18 @@
 plugins {
     id 'com.android.application'
     id 'com.google.gms.google-services'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
+
 
 android {
     namespace 'com.example.csci3130_w24_group20_quick_cash'
     compileSdk 34
+    buildFeatures {
+        buildConfig = true
+    }
 
-    defaultConfig {
+        defaultConfig {
         applicationId "com.example.csci3130_w24_group20_quick_cash"
         minSdk 30
         targetSdk 34
@@ -15,13 +20,22 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
+
+            buildConfigField "String", "PAYPAL_CLIENT_ID", "\"AaP0P80fUj7yg_Vj55pC9TBKCKMDoZw32CAEVdx82IDhRDnb3J5O2VjjdHPCycdT8WHV7In6NGAigATA\""
+
+
+
+}
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+
+    buildFeatures{
+        viewBinding true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -34,14 +48,17 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.11.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.activity:activity:1.8.2'
 
     //Firebase
-    implementation 'com.google.firebase:firebase-database:20.3.0'
+    implementation 'com.google.firebase:firebase-database:20.3.1'
     implementation platform('com.google.firebase:firebase-bom:32.7.2')
     implementation("com.google.firebase:firebase-auth")
-    //implementation 'com.google.firebase:firebase-admin:9.2.0'
     implementation 'com.google.firebase:firebase-analytics'
-    implementation 'com.google.android.gms:play-services-auth:20.7.0'
+    implementation 'com.google.android.gms:play-services-auth:21.0.0'
+    implementation 'com.google.firebase:firebase-messaging:23.4.1'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'com.google.firebase:firebase-storage:20.3.0'
 
     /*JUnit*/
     testImplementation 'junit:junit:4.13.2'
@@ -53,8 +70,35 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.2'
 
     /*UI Automator library*/
-    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
+    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.3.0'
 
     androidTestImplementation project(path: ':app')
 
+    /*Google Maps*/
+    implementation 'com.google.android.gms:play-services-maps:18.2.0'
+    implementation 'com.google.android.gms:play-services-location:21.2.0'
+    implementation 'com.google.maps.android:android-maps-utils:0.4'
+
+
+    /*Notification*/
+    //implementation("androidx.core:core-ktx:2.2.0")
+    implementation 'com.google.firebase:firebase-messaging:23.4.1'
+    implementation 'com.android.volley:volley:1.2.1'
+
+
+    /*Mockito*/
+    testImplementation "org.mockito:mockito-inline:3.4.0"
+    androidTestImplementation project(path: ':app')
+    testImplementation 'org.robolectric:robolectric:4.6.1'
+
+    /*PayPal*/
+    implementation 'com.paypal.sdk:paypal-android-sdk:2.16.0'
+    implementation "com.squareup.retrofit2:converter-gson:2.5.0"
+
+
+
 }
+
+
+
+

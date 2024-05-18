@@ -1,0 +1,14 @@
+
+D
+java:S1604ø"(Make this anonymous inner class a lambda(ˆøÎ‹ýÿÿÿÿ
+„
+java:S3252²"hUse static access with "com.google.android.material.snackbar.BaseTransientBottomBar" for "LENGTH_SHORT".(ØÇß–ùÿÿÿÿ
+c	java:S100Á"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(öÖ¿
+W
+java:S1854î"@Remove this useless assignment to local variable "errorMessage".(¹öÆš
+7
+java:S2129î" Remove this "String" constructor(¹öÆš
+K
+java:S1481ð"/Remove this unused "userExists" local variable.(®õ£ºøÿÿÿÿ
+A
+java:S1197˜"*Move the array designators [] to the type.(ÏÝ”ú

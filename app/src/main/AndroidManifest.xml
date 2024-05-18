@@ -2,6 +2,13 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- permission -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,6 +19,28 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Csci3130_w24_group20_Quick_Cash"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCxPsxpdWDE-Tk4Hf8ZE_Q993DGudKy16M" />
+
+        <meta-data
+            android:name="com.paypal.ClientId"
+            android:value="AaP0P80fUj7yg_Vj55pC9TBKCKMDoZw32CAEVdx82IDhRDnb3J5O2VjjdHPCycdT8WHV7In6NGAigATA" />
+
+
+        <service
+            android:name=".FavJobTypeNotifService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".MapsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_maps" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -21,11 +50,23 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".WelcomeActivity" />
+        <activity
+            android:name=".BaseEmployeeActivity.BaseEmployeeActivity"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".BaseEmployerActivity.BaseEmployerActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".ForgotPasswordActivity" />
 
+        <service
+            android:name=".BaseEmployerActivity.EmployerFragments.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
     </application>
+
 
 </manifest>

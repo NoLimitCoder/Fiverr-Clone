@@ -10,6 +10,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.concurrent.CompletionException;
 
+/**
+ * Class for performing CRUD operations on Firebase Realtime Database.
+ */
+
 public class FirebaseCRUD {
     private FirebaseDatabase database;
     private DatabaseReference nameRef = null;
@@ -25,6 +29,11 @@ public class FirebaseCRUD {
     private String extractedContactNumber;
     private String extractedRole;
 
+    /**
+     * Constructor for FirebaseCRUD.
+     *
+     * @param database The FirebaseDatabase instance.
+     */
 
     public FirebaseCRUD(FirebaseDatabase database) {
         this.database = database;
@@ -77,7 +86,7 @@ public class FirebaseCRUD {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                    //no onCancelled changes
             }
         });
     }
@@ -91,7 +100,7 @@ public class FirebaseCRUD {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                //no onCancelled changes
             }
         });
     }
@@ -105,7 +114,7 @@ public class FirebaseCRUD {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                //no onCancelled changes
             }
         });
     }
@@ -119,7 +128,7 @@ public class FirebaseCRUD {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                //no onCancelled changes
             }
         });
     }
@@ -132,7 +141,7 @@ public class FirebaseCRUD {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
+                //no onCancelled changes
             }
         });
     }
@@ -150,7 +159,7 @@ public class FirebaseCRUD {
         this.setEmailListener();
         this.setPasswordListener();
         this.setContactNumberListener();
-        this.setRoleListener();;
+        this.setRoleListener();
     }
 
 }

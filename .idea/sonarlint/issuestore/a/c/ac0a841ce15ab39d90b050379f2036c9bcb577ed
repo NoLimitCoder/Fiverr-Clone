@@ -1,0 +1,10 @@
+
+‘	java:S117^"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(®¶ύÿÿÿÿJ$bd417b4d-7cea-478a-9f86-e6e3353ca750
+i
+java:S1604R"(Make this anonymous inner class a lambda(†«ΏΊϊÿÿÿÿJ$01e658af-584f-4153-84ef-8623ef922dd9
+ 
+java:S1450 "_Remove the "chatRecyclerView" field and declare it as a local variable in the relevant methods.(­”³ξÿÿÿÿÿJ$a18319e7-da31-4865-8bf1-76b9e1fdc4bf
+–
+java:S1450("ZRemove the "chatSendBtn" field and declare it as a local variable in the relevant methods.(ÿΘρJ$e34bf0bf-86ee-4827-af11-4a8f8230c0e2
+x
+java:S1874;"7Remove this use of "getSerializable"; it is deprecated.(ϊ»”ΠώÿÿÿÿJ$9f461582-76e5-4642-8377-b70c4958bd0f
